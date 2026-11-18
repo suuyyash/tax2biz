@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trademark Gazette Record | Tax2Biz India</title>
+  <meta name="description" content="Official Trade Mark Gazette record, application status, Class classification, legal lifecycle, and proprietor details from the Trade Marks Registry (CGPDTM)." />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="product.css" />
+  <link rel="stylesheet" href="trademark.css" />
+  <style>
+    /* Full-Page Gazette Record View (Executive & Minimal) */
+    .tm-details-hero {
+      padding: 36px 0 56px;
+      background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+      min-height: calc(100vh - 200px);
+    }
+    .tm-details-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tm-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #2563EB;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .tm-back-link:hover {
+      color: #1D4ED8;
+      text-decoration: underline;
+    }
+    .tm-details-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 36px 40px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .tm-details-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .tm-details-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .tm-details-title-row h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    .tm-app-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #2563EB;
+      background: #EFF6FF;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .tm-details-class-sub {
+      font-size: 0.92rem;
+      color: #64748B;
+      font-weight: 500;
+    }
+    .tm-details-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-outline-navy {
+      background: #FFFFFF;
+      color: #0F172A;
+      border: 1px solid #CBD5E1;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-outline-navy:hover {
+      background: #F8FAFC;
+      border-color: #0F172A;
+      color: #0F172A;
+    }
+    .btn-outline-white {
+      background: transparent;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-outline-white:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #FFFFFF;
+      color: #FFFFFF;
+    }
+    .tm-details-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 860px) {
+      .tm-details-meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .tm-details-meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .tm-details-meta-item {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .tm-details-meta-item:hover {
+      background: #FFFFFF;
+      border-color: #CBD5E1;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    }
+    .tm-details-meta-item strong {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748B;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .tm-details-meta-item span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0F172A;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .tm-details-status-callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 26px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .tm-details-status-callout i {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .tm-details-status-callout strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .tm-details-status-callout span {
+      display: block;
+      font-size: 0.86rem;
+      opacity: 0.92;
+    }
+    .tm-status-callout-green {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+    }
+    .tm-status-callout-green i {
+      color: #16A34A;
+    }
+    .tm-status-callout-amber {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+    }
+    .tm-status-callout-amber i {
+      color: #D97706;
+    }
+    .tm-status-callout-red {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+    }
+    .tm-status-callout-red i {
+      color: #DC2626;
+    }
+    .tm-details-section-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tm-lifecycle-stepper {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin: 16px 0 28px;
+      position: relative;
+    }
+    @media (max-width: 768px) {
+      .tm-lifecycle-stepper {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+    .tm-step-node {
+      text-align: center;
+      position: relative;
+      padding: 14px 10px;
+      background: #F8FAFC;
+      border-radius: 12px;
+      border: 1px solid #E2E8F0;
+      transition: all 0.2s ease;
+    }
+    @media (max-width: 768px) {
+      .tm-step-node {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        grid-template-rows: auto auto;
+        column-gap: 12px;
+        row-gap: 2px;
+        align-items: center;
+        text-align: left;
+        padding: 12px 16px;
+      }
+    }
+    .tm-step-node-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      background: #E2E8F0;
+      color: #64748B;
+      transition: all 0.2s ease;
+    }
+    @media (max-width: 768px) {
+      .tm-step-node-icon {
+        grid-row: 1 / span 2;
+        grid-column: 1;
+        margin: 0;
+      }
+    }
+    .tm-step-node-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1E293B;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    @media (max-width: 768px) {
+      .tm-step-node-title {
+        grid-row: 1;
+        grid-column: 2;
+        text-align: left;
+        margin: 0;
+      }
+    }
+    .tm-step-node-sub {
+      font-size: 0.72rem;
+      color: #64748B;
+    }
+    @media (max-width: 768px) {
+      .tm-step-node-sub {
+        grid-row: 2;
+        grid-column: 2;
+        text-align: left;
+        margin: 0;
+      }
+    }
+    .tm-step-node.completed {
+      border-color: #A7F3D0;
+      background: #F0FDF4;
+    }
+    .tm-step-node.completed .tm-step-node-icon {
+      background: #10B981;
+      color: #FFFFFF;
+    }
+    .tm-step-node.completed .tm-step-node-title {
+      color: #065F46;
+    }
+    .tm-step-node.active {
+      border-color: #BFDBFE;
+      background: #EFF6FF;
+    }
+    .tm-step-node.active .tm-step-node-icon {
+      background: #2563EB;
+      color: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    }
+    .tm-step-node.active .tm-step-node-title {
+      color: #1E40AF;
+    }
+    .tm-step-node.objected {
+      border-color: #FDE68A;
+      background: #FFFBEB;
+    }
+    .tm-step-node.objected .tm-step-node-icon {
+      background: #D97706;
+      color: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.18);
+    }
+    .tm-step-node.objected .tm-step-node-title {
+      color: #92400E;
+    }
+    .tm-step-node.refused {
+      border-color: #FECACA;
+      background: #FEF2F2;
+    }
+    .tm-step-node.refused .tm-step-node-icon {
+      background: #EF4444;
+      color: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+    }
+    .tm-step-node.refused .tm-step-node-title {
+      color: #991B1B;
+    }
+    .tm-details-goods-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      padding: 20px 24px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #334155;
+      margin-bottom: 28px;
+      word-break: break-word;
+    }
+    .tm-details-cta-card {
+      background: #0F172A;
+      color: #FFFFFF;
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .tm-details-cta-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .tm-details-cta-card p {
+      font-size: 0.88rem;
+      color: #94A3B8;
+      margin: 0;
+      max-width: 500px;
+      line-height: 1.45;
+    }
+    .tm-details-cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tm-details-attribution-row {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #F1F5F9;
+      font-size: 0.8rem;
+      color: #64748B;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tm-details-attribution-row a {
+      color: #0F172A;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    @media (max-width: 640px) {
+      .tm-details-card {
+        padding: 22px 18px;
+        border-radius: 16px;
+      }
+      .tm-details-title-row h1 {
+        font-size: 1.5rem;
+      }
+      .tm-details-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+      }
+      .tm-details-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .tm-details-actions .btn {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+      }
+      .tm-details-cta-card {
+        padding: 20px 18px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .tm-details-cta-actions {
+        width: 100%;
+        flex-direction: column;
+      }
+      .tm-details-cta-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="index.html" class="logo" aria-label="Tax2Biz – Return to homepage">
+          <img src="tax2biz.png" alt="Tax2Biz" class="logo-img" width="128" height="44">
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+
+          <!-- 1. Tax & Audit -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              Tax &amp; Audit <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu align-left" role="menu" style="min-width: 600px;">
+              <div class="mega-columns-wrap">
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-receipt" aria-hidden="true"></i> Tax Filing</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="self-itr-filing.html" role="menuitem"><i class="ph ph-file-text" aria-hidden="true"></i>ITR-1 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-chart-line" aria-hidden="true"></i>ITR-2 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-briefcase" aria-hidden="true"></i>ITR-3 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-calculator" aria-hidden="true"></i>ITR-4 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-buildings" aria-hidden="true"></i>ITR-5/6 Filing</a></li>
+                  </ul>
+                </div>
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-seal-check" aria-hidden="true"></i> Accounting &amp; Audit</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-checks" aria-hidden="true"></i>Tax Audit</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-shield-check" aria-hidden="true"></i>Pvt Ltd statutory audit</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-handshake" aria-hidden="true"></i>LLP statutory audit</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-files" aria-hidden="true"></i>Tax Audit + PVT LTd Statutory Audit. + ITR6</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-folder-notch" aria-hidden="true"></i>Tax Audit + LLP Statutory Audit. + ITR5</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Business Registration & Changes -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              Business Registration &amp; Changes <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu mega-menu-4col align-center" role="menu" style="min-width: 940px;">
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-buildings" aria-hidden="true"></i> Business Registration</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="private-limited-company-registration.html" role="menuitem"><i class="ph ph-buildings" aria-hidden="true"></i>Private Limited Company Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-users-three" aria-hidden="true"></i>LLP Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-user-square" aria-hidden="true"></i>One Person Company (OPC) Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-handshake" aria-hidden="true"></i>Partnership Firm Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-user" aria-hidden="true"></i>Proprietorship Setup</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i> Company &amp; LLP Changes</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-user-switch" aria-hidden="true"></i>Director Change – Appointment / Resignation / Replacement</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-pencil-line" aria-hidden="true"></i>Company Name Change</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-map-pin" aria-hidden="true"></i>Registered Office Change</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-users" aria-hidden="true"></i>Appointment / Resignation of LLP Designated Partner</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-fingerprint" aria-hidden="true"></i> Digital Signature &amp; ID</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-pen-nib" aria-hidden="true"></i>New DSC – Individual / Director</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-arrows-counter-clockwise" aria-hidden="true"></i>DSC Renewal / Reissue</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-identification-badge" aria-hidden="true"></i>DIN Application / Allotment</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-shield-check" aria-hidden="true"></i> Compliance &amp; Add-ons</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-folder-open" aria-hidden="true"></i>Private Limited Company – ROC Annual Compliance</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-files" aria-hidden="true"></i>LLP Annual Compliance</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-medal" aria-hidden="true"></i>Udyam / MSME Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-rocket-launch" aria-hidden="true"></i>Startup India Registration</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. GST & Accounting -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              GST &amp; Accounting <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu align-center" role="menu" style="min-width: 780px;">
+              <div class="mega-columns-wrap">
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-receipt" aria-hidden="true"></i> GST Services</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-plus-circle" aria-hidden="true"></i>GST Registration</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-calendar" aria-hidden="true"></i>Monthly GST Return Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-calendar-blank" aria-hidden="true"></i>Quarterly GST Return Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-archive" aria-hidden="true"></i>Annual GST Return Filing (GSTR-9 / GSTR-9C, where applicable)</a></li>
+                  </ul>
+                </div>
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-calculator" aria-hidden="true"></i> Accounting</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-book-open" aria-hidden="true"></i>Bookkeeping / Accounting – Monthly</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-notebook" aria-hidden="true"></i>Bookkeeping / Accounting – Quarterly</a></li>
+                  </ul>
+                </div>
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-package" aria-hidden="true"></i> Combined Packages</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-package" aria-hidden="true"></i>Combined Monthly Package</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-package" aria-hidden="true"></i>Combined Quarterly Package</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-package" aria-hidden="true"></i>Combined Annual Package</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Trademark -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              Trademark <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu align-right" role="menu" style="min-width: 440px;">
+              <div class="mega-columns-wrap">
+                <div class="mega-col" style="min-width: 100%;">
+                  <div class="mega-col-title"><i class="ph ph-trademark" aria-hidden="true"></i> Trademark Services</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="trademark-search.html" role="menuitem"><i class="ph ph-trademark" aria-hidden="true"></i>Trademark Registration – Application Only</a></li>
+                    <li><a class="mega-link" href="trademark-search.html" role="menuitem"><i class="ph ph-gavel" aria-hidden="true"></i>Trademark Registration – Including Objection Reply &amp; Hearing</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </nav>
+
+        <!-- Desktop CTA -->
+        <div class="header-actions">
+          <a href="#" class="btn btn-secondary btn-sm">Sign In</a>
+          <a href="index.html#get-started" class="btn btn-primary btn-sm">Get Started <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          <button class="mobile-toggle" aria-label="Open menu" aria-expanded="false">
+            <i class="ph ph-list" aria-hidden="true"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+<!-- ============================================================
+     MOBILE DRAWER
+     ============================================================ -->
+<div class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <div class="drawer-header">
+    <a href="index.html" class="logo" aria-label="Tax2Biz – Return to homepage">
+      <img src="tax2biz.png" alt="Tax2Biz" class="logo-img" width="116" height="40">
+    </a>
+    <button class="drawer-close" aria-label="Close menu"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="drawer-nav">
+
+    <!-- 1. Tax & Audit -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-receipt"></i> Tax &amp; Audit</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-receipt"></i> Tax Filing</div>
+        <a class="drawer-link" href="self-itr-filing.html"><i class="ph ph-file-text"></i> ITR-1 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-chart-line"></i> ITR-2 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-briefcase"></i> ITR-3 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-calculator"></i> ITR-4 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-buildings"></i> ITR-5/6 Filing</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-seal-check"></i> Accounting &amp; Audit</div>
+        <a class="drawer-link" href="#"><i class="ph ph-checks"></i> Tax Audit</a>
+        <a class="drawer-link" href="#"><i class="ph ph-shield-check"></i> Pvt Ltd statutory audit</a>
+        <a class="drawer-link" href="#"><i class="ph ph-handshake"></i> LLP statutory audit</a>
+        <a class="drawer-link" href="#"><i class="ph ph-files"></i> Tax Audit + PVT LTd Statutory Audit. + ITR6</a>
+        <a class="drawer-link" href="#"><i class="ph ph-folder-notch"></i> Tax Audit + LLP Statutory Audit. + ITR5</a>
+      </div>
+    </div>
+
+    <!-- 2. Business Registration & Changes -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-buildings"></i> Business Registration &amp; Changes</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-buildings"></i> Business Registration</div>
+        <a class="drawer-link" href="private-limited-company-registration.html"><i class="ph ph-buildings"></i> Private Limited Company Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-users-three"></i> LLP Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-user-square"></i> One Person Company (OPC) Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-handshake"></i> Partnership Firm Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-user"></i> Proprietorship Setup</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-arrows-clockwise"></i> Company &amp; LLP Changes</div>
+        <a class="drawer-link" href="#"><i class="ph ph-user-switch"></i> Director Change – Appointment / Resignation / Replacement</a>
+        <a class="drawer-link" href="#"><i class="ph ph-pencil-line"></i> Company Name Change</a>
+        <a class="drawer-link" href="#"><i class="ph ph-map-pin"></i> Registered Office Change</a>
+        <a class="drawer-link" href="#"><i class="ph ph-users"></i> Appointment / Resignation of LLP Designated Partner</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-fingerprint"></i> Digital Signature &amp; ID</div>
+        <a class="drawer-link" href="#"><i class="ph ph-pen-nib"></i> New DSC – Individual / Director</a>
+        <a class="drawer-link" href="#"><i class="ph ph-arrows-counter-clockwise"></i> DSC Renewal / Reissue</a>
+        <a class="drawer-link" href="#"><i class="ph ph-identification-badge"></i> DIN Application / Allotment</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-shield-check"></i> Compliance &amp; Add-ons</div>
+        <a class="drawer-link" href="#"><i class="ph ph-folder-open"></i> Private Limited Company – ROC Annual Compliance</a>
+        <a class="drawer-link" href="#"><i class="ph ph-files"></i> LLP Annual Compliance</a>
+        <a class="drawer-link" href="#"><i class="ph ph-medal"></i> Udyam / MSME Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-rocket-launch"></i> Startup India Registration</a>
+      </div>
+    </div>
+
+    <!-- 3. GST & Accounting -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-calculator"></i> GST &amp; Accounting</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-receipt"></i> GST Services</div>
+        <a class="drawer-link" href="#"><i class="ph ph-plus-circle"></i> GST Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-calendar"></i> Monthly GST Return Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-calendar-blank"></i> Quarterly GST Return Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-archive"></i> Annual GST Return Filing (GSTR-9 / GSTR-9C, where applicable)</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-calculator"></i> Accounting</div>
+        <a class="drawer-link" href="#"><i class="ph ph-book-open"></i> Bookkeeping / Accounting – Monthly</a>
+        <a class="drawer-link" href="#"><i class="ph ph-notebook"></i> Bookkeeping / Accounting – Quarterly</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-package"></i> Combined Packages</div>
+        <a class="drawer-link" href="#"><i class="ph ph-package"></i> Combined Monthly Package</a>
+        <a class="drawer-link" href="#"><i class="ph ph-package"></i> Combined Quarterly Package</a>
+        <a class="drawer-link" href="#"><i class="ph ph-package"></i> Combined Annual Package</a>
+      </div>
+    </div>
+
+    <!-- 4. Trademark -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-trademark"></i> Trademark</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-trademark"></i> Trademark Services</div>
+        <a class="drawer-link" href="trademark-search.html"><i class="ph ph-trademark"></i> Trademark Registration – Application Only</a>
+        <a class="drawer-link" href="trademark-search.html"><i class="ph ph-gavel"></i> Trademark Registration – Including Objection Reply &amp; Hearing</a>
+      </div>
+    </div>
+
+    <div class="drawer-actions">
+      <a href="#" class="btn btn-secondary">Sign In</a>
+      <a href="index.html#get-started" class="btn btn-primary">Get Started <i class="ph ph-arrow-right"></i></a>
+    </div>
+  </div>
+</div>
+
+<main id="main" role="main">
+
+  <section class="tm-details-hero">
+    <div class="container">
+      
+      <!-- Top Navigation & Breadcrumb -->
+      <div class="tm-details-top-bar">
+        <a href="trademark-search.html" class="tm-back-link">
+          <i class="ph-bold ph-arrow-left"></i> Back to Trademark Search
+        </a>
+        <nav class="tm-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <i class="ph-bold ph-caret-right" aria-hidden="true"></i>
+          <a href="trademark-search.html">Trademark Search</a>
+          <i class="ph-bold ph-caret-right" aria-hidden="true"></i>
+          <span aria-current="page">Gazette Record</span>
+        </nav>
+      </div>
+
+      <!-- Main Gazette Environment Container -->
+      <div class="tm-details-card">
+        
+        <!-- Header Row -->
+        <div class="tm-details-header">
+          <div>
+            <div class="tm-details-title-row">
+              <h1 id="page-gazette-wordmark">LOADING...</h1>
+              <span id="page-gazette-appno" class="tm-app-tag">TM App #...</span>
+              <span id="page-gazette-status-badge" class="tm-status-badge tm-status-registered">
+                <i class="ph-fill ph-circle"></i> Loading Status...
+              </span>
+            </div>
+            <div id="page-gazette-class-label" class="tm-details-class-sub">
+              Retrieving live government record from Trade Marks Registry...
+            </div>
+          </div>
+
+          <div class="tm-details-actions">
+            <button type="button" class="btn btn-sm btn-outline-navy" onclick="window.print();">
+              <i class="ph ph-printer"></i> Print Record
+            </button>
+            <a href="trademark-search.html" class="btn btn-sm btn-outline-navy">
+              <i class="ph ph-magnifying-glass"></i> New Search
+            </a>
+          </div>
+        </div>
+
+        <!-- 4-Item Executive Metadata Grid -->
+        <div class="tm-details-meta-grid">
+          <div class="tm-details-meta-item">
+            <strong>Proprietor / Applicant</strong>
+            <span id="page-gazette-proprietor">Loading...</span>
+          </div>
+          <div class="tm-details-meta-item">
+            <strong>Application Date</strong>
+            <span id="page-gazette-filing-date">Loading...</span>
+          </div>
+          <div class="tm-details-meta-item">
+            <strong>Valid Upto</strong>
+            <span id="page-gazette-valid-upto">Loading...</span>
+          </div>
+          <div class="tm-details-meta-item">
+            <strong>Registry Jurisdiction</strong>
+            <span id="page-gazette-tm-office">Trade Marks Registry, New Delhi / Mumbai</span>
+          </div>
+        </div>
+
+        <!-- Subtle Status Advisory Notice -->
+        <div class="tm-details-status-callout tm-status-callout-green" id="page-gazette-alert-box">
+          <i class="ph-bold ph-shield-check" id="page-gazette-alert-icon"></i>
+          <div>
+            <strong id="page-gazette-alert-title">Registered Trademark in Good Standing</strong>
+            <span id="page-gazette-alert-desc">This mark is officially registered on the Trade Marks Register under Section 23(2).</span>
+          </div>
+        </div>
+
+        <!-- Lifecycle Stepper -->
+        <div class="tm-details-section-label">
+          <i class="ph-bold ph-clock-counter-clockwise"></i> Procedural Examination Lifecycle
+        </div>
+        <div class="tm-lifecycle-stepper" id="page-gazette-stepper">
+          <div class="tm-step-node completed" id="step-filed">
+            <div class="tm-step-node-icon"><i class="ph-bold ph-check"></i></div>
+            <div class="tm-step-node-title">1. Filed</div>
+            <div class="tm-step-node-sub">Form TM-A</div>
+          </div>
+          <div class="tm-step-node completed" id="step-formalities">
+            <div class="tm-step-node-icon"><i class="ph-bold ph-check"></i></div>
+            <div class="tm-step-node-title">2. Formalities</div>
+            <div class="tm-step-node-sub">Pass</div>
+          </div>
+          <div class="tm-step-node completed" id="step-exam">
+            <div class="tm-step-node-icon"><i class="ph-bold ph-check"></i></div>
+            <div class="tm-step-node-title">3. Examined</div>
+            <div class="tm-step-node-sub">Sec 9 &amp; 11</div>
+          </div>
+          <div class="tm-step-node completed" id="step-advertised">
+            <div class="tm-step-node-icon"><i class="ph-bold ph-check"></i></div>
+            <div class="tm-step-node-title">4. Advertised</div>
+            <div class="tm-step-node-sub">Journal Gazette</div>
+          </div>
+          <div class="tm-step-node completed" id="step-registered">
+            <div class="tm-step-node-icon"><i class="ph-bold ph-seal-check"></i></div>
+            <div class="tm-step-node-title">5. Registered</div>
+            <div class="tm-step-node-sub">Certificate Issued</div>
+          </div>
+        </div>
+
+        <!-- Certified Goods & Services Specification -->
+        <div class="tm-details-section-label" style="margin-top: 28px;">
+          <i class="ph-bold ph-list-dashes"></i> Certified Goods &amp; Services Specification
+        </div>
+        <div class="tm-details-goods-box" id="page-gazette-goods">
+          Loading goods &amp; services description...
+        </div>
+
+        <!-- Legal Attorney Consultation Bar -->
+        <div class="tm-details-cta-card">
+          <div>
+            <h3>Need Legal Support for This Trademark?</h3>
+            <p>
+              Our registered trademark attorneys handle Section 9 &amp; 11 objection replies, hearings, renewals, and opposition defense.
+            </p>
+          </div>
+          <div class="tm-details-cta-actions">
+            <a href="https://ipindiaonline.gov.in/eregister/eregister.aspx" target="_blank" rel="noopener noreferrer" class="btn btn-outline-white">
+              Official IP India Portal <i class="ph ph-arrow-square-out"></i>
+            </a>
+            <button type="button" class="btn btn-primary hire-expert-trigger">
+              Consult Attorney <i class="ph ph-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer Attribution -->
+        <div class="tm-details-attribution-row">
+          <span><i class="ph-bold ph-shield-check" style="color: #10B981;"></i> Official Trade Marks Registry Gazette Environment</span>
+          <a href="https://trademarx.in/?utm_source=api&utm_medium=attribution&utm_content=55940401" target="_blank" rel="noopener">
+            Trademark data powered by TradeMarx
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo" aria-label="Tax2Biz Home">
+          <img src="Tax2biz-white.png" alt="Tax2Biz" class="footer-logo-img" width="131" height="44">
+        </a>
+        <p class="footer-tagline">From Personal Taxes to Business Compliance.</p>
+        <p>Tax filing, business registration, GST, accounting and compliance services for individuals and businesses in India.</p>
+      </div>
+
+      <!-- Tax & Audit -->
+      <div>
+        <div class="footer-col-title">Tax &amp; Audit</div>
+        <nav class="footer-links-list" aria-label="Tax and audit services">
+          <a href="self-itr-filing.html">ITR-1 Filing</a>
+          <a href="#">ITR-2 Filing</a>
+          <a href="#">ITR-3 Filing</a>
+          <a href="#">ITR-4 Filing</a>
+          <a href="#">ITR-5/6 Filing</a>
+          <a href="#">Tax Audit</a>
+          <a href="#">Pvt Ltd statutory audit</a>
+          <a href="#">LLP statutory audit</a>
+          <a href="#">Tax Audit + PVT LTd Statutory Audit. + ITR6</a>
+          <a href="#">Tax Audit + LLP Statutory Audit. + ITR5</a>
+        </nav>
+      </div>
+
+      <!-- Business Registration & Changes -->
+      <div>
+        <div class="footer-col-title">Business Setup &amp; Changes</div>
+        <nav class="footer-links-list" aria-label="Business setup and company changes">
+          <a href="#">Private Limited Company Registration</a>
+          <a href="#">LLP Registration</a>
+          <a href="#">One Person Company (OPC) Registration</a>
+          <a href="#">Partnership Firm Registration</a>
+          <a href="#">Proprietorship Setup</a>
+          <a href="#">Director Change – Appointment / Resignation / Replacement</a>
+          <a href="#">Company Name Change</a>
+          <a href="#">Registered Office Change</a>
+          <a href="#">Appointment / Resignation of LLP Designated Partner</a>
+        </nav>
+      </div>
+
+      <!-- GST & Accounting -->
+      <div>
+        <div class="footer-col-title">GST &amp; Accounting</div>
+        <nav class="footer-links-list" aria-label="GST and accounting services">
+          <a href="#">GST Registration</a>
+          <a href="#">Monthly GST Return Filing</a>
+          <a href="#">Quarterly GST Return Filing</a>
+          <a href="#">Annual GST Return Filing (GSTR-9 / GSTR-9C, where applicable)</a>
+          <a href="#">Bookkeeping / Accounting – Monthly</a>
+          <a href="#">Bookkeeping / Accounting – Quarterly</a>
+          <a href="#">Combined Monthly Package</a>
+          <a href="#">Combined Quarterly Package</a>
+          <a href="#">Combined Annual Package</a>
+        </nav>
+      </div>
+
+      <!-- Compliance, ID & Trademark -->
+      <div>
+        <div class="footer-col-title">Compliance &amp; Trademark</div>
+        <nav class="footer-links-list" aria-label="Compliance, ID and trademark links">
+          <a href="#">Private Limited Company – ROC Annual Compliance</a>
+          <a href="#">LLP Annual Compliance</a>
+          <a href="#">New DSC – Individual / Director</a>
+          <a href="#">DSC Renewal / Reissue</a>
+          <a href="#">DIN Application / Allotment</a>
+          <a href="trademark-search.html">Trademark Registration – Application Only</a>
+          <a href="trademark-search.html">Trademark Registration – Including Objection Reply &amp; Hearing</a>
+          <a href="#">Udyam / MSME Registration</a>
+          <a href="#">Startup India Registration</a>
+        </nav>
+      </div>
+
+    </div>
+
+    <!-- Legal Disclaimer -->
+    <div class="footer-legal">
+      <p>
+        Tax2Biz service fees cover the professional or platform services described for each package. Government fees, statutory payments, stamp duty, Digital Signature Certificate charges and other third-party expenses, where applicable, are charged separately at actuals unless explicitly stated otherwise. Applicable GST on Tax2Biz service fees is additional where required by law. Service availability, eligibility and deliverables depend on the selected service and the customer's circumstances.
+      </p>
+      <p>
+        Tax, legal, audit, certification and other regulated services are performed or reviewed only by appropriately qualified and eligible professionals where required. Availability depends on the nature of the engagement and applicable law.
+      </p>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <span>&copy; 2026 Tax2Biz. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Refund Policy</a>
+        <a href="https://trademarx.in/?utm_source=api&utm_medium=attribution&utm_content=55940401" rel="noopener" target="_blank">Trademark data powered by TradeMarx</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<div class="modal-overlay" id="expert-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close modal"><i class="ph ph-x"></i></button>
+    
+    <div class="modal-header">
+      <div class="modal-icon"><i class="ph-fill ph-user-circle-gear"></i></div>
+      <h3 id="modal-title">Talk to a Tax &amp; Business Expert</h3>
+      <p>Get personalized guidance for ITR filing, business registration, or GST compliance.</p>
+    </div>
+
+    <form class="modal-form" id="expert-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="+91" required>
+      </div>
+      <div class="form-group">
+        <label for="tax-type">Service Required</label>
+        <select id="tax-type" required>
+          <option value="" disabled selected>Select service</option>
+          <option value="ca_itr">CA-Assisted ITR Filing (Salary / Freelancer / Capital Gains)</option>
+          <option value="business_reg">Company / LLP Registration</option>
+          <option value="gst_filing">GST Registration &amp; Returns</option>
+          <option value="tax_notice">Tax Notice / Demand Assistance</option>
+          <option value="accounting">Accounting, TDS &amp; Payroll</option>
+          <option value="other">Other Compliance Service</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Request Free Callback <i class="ph ph-arrow-right"></i></button>
+    </form>
+    <div class="modal-footer-note">
+      <i class="ph-fill ph-lock-key"></i> 100% confidential. No spam, verified CA &amp; CS advisory.
+    </div>
+  </div>
+</div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script>
+    (async function initGazettePage() {
+      const params = new URLSearchParams(window.location.search);
+      const appNo = params.get('appNo') || '5274626';
+
+      const wordmarkEl = document.getElementById('page-gazette-wordmark');
+      const appNoEl = document.getElementById('page-gazette-appno');
+      const statusBadgeEl = document.getElementById('page-gazette-status-badge');
+      const classLabelEl = document.getElementById('page-gazette-class-label');
+      const proprietorEl = document.getElementById('page-gazette-proprietor');
+      const filingDateEl = document.getElementById('page-gazette-filing-date');
+      const validUptoEl = document.getElementById('page-gazette-valid-upto');
+      const goodsEl = document.getElementById('page-gazette-goods');
+      const alertBoxEl = document.getElementById('page-gazette-alert-box');
+      const alertTitleEl = document.getElementById('page-gazette-alert-title');
+      const alertDescEl = document.getElementById('page-gazette-alert-desc');
+
+      appNoEl.textContent = 'TM App #' + appNo;
+
+      try {
+        let record = null;
+        try {
+          const res = await fetch('/api/trademark-details?appNo=' + encodeURIComponent(appNo));
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.status === 'success' && data.record) {
+              record = data.record;
+            }
+          }
+        } catch(e) {}
+
+        if (!record) {
+          const directUrl = 'https://admin.trademarx.in/api/public/v1/trademarks/' + encodeURIComponent(appNo) + '/status';
+          const dRes = await fetch(directUrl, {
+            headers: { 'X-API-Key': 'tmx_live_G_d7DTZhMEeVIhKWUtf3nZ9phJFgNx4z' }
+          });
+          if (dRes.ok) {
+            const dData = await dRes.json();
+            if (dData && dData.name) {
+              record = {
+                wordmark: dData.name.toUpperCase(),
+                appNo: String(dData.applicationNo || appNo),
+                classNum: dData.tmClass || 0,
+                classLabel: 'Class ' + (dData.tmClass || '') + ' – Intellectual Property Classification',
+                status: dData.trademarkStatus || 'Registered',
+                proprietor: dData.proprietorName || 'Proprietor on Record',
+                filingDate: dData.applicationDate ? dData.applicationDate.split('-').reverse().join('/') : 'On Record',
+                validUpto: dData.applicationDate ? dData.applicationDate.split('-')[2] + '/' + dData.applicationDate.split('-')[1] + '/' + (parseInt(dData.applicationDate.split('-')[0]) + 10) : 'Under Review',
+                goods: dData.details || 'Specification of goods on file.'
+              };
+            }
+          }
+        }
+
+        if (record) {
+          wordmarkEl.textContent = record.wordmark;
+          document.title = record.wordmark + ' (TM #' + appNo + ') Gazette Record | Tax2Biz';
+          appNoEl.textContent = 'TM App #' + record.appNo;
+          classLabelEl.textContent = record.classLabel;
+          proprietorEl.textContent = record.proprietor;
+          filingDateEl.textContent = record.filingDate;
+          validUptoEl.textContent = record.validUpto;
+          goodsEl.textContent = record.goods;
+
+          const s = (record.status || '').toLowerCase();
+          let sClass = 'tm-status-registered';
+          let alertClass = 'tm-status-callout-green';
+          let alertTitle = 'Registered Trademark in Good Standing';
+          let alertDesc = 'This mark is officially registered on the Trade Marks Register under Section 23(2). It is protected against unauthorized commercial infringement across India.';
+
+          if (s.includes('object') || s.includes('advertis') || s.includes('accept')) {
+            sClass = 'tm-status-objected';
+            alertClass = 'tm-status-callout-amber';
+            alertTitle = 'Examination Report / Objection Issued';
+            alertDesc = 'The Trade Marks Registry has issued an examination report under Section 9 or 11. A formal legal reply must be filed within 30 days to avoid abandonment.';
+          } else if (s.includes('abandon') || s.includes('refus')) {
+            sClass = 'tm-status-abandoned';
+            alertClass = 'tm-status-callout-red';
+            alertTitle = 'Application Abandoned / Refused';
+            alertDesc = 'This application was abandoned due to non-response or refused under Section 18(4). Consult our attorneys regarding potential revival or fresh filing options.';
+          } else if (s.includes('exam') || s.includes('formalit') || s.includes('ready')) {
+            sClass = 'tm-status-pending';
+            alertClass = 'tm-status-callout-amber';
+            alertTitle = 'Under Examination / Review';
+            alertDesc = 'This application is currently pending examination by the Trade Marks Registry. Regular monitoring ensures timely responses to registry queries.';
+          }
+
+          statusBadgeEl.className = 'tm-status-badge ' + sClass;
+          statusBadgeEl.innerHTML = '<i class="ph-fill ph-circle"></i> ' + (record.status || 'Active');
+
+          alertBoxEl.className = 'tm-details-status-callout ' + alertClass;
+          alertTitleEl.textContent = alertTitle;
+          alertDescEl.textContent = alertDesc;
+
+          const sFiled = document.getElementById('step-filed');
+          const sFormalities = document.getElementById('step-formalities');
+          const sExam = document.getElementById('step-exam');
+          const sAdvertised = document.getElementById('step-advertised');
+          const sRegistered = document.getElementById('step-registered');
+
+          function updateStep(nodeEl, state, iconClass) {
+            if (!nodeEl) return;
+            nodeEl.className = 'tm-step-node ' + (state || '');
+            const iconEl = nodeEl.querySelector('.tm-step-node-icon');
+            if (iconEl && iconClass) {
+              iconEl.innerHTML = '<i class="' + iconClass + '"></i>';
+            }
+          }
+
+          if (s.includes('registered')) {
+            updateStep(sFiled, 'completed', 'ph-bold ph-check');
+            updateStep(sFormalities, 'completed', 'ph-bold ph-check');
+            updateStep(sExam, 'completed', 'ph-bold ph-check');
+            updateStep(sAdvertised, 'completed', 'ph-bold ph-check');
+            updateStep(sRegistered, 'completed', 'ph-bold ph-seal-check');
+          } else if (s.includes('advertis') || s.includes('accept')) {
+            updateStep(sFiled, 'completed', 'ph-bold ph-check');
+            updateStep(sFormalities, 'completed', 'ph-bold ph-check');
+            updateStep(sExam, 'completed', 'ph-bold ph-check');
+            updateStep(sAdvertised, 'active', 'ph-bold ph-megaphone');
+            updateStep(sRegistered, '', 'ph-bold ph-circle');
+          } else if (s.includes('object')) {
+            updateStep(sFiled, 'completed', 'ph-bold ph-check');
+            updateStep(sFormalities, 'completed', 'ph-bold ph-check');
+            updateStep(sExam, 'objected', 'ph-bold ph-warning');
+            updateStep(sAdvertised, '', 'ph-bold ph-circle');
+            updateStep(sRegistered, '', 'ph-bold ph-circle');
+          } else if (s.includes('refus') || s.includes('abandon') || s.includes('withdrawn')) {
+            updateStep(sFiled, 'completed', 'ph-bold ph-check');
+            updateStep(sFormalities, 'completed', 'ph-bold ph-check');
+            updateStep(sExam, 'refused', 'ph-bold ph-x');
+            updateStep(sAdvertised, '', 'ph-bold ph-circle');
+            updateStep(sRegistered, '', 'ph-bold ph-circle');
+          } else if (s.includes('formalit') || s.includes('new') || s.includes('filed')) {
+            updateStep(sFiled, 'completed', 'ph-bold ph-check');
+            updateStep(sFormalities, 'active', 'ph-bold ph-clock');
+            updateStep(sExam, '', 'ph-bold ph-circle');
+            updateStep(sAdvertised, '', 'ph-bold ph-circle');
+            updateStep(sRegistered, '', 'ph-bold ph-circle');
+          } else {
+            updateStep(sFiled, 'completed', 'ph-bold ph-check');
+            updateStep(sFormalities, 'completed', 'ph-bold ph-check');
+            updateStep(sExam, 'active', 'ph-bold ph-clock');
+            updateStep(sAdvertised, '', 'ph-bold ph-circle');
+            updateStep(sRegistered, '', 'ph-bold ph-circle');
+          }
+        } else {
+          wordmarkEl.textContent = 'Record Not Found';
+          classLabelEl.textContent = 'Unable to locate application #' + appNo;
+        }
+      } catch(err) {
+        console.error('Failed to load gazette record:', err);
+      }
+
+      // Wire expert modal triggers
+      const expertModal = document.getElementById('expert-modal');
+      if (expertModal) {
+        document.querySelectorAll('.hire-expert-trigger').forEach(btn => {
+          btn.onclick = (e) => {
+            e.preventDefault();
+            expertModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          };
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

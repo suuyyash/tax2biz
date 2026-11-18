@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Self ITR Filing – Tax2Biz</title>
+  <meta name="description" content="India's most trusted tax filing platform. 100% Accuracy and Maximum Tax Refund. File your ITR easily with Tax2Biz." />
+  <meta name="theme-color" content="#0C1B33" />
+
+  <!-- Phosphor Icons (Web) -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="product.css" />
+
+  <!-- Scroll-reveal base -->
+  <style>
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1), transform 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+    [data-reveal="left"] { transform: translateX(-22px); }
+    [data-reveal="right"] { transform: translateX(22px); }
+    [data-reveal="left"].revealed,
+    [data-reveal="right"].revealed { transform: none; }
+  </style>
+</head>
+<body class="product-page">
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="index.html" class="logo" aria-label="Tax2Biz – Return to homepage">
+          <img src="tax2biz.png" alt="Tax2Biz" class="logo-img" width="128" height="44">
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+
+          <!-- 1. Tax & Audit -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              Tax &amp; Audit <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu align-left" role="menu" style="min-width: 600px;">
+              <div class="mega-columns-wrap">
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-receipt" aria-hidden="true"></i> Tax Filing</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="self-itr-filing.html" role="menuitem"><i class="ph ph-file-text" aria-hidden="true"></i>ITR-1 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-chart-line" aria-hidden="true"></i>ITR-2 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-briefcase" aria-hidden="true"></i>ITR-3 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-calculator" aria-hidden="true"></i>ITR-4 Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-buildings" aria-hidden="true"></i>ITR-5/6 Filing</a></li>
+                  </ul>
+                </div>
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-seal-check" aria-hidden="true"></i> Accounting &amp; Audit</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-checks" aria-hidden="true"></i>Tax Audit</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-shield-check" aria-hidden="true"></i>Pvt Ltd statutory audit</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-handshake" aria-hidden="true"></i>LLP statutory audit</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-files" aria-hidden="true"></i>Tax Audit + PVT LTd Statutory Audit. + ITR6</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-folder-notch" aria-hidden="true"></i>Tax Audit + LLP Statutory Audit. + ITR5</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Business Registration & Changes -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              Business Registration &amp; Changes <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu mega-menu-4col align-center" role="menu" style="min-width: 940px;">
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-buildings" aria-hidden="true"></i> Business Registration</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="private-limited-company-registration.html" role="menuitem"><i class="ph ph-buildings" aria-hidden="true"></i>Private Limited Company Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-users-three" aria-hidden="true"></i>LLP Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-user-square" aria-hidden="true"></i>One Person Company (OPC) Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-handshake" aria-hidden="true"></i>Partnership Firm Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-user" aria-hidden="true"></i>Proprietorship Setup</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i> Company &amp; LLP Changes</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-user-switch" aria-hidden="true"></i>Director Change – Appointment / Resignation / Replacement</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-pencil-line" aria-hidden="true"></i>Company Name Change</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-map-pin" aria-hidden="true"></i>Registered Office Change</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-users" aria-hidden="true"></i>Appointment / Resignation of LLP Designated Partner</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-fingerprint" aria-hidden="true"></i> Digital Signature &amp; ID</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-pen-nib" aria-hidden="true"></i>New DSC – Individual / Director</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-arrows-counter-clockwise" aria-hidden="true"></i>DSC Renewal / Reissue</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-identification-badge" aria-hidden="true"></i>DIN Application / Allotment</a></li>
+                </ul>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-title"><i class="ph ph-shield-check" aria-hidden="true"></i> Compliance &amp; Add-ons</div>
+                <ul class="mega-links" role="none">
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-folder-open" aria-hidden="true"></i>Private Limited Company – ROC Annual Compliance</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-files" aria-hidden="true"></i>LLP Annual Compliance</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-medal" aria-hidden="true"></i>Udyam / MSME Registration</a></li>
+                  <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-rocket-launch" aria-hidden="true"></i>Startup India Registration</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. GST & Accounting -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              GST &amp; Accounting <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu align-center" role="menu" style="min-width: 780px;">
+              <div class="mega-columns-wrap">
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-receipt" aria-hidden="true"></i> GST Services</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-plus-circle" aria-hidden="true"></i>GST Registration</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-calendar" aria-hidden="true"></i>Monthly GST Return Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-calendar-blank" aria-hidden="true"></i>Quarterly GST Return Filing</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-archive" aria-hidden="true"></i>Annual GST Return Filing (GSTR-9 / GSTR-9C, where applicable)</a></li>
+                  </ul>
+                </div>
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-calculator" aria-hidden="true"></i> Accounting</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-book-open" aria-hidden="true"></i>Bookkeeping / Accounting – Monthly</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-notebook" aria-hidden="true"></i>Bookkeeping / Accounting – Quarterly</a></li>
+                  </ul>
+                </div>
+                <div class="mega-col">
+                  <div class="mega-col-title"><i class="ph ph-package" aria-hidden="true"></i> Combined Packages</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-package" aria-hidden="true"></i>Combined Monthly Package</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-package" aria-hidden="true"></i>Combined Quarterly Package</a></li>
+                    <li><a class="mega-link" href="#" role="menuitem"><i class="ph ph-package" aria-hidden="true"></i>Combined Annual Package</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Trademark -->
+          <div class="nav-item">
+            <button class="nav-btn" aria-haspopup="true" aria-expanded="false">
+              Trademark <i class="ph ph-caret-down caret" aria-hidden="true"></i>
+            </button>
+            <div class="mega-menu align-right" role="menu" style="min-width: 440px;">
+              <div class="mega-columns-wrap">
+                <div class="mega-col" style="min-width: 100%;">
+                  <div class="mega-col-title"><i class="ph ph-trademark" aria-hidden="true"></i> Trademark Services</div>
+                  <ul class="mega-links" role="none">
+                    <li><a class="mega-link" href="trademark-search.html" role="menuitem"><i class="ph ph-trademark" aria-hidden="true"></i>Trademark Registration – Application Only</a></li>
+                    <li><a class="mega-link" href="trademark-search.html" role="menuitem"><i class="ph ph-gavel" aria-hidden="true"></i>Trademark Registration – Including Objection Reply &amp; Hearing</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </nav>
+
+        <!-- Desktop CTA -->
+        <div class="header-actions">
+          <a href="#" class="btn btn-secondary btn-sm">Sign In</a>
+          <a href="index.html#get-started" class="btn btn-primary btn-sm">Get Started <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          <button class="mobile-toggle" aria-label="Open menu" aria-expanded="false">
+            <i class="ph ph-list" aria-hidden="true"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+<!-- ============================================================
+     MOBILE DRAWER
+     ============================================================ -->
+<div class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <div class="drawer-header">
+    <a href="index.html" class="logo" aria-label="Tax2Biz – Return to homepage">
+      <img src="tax2biz.png" alt="Tax2Biz" class="logo-img" width="116" height="40">
+    </a>
+    <button class="drawer-close" aria-label="Close menu"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="drawer-nav">
+
+    <!-- 1. Tax & Audit -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-receipt"></i> Tax &amp; Audit</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-receipt"></i> Tax Filing</div>
+        <a class="drawer-link" href="self-itr-filing.html"><i class="ph ph-file-text"></i> ITR-1 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-chart-line"></i> ITR-2 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-briefcase"></i> ITR-3 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-calculator"></i> ITR-4 Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-buildings"></i> ITR-5/6 Filing</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-seal-check"></i> Accounting &amp; Audit</div>
+        <a class="drawer-link" href="#"><i class="ph ph-checks"></i> Tax Audit</a>
+        <a class="drawer-link" href="#"><i class="ph ph-shield-check"></i> Pvt Ltd statutory audit</a>
+        <a class="drawer-link" href="#"><i class="ph ph-handshake"></i> LLP statutory audit</a>
+        <a class="drawer-link" href="#"><i class="ph ph-files"></i> Tax Audit + PVT LTd Statutory Audit. + ITR6</a>
+        <a class="drawer-link" href="#"><i class="ph ph-folder-notch"></i> Tax Audit + LLP Statutory Audit. + ITR5</a>
+      </div>
+    </div>
+
+    <!-- 2. Business Registration & Changes -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-buildings"></i> Business Registration &amp; Changes</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-buildings"></i> Business Registration</div>
+        <a class="drawer-link" href="private-limited-company-registration.html"><i class="ph ph-buildings"></i> Private Limited Company Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-users-three"></i> LLP Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-user-square"></i> One Person Company (OPC) Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-handshake"></i> Partnership Firm Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-user"></i> Proprietorship Setup</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-arrows-clockwise"></i> Company &amp; LLP Changes</div>
+        <a class="drawer-link" href="#"><i class="ph ph-user-switch"></i> Director Change – Appointment / Resignation / Replacement</a>
+        <a class="drawer-link" href="#"><i class="ph ph-pencil-line"></i> Company Name Change</a>
+        <a class="drawer-link" href="#"><i class="ph ph-map-pin"></i> Registered Office Change</a>
+        <a class="drawer-link" href="#"><i class="ph ph-users"></i> Appointment / Resignation of LLP Designated Partner</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-fingerprint"></i> Digital Signature &amp; ID</div>
+        <a class="drawer-link" href="#"><i class="ph ph-pen-nib"></i> New DSC – Individual / Director</a>
+        <a class="drawer-link" href="#"><i class="ph ph-arrows-counter-clockwise"></i> DSC Renewal / Reissue</a>
+        <a class="drawer-link" href="#"><i class="ph ph-identification-badge"></i> DIN Application / Allotment</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-shield-check"></i> Compliance &amp; Add-ons</div>
+        <a class="drawer-link" href="#"><i class="ph ph-folder-open"></i> Private Limited Company – ROC Annual Compliance</a>
+        <a class="drawer-link" href="#"><i class="ph ph-files"></i> LLP Annual Compliance</a>
+        <a class="drawer-link" href="#"><i class="ph ph-medal"></i> Udyam / MSME Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-rocket-launch"></i> Startup India Registration</a>
+      </div>
+    </div>
+
+    <!-- 3. GST & Accounting -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-calculator"></i> GST &amp; Accounting</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-receipt"></i> GST Services</div>
+        <a class="drawer-link" href="#"><i class="ph ph-plus-circle"></i> GST Registration</a>
+        <a class="drawer-link" href="#"><i class="ph ph-calendar"></i> Monthly GST Return Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-calendar-blank"></i> Quarterly GST Return Filing</a>
+        <a class="drawer-link" href="#"><i class="ph ph-archive"></i> Annual GST Return Filing (GSTR-9 / GSTR-9C, where applicable)</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-calculator"></i> Accounting</div>
+        <a class="drawer-link" href="#"><i class="ph ph-book-open"></i> Bookkeeping / Accounting – Monthly</a>
+        <a class="drawer-link" href="#"><i class="ph ph-notebook"></i> Bookkeeping / Accounting – Quarterly</a>
+
+        <div class="drawer-sub-title"><i class="ph ph-package"></i> Combined Packages</div>
+        <a class="drawer-link" href="#"><i class="ph ph-package"></i> Combined Monthly Package</a>
+        <a class="drawer-link" href="#"><i class="ph ph-package"></i> Combined Quarterly Package</a>
+        <a class="drawer-link" href="#"><i class="ph ph-package"></i> Combined Annual Package</a>
+      </div>
+    </div>
+
+    <!-- 4. Trademark -->
+    <div class="drawer-nav-item">
+      <button class="drawer-trigger" aria-expanded="false">
+        <span class="drawer-trigger-title"><i class="ph ph-trademark"></i> Trademark</span>
+        <i class="ph ph-caret-down drawer-caret"></i>
+      </button>
+      <div class="drawer-submenu">
+        <div class="drawer-sub-title"><i class="ph ph-trademark"></i> Trademark Services</div>
+        <a class="drawer-link" href="trademark-search.html"><i class="ph ph-trademark"></i> Trademark Registration – Application Only</a>
+        <a class="drawer-link" href="trademark-search.html"><i class="ph ph-gavel"></i> Trademark Registration – Including Objection Reply &amp; Hearing</a>
+      </div>
+    </div>
+
+    <div class="drawer-actions">
+      <a href="#" class="btn btn-secondary">Sign In</a>
+      <a href="index.html#get-started" class="btn btn-primary">Get Started <i class="ph ph-arrow-right"></i></a>
+    </div>
+  </div>
+</div>
+
+<main id="main-content">
+
+  <!-- ============================================================
+       PRODUCT HERO SECTION (Based on Reference)
+       ============================================================ -->
+  <section class="product-hero" aria-labelledby="product-hero-heading">
+    <div class="container">
+      <div class="product-hero-inner">
+        
+        <!-- Left: Copy & Call to Action Cards -->
+        <div class="product-hero-left">
+          
+          <div class="trust-top-tag" data-reveal>
+            <span class="trust-users">8 M+ Users</span>
+            <span class="trust-divider">|</span>
+            <span class="trust-stars">
+              <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i>
+            </span>
+            <span class="trust-score">4.6</span>
+            <span class="trust-divider">|</span>
+            <a href="#" class="trust-reviews">See reviews</a>
+          </div>
+
+          <h1 id="product-hero-heading" data-reveal>
+            India's Most Trusted Tax Filing Platform
+          </h1>
+          
+          <div class="product-hero-subtitle" data-reveal>
+            <span class="highlight-green">100% Accuracy</span> and Maximum Tax Refund
+          </div>
+
+          <div class="notice-protect-badge" data-reveal>
+            <div class="notice-protect-logo">
+              <i class="ph-fill ph-shield-check"></i>
+              <div>Tax2Biz<br><span>NOTICE PROTECT</span></div>
+            </div>
+            <div class="notice-protect-text">
+              Received a notice? <strong>We Handle It Free</strong><br>
+              Computation Error? <strong>100% Refund.</strong>
+            </div>
+          </div>
+
+          <div class="action-cards-row" data-reveal>
+            
+            <!-- Self File Card -->
+            <div class="action-card">
+              <div class="action-card-icon self-file-icon">
+                <i class="ph-fill ph-file-text"></i>
+              </div>
+              <h3>File your Self ITR</h3>
+              <p>In just <span class="highlight-green-text">5 minutes</span></p>
+              <a href="#" class="btn btn-primary action-btn">File Now</a>
+            </div>
+
+            <!-- Hire Expert Card -->
+            <div class="action-card">
+              <div class="action-card-icon expert-icon">
+                <i class="ph-fill ph-user-circle-gear"></i>
+                <div class="verified-tick"><i class="ph-bold ph-check"></i></div>
+              </div>
+              <h3>Hire an Expert</h3>
+              <p>For year round tax needs</p>
+              <button class="btn btn-blue action-btn" id="hire-expert-btn">Hire an expert</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: CSS Built Graphic -->
+        <div class="product-hero-right" data-reveal="right">
+          
+          <!-- Outer circular graphic effect -->
+          <div class="hero-graphic-circle">
+            <div class="circle-text-ring">
+              <!-- Simulated text ring via CSS rotation -->
+            </div>
+          </div>
+
+          <!-- Auto-fetching Card Graphic -->
+          <div class="auto-fetch-card">
+            <div class="af-header">
+              Auto-fetching all your data<br>from PAN, Form 16 and AIS
+            </div>
+            <div class="af-list">
+              <div class="af-item">
+                <span class="af-label">Salary</span>
+                <span class="af-val">₹ 20,54,672 <i class="ph-fill ph-check-circle"></i></span>
+              </div>
+              <div class="af-item">
+                <span class="af-label">F&O Profit</span>
+                <span class="af-val">₹ 5,13,588 <i class="ph-fill ph-check-circle"></i></span>
+              </div>
+              <div class="af-item">
+                <span class="af-label">Capital Gains</span>
+                <span class="af-val">₹ 4,57,692 <i class="ph-fill ph-check-circle"></i></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Stats Bar -->
+      <div class="hero-stats-bar" data-reveal>
+        <div class="stat-item">
+          <div class="stat-value">₹ 5346 Cr+</div>
+          <div class="stat-label">Lifetime ITR Refund Delivered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">8 M+</div>
+          <div class="stat-label">Users Trust Us</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS SECTION
+       ============================================================ -->
+  <section class="how-section section-pad" style="background-color: var(--off-white);">
+    <div class="container">
+      <div class="section-header center">
+        <span class="eyebrow" style="color:var(--accent); background:var(--green-bg); border-color:var(--green-border)"><i class="ph ph-lightning" aria-hidden="true"></i> Fast &amp; Simple</span>
+        <h2 style="color:var(--navy)">How Self Filing Works</h2>
+        <p style="color:var(--text-secondary); max-width:520px; margin:0 auto">File your returns securely in minutes with our intelligent auto-fetch system.</p>
+      </div>
+
+      <div class="steps-row alt-steps">
+        <div class="step step-light" data-reveal>
+          <div class="step-num">1</div>
+          <h4>Link PAN &amp; Auto-Fetch</h4>
+          <p>We securely connect with the IT portal to fetch your Form 16, 26AS, and AIS data automatically.</p>
+        </div>
+        <div class="step step-light" data-reveal>
+          <div class="step-num">2</div>
+          <h4>Review Pre-filled Data</h4>
+          <p>Our system calculates your tax and deductions. Simply review the numbers and confirm.</p>
+        </div>
+        <div class="step step-light" data-reveal>
+          <div class="step-num">3</div>
+          <h4>E-Verify &amp; Done</h4>
+          <p>Submit your return and e-verify instantly using Aadhaar OTP. Maximize your refund effortlessly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRUST & BENEFITS SECTION
+       ============================================================ -->
+  <section class="benefits-section section-pad">
+    <div class="container">
+      <div class="section-header center">
+        <h2 style="color:var(--navy)">Why file with Tax2Biz?</h2>
+        <p style="color:var(--text-secondary); max-width:600px; margin:0 auto">Built for accuracy and speed, our platform ensures you get every deduction you deserve.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card" data-reveal>
+          <div class="benefit-icon"><i class="ph-fill ph-shield-check"></i></div>
+          <h4>Bank-Grade Security</h4>
+          <p>Your financial data is encrypted and securely transmitted. We never share your data with third parties.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <div class="benefit-icon"><i class="ph-fill ph-check-square"></i></div>
+          <h4>100% Accurate Computations</h4>
+          <p>Our rule engine is constantly updated with the latest IT laws to ensure zero calculation errors.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <div class="benefit-icon"><i class="ph-fill ph-money"></i></div>
+          <h4>Maximum Tax Refund</h4>
+          <p>We automatically identify the best tax regime and eligible deductions to maximize your refund.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HIRE AN EXPERT HIGHLIGHT (CRO BANNER)
+       ============================================================ -->
+  <section class="expert-highlight-section section-pad">
+    <div class="container">
+      <div class="expert-banner" data-reveal>
+        <div class="expert-banner-content">
+          <div class="expert-badge">Not sure about self-filing?</div>
+          <h2>Let a Tax Expert Handle It For You.</h2>
+          <p>Filing for Capital Gains? Freelance Income? NRI? Our verified Chartered Accountants can prepare, review, and file your taxes with 100% accuracy.</p>
+          <div class="expert-features">
+            <span><i class="ph-fill ph-check-circle"></i> Dedicated CA Support</span>
+            <span><i class="ph-fill ph-check-circle"></i> Year-round Assistance</span>
+            <span><i class="ph-fill ph-check-circle"></i> Audit Defense</span>
+          </div>
+          <button class="btn btn-blue btn-lg" onclick="document.getElementById('hire-expert-btn').click();">Hire an Expert Now</button>
+        </div>
+        <div class="expert-banner-image">
+          <!-- Stylized Expert Illustration / Graphic -->
+          <div class="expert-avatar-grid">
+            <div class="expert-avatar"><i class="ph-fill ph-user-circle"></i></div>
+            <div class="expert-avatar"><i class="ph-fill ph-user-circle"></i></div>
+            <div class="expert-avatar"><i class="ph-fill ph-user-circle"></i></div>
+            <div class="expert-rating-box">
+              <div class="stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+              <div class="rating-text">4.9/5 from 10k+ reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CUSTOMER REVIEWS SECTION
+       ============================================================ -->
+  <section class="reviews-section section-pad" style="background-color: var(--off-white);">
+    <div class="container">
+      <div class="section-header center">
+        <span class="eyebrow"><i class="ph-fill ph-heart"></i> Loved by Millions</span>
+        <h2 style="color:var(--navy)">What Our Users Say</h2>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card" data-reveal>
+          <div class="review-stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <p class="review-text">"Easiest tax filing experience ever. It auto-fetched my Form 16 and AIS, and I filed within 3 minutes. Highly recommended!"</p>
+          <div class="review-author">
+            <div class="author-avatar">R</div>
+            <div class="author-info">
+              <strong>Rohan M.</strong>
+              <span>Salaried Employee</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card" data-reveal>
+          <div class="review-stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <p class="review-text">"I was confused about the new vs old regime, but the portal automatically compared both and chose the one with the maximum refund. Genius."</p>
+          <div class="review-author">
+            <div class="author-avatar">P</div>
+            <div class="author-info">
+              <strong>Priya S.</strong>
+              <span>Software Engineer</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card" data-reveal>
+          <div class="review-stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <p class="review-text">"Got stuck with my capital gains. Switched to 'Hire an Expert' and the CA was extremely helpful and sorted it out the same day."</p>
+          <div class="review-author">
+            <div class="author-avatar">A</div>
+            <div class="author-info">
+              <strong>Amit V.</strong>
+              <span>Freelancer & Investor</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ SECTION
+       ============================================================ -->
+  <section class="faq-section section-pad">
+    <div class="container">
+      <div class="section-header center">
+        <h2 style="color:var(--navy)">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-list" style="max-width: 800px; margin: 0 auto;">
+        
+        <div class="accordion open" data-reveal>
+          <button class="accordion-trigger" aria-expanded="true">
+            Is self-filing completely free?
+            <span class="accordion-icon"><i class="ph ph-caret-down"></i></span>
+          </button>
+          <div class="accordion-body" style="max-height: 200px;">
+            <div class="accordion-body-inner">
+              Our basic self-filing tool for simple salary income (ITR-1) starts at a nominal platform fee of ₹299 to cover the secure auto-fetch and computation infrastructure.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" data-reveal>
+          <button class="accordion-trigger" aria-expanded="false">
+            What documents do I need to self-file?
+            <span class="accordion-icon"><i class="ph ph-caret-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              You only need your PAN card. Our system will securely connect with the IT portal to auto-fetch your Form 16, Form 26AS, and AIS data. It's helpful to keep your investment proofs handy for reference.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" data-reveal>
+          <button class="accordion-trigger" aria-expanded="false">
+            Can I file Capital Gains via self-filing?
+            <span class="accordion-icon"><i class="ph ph-caret-down"></i></span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              Yes, our platform supports ITR-2 for Capital Gains (Stocks, Mutual Funds, Crypto). However, if you have complex, high-volume trades, we strongly recommend our 'Hire an Expert' service for accuracy.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BOTTOM CTA SECTION
+       ============================================================ -->
+  <section class="cta-section section-pad">
+    <div class="container">
+      <div class="cta-inner" style="background: var(--navy); border-radius: var(--radius-xl); padding: 60px 40px; text-align: center; color: white;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 16px; color: white;">Ready to maximize your tax refund?</h2>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: 32px; font-size: 1.125rem;">Join 8 million+ Indians who trust Tax2Biz for their tax filing.</p>
+        <div class="cta-actions" style="justify-content: center;">
+          <a href="#" class="btn btn-lg btn-cta-white">Start Filing Now</a>
+          <button class="btn btn-lg btn-cta-outline" onclick="document.getElementById('hire-expert-btn').click();">Hire an Expert</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo" aria-label="Tax2Biz Home">
+          <img src="Tax2biz-white.png" alt="Tax2Biz" class="footer-logo-img" width="131" height="44">
+        </a>
+        <p class="footer-tagline">From Personal Taxes to Business Compliance.</p>
+        <p>Tax filing, business registration, GST, accounting and compliance services for individuals and businesses in India.</p>
+      </div>
+
+      <!-- Tax & Audit -->
+      <div>
+        <div class="footer-col-title">Tax &amp; Audit</div>
+        <nav class="footer-links-list" aria-label="Tax and audit services">
+          <a href="self-itr-filing.html">ITR-1 Filing</a>
+          <a href="#">ITR-2 Filing</a>
+          <a href="#">ITR-3 Filing</a>
+          <a href="#">ITR-4 Filing</a>
+          <a href="#">ITR-5/6 Filing</a>
+          <a href="#">Tax Audit</a>
+          <a href="#">Pvt Ltd statutory audit</a>
+          <a href="#">LLP statutory audit</a>
+          <a href="#">Tax Audit + PVT LTd Statutory Audit. + ITR6</a>
+          <a href="#">Tax Audit + LLP Statutory Audit. + ITR5</a>
+        </nav>
+      </div>
+
+      <!-- Business Registration & Changes -->
+      <div>
+        <div class="footer-col-title">Business Setup &amp; Changes</div>
+        <nav class="footer-links-list" aria-label="Business setup and company changes">
+          <a href="#">Private Limited Company Registration</a>
+          <a href="#">LLP Registration</a>
+          <a href="#">One Person Company (OPC) Registration</a>
+          <a href="#">Partnership Firm Registration</a>
+          <a href="#">Proprietorship Setup</a>
+          <a href="#">Director Change – Appointment / Resignation / Replacement</a>
+          <a href="#">Company Name Change</a>
+          <a href="#">Registered Office Change</a>
+          <a href="#">Appointment / Resignation of LLP Designated Partner</a>
+        </nav>
+      </div>
+
+      <!-- GST & Accounting -->
+      <div>
+        <div class="footer-col-title">GST &amp; Accounting</div>
+        <nav class="footer-links-list" aria-label="GST and accounting services">
+          <a href="#">GST Registration</a>
+          <a href="#">Monthly GST Return Filing</a>
+          <a href="#">Quarterly GST Return Filing</a>
+          <a href="#">Annual GST Return Filing (GSTR-9 / GSTR-9C, where applicable)</a>
+          <a href="#">Bookkeeping / Accounting – Monthly</a>
+          <a href="#">Bookkeeping / Accounting – Quarterly</a>
+          <a href="#">Combined Monthly Package</a>
+          <a href="#">Combined Quarterly Package</a>
+          <a href="#">Combined Annual Package</a>
+        </nav>
+      </div>
+
+      <!-- Compliance, ID & Trademark -->
+      <div>
+        <div class="footer-col-title">Compliance &amp; Trademark</div>
+        <nav class="footer-links-list" aria-label="Compliance, ID and trademark links">
+          <a href="#">Private Limited Company – ROC Annual Compliance</a>
+          <a href="#">LLP Annual Compliance</a>
+          <a href="#">New DSC – Individual / Director</a>
+          <a href="#">DSC Renewal / Reissue</a>
+          <a href="#">DIN Application / Allotment</a>
+          <a href="trademark-search.html">Trademark Registration – Application Only</a>
+          <a href="trademark-search.html">Trademark Registration – Including Objection Reply &amp; Hearing</a>
+          <a href="#">Udyam / MSME Registration</a>
+          <a href="#">Startup India Registration</a>
+        </nav>
+      </div>
+
+    </div>
+
+    <!-- Legal Disclaimer -->
+    <div class="footer-legal">
+      <p>
+        Tax2Biz service fees cover the professional or platform services described for each package. Government fees, statutory payments, stamp duty, Digital Signature Certificate charges and other third-party expenses, where applicable, are charged separately at actuals unless explicitly stated otherwise. Applicable GST on Tax2Biz service fees is additional where required by law. Service availability, eligibility and deliverables depend on the selected service and the customer's circumstances.
+      </p>
+      <p>
+        Tax, legal, audit, certification and other regulated services are performed or reviewed only by appropriately qualified and eligible professionals where required. Availability depends on the nature of the engagement and applicable law.
+      </p>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <span>&copy; 2026 Tax2Biz. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Refund Policy</a>
+        <a href="https://trademarx.in/?utm_source=api&utm_medium=attribution&utm_content=55940401" rel="noopener" target="_blank">Trademark data powered by TradeMarx</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ============================================================
+     HIRE AN EXPERT MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="expert-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close modal"><i class="ph ph-x"></i></button>
+    
+    <div class="modal-header">
+      <div class="modal-icon"><i class="ph-fill ph-user-circle-gear"></i></div>
+      <h3 id="modal-title">Talk to a Tax &amp; Business Expert</h3>
+      <p>Get personalized guidance for ITR filing, business registration, or GST compliance.</p>
+    </div>
+
+    <form class="modal-form" id="expert-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="+91" required>
+      </div>
+      <div class="form-group">
+        <label for="tax-type">Service Required</label>
+        <select id="tax-type" required>
+          <option value="" disabled selected>Select service</option>
+          <option value="ca_itr">CA-Assisted ITR Filing (Salary / Freelancer / Capital Gains)</option>
+          <option value="business_reg">Company / LLP Registration</option>
+          <option value="gst_filing">GST Registration &amp; Returns</option>
+          <option value="tax_notice">Tax Notice / Demand Assistance</option>
+          <option value="accounting">Accounting, TDS &amp; Payroll</option>
+          <option value="other">Other Compliance Service</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Request Free Callback <i class="ph ph-arrow-right"></i></button>
+    </form>
+    <div class="modal-footer-note">
+      <i class="ph-fill ph-lock-key"></i> 100% confidential. No spam, verified CA &amp; CS advisory.
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
