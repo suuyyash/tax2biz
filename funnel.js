@@ -302,9 +302,9 @@
     const proceedBtn = document.getElementById('t2b-proceed-to-pay-btn');
 
     let currentPlan = {
-      id: lead.planId || 'plan_standard',
-      name: lead.planName || 'Incorporation Only',
-      price: lead.planPrice || 2499,
+      planId: lead.planId || 'plan_standard',
+      planName: lead.planName || 'Incorporation Only',
+      planPrice: lead.planPrice || 2499,
       originalPrice: lead.originalPrice || 4999
     };
 
@@ -317,7 +317,7 @@
       const planPrice = parseInt(card.getAttribute('data-plan-price'), 10);
       const originalPrice = parseInt(card.getAttribute('data-original-price'), 10);
 
-      currentPlan = { id: planId, name: planName, price: planPrice, originalPrice: originalPrice };
+      currentPlan = { planId: planId, planName: planName, planPrice: planPrice, originalPrice: originalPrice };
       saveLeadData({
         planId: planId,
         planName: planName,
