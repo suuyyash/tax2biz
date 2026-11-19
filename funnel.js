@@ -309,13 +309,20 @@
     };
 
     function updatePlanSelection(card) {
-      planCards.forEach(c => c.classList.remove('selected'));
+      planCards.forEach(c => {
+        c.classList.remove('selected');
+        const btn = c.querySelector('.t2b-card-select-btn');
+        if (btn) btn.textContent = 'Select Plan';
+      });
       card.classList.add('selected');
 
       const planId = card.getAttribute('data-plan-id');
       const planName = card.getAttribute('data-plan-name');
       const planPrice = parseInt(card.getAttribute('data-plan-price'), 10);
       const originalPrice = parseInt(card.getAttribute('data-original-price'), 10);
+
+      const selBtn = card.querySelector('.t2b-card-select-btn');
+      if (selBtn) selBtn.textContent = `Selected: ${planName} (₹${planPrice.toLocaleString('en-IN')})`;
 
       currentPlan = { planId: planId, planName: planName, planPrice: planPrice, originalPrice: originalPrice };
       saveLeadData({
@@ -328,6 +335,31 @@
       if (summaryPlanName) summaryPlanName.textContent = planName;
       if (summaryPlanPrice) summaryPlanPrice.textContent = `₹${planPrice.toLocaleString('en-IN')}`;
     }
+
+    // Deliverables dropdown toggle
+    document.querySelectorAll('.t2b-deliverables-toggle').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const card = this.closest('.t2b-plan-card');
+        const dropdown = card.querySelector('.t2b-deliverables-dropdown');
+        if (!dropdown) return;
+
+        const isOpen = dropdown.classList.contains('open');
+        if (isOpen) {
+          dropdown.classList.remove('open');
+          this.classList.remove('active');
+          this.setAttribute('aria-expanded', 'false');
+          const span = this.querySelector('span');
+          if (span) span.textContent = span.textContent.replace('Hide', 'View');
+        } else {
+          dropdown.classList.add('open');
+          this.classList.add('active');
+          this.setAttribute('aria-expanded', 'true');
+          const span = this.querySelector('span');
+          if (span) span.textContent = span.textContent.replace('View', 'Hide');
+        }
+      });
+    });
 
     planCards.forEach(card => {
       card.addEventListener('click', function () {
