@@ -322,7 +322,7 @@
       const originalPrice = parseInt(card.getAttribute('data-original-price'), 10);
 
       const selBtn = card.querySelector('.t2b-card-select-btn');
-      if (selBtn) selBtn.textContent = `Selected: ${planName} (₹${planPrice.toLocaleString('en-IN')})`;
+      if (selBtn) selBtn.textContent = 'Selected Plan ✓';
 
       currentPlan = { planId: planId, planName: planName, planPrice: planPrice, originalPrice: originalPrice };
       saveLeadData({
@@ -484,7 +484,7 @@
      4. THANK YOU & ASSIGNED CA PAGE (registration-success.html)
      ============================================================ */
   function initSuccessThankYouPage() {
-    const successWrap = document.querySelector('.t2b-success-wrap');
+    const successWrap = document.querySelector('.t2b-thankyou-wrap, .t2b-success-wrap');
     if (!successWrap) return;
 
     const lead = getLeadData();
