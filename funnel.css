@@ -428,6 +428,11 @@ body.t2b-funnel-page {
 }
 
 /* ── 3. Plan Selection Page Specifics ── */
+.t2b-plans-selection-section {
+  padding: 36px 0 160px;
+  width: 100%;
+}
+
 .t2b-plans-hero {
   text-align: center;
   padding: 40px 0 28px;
@@ -436,7 +441,8 @@ body.t2b-funnel-page {
 /* ── 3. Plan Selection Page (Minimal & Modern) ── */
 .t2b-plans-hero-clean {
   text-align: center;
-  margin-bottom: 28px;
+  margin-top: 8px;
+  margin-bottom: 32px;
 }
 
 .t2b-page-title {
@@ -706,15 +712,46 @@ body.t2b-funnel-page {
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
-/* Sticky Action Bar on Plan Page */
+/* Pinned Fixed Bottom Summary Bar on Plan Page */
 .t2b-plans-bottom-bar {
-  position: sticky;
-  bottom: 0;
-  background: #FFFFFF;
-  border-top: 1px solid #E2E8F0;
-  padding: 16px 0;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-  z-index: 90;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  background: #FFFFFF !important;
+  border-top: 1px solid #E2E8F0 !important;
+  padding: 10px 0 12px !important;
+  box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08) !important;
+  z-index: 999 !important;
+}
+
+.t2b-bar-trust-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.t2b-bar-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.t2b-bar-trust-item i {
+  font-size: 14px;
+}
+
+.t2b-bar-trust-sep {
+  color: #CBD5E1;
+  font-size: 0.8rem;
 }
 
 .t2b-plans-bar-inner {
@@ -728,20 +765,71 @@ body.t2b-funnel-page {
 
 .t2b-bar-plan-summary {
   display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.t2b-bar-plan-meta {
+  display: flex;
   flex-direction: column;
 }
 
-.t2b-bar-plan-name {
-  font-size: 0.85rem;
+.t2b-bar-selected-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   color: #64748B;
-  font-weight: 600;
+}
+
+.t2b-bar-plan-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.t2b-bar-price-cluster {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
 }
 
 .t2b-bar-plan-price {
   font-size: 1.6rem;
   font-weight: 900;
-  color: #142D4E;
-  line-height: 1.1;
+  color: #059669;
+  line-height: 1;
+}
+
+.t2b-bar-offer-badge {
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.t2b-bar-offer-badge.gold {
+  background: #FEF3C7;
+  color: #92400E;
+  border-color: #FCD34D;
+}
+
+.t2b-bar-proceed-btn {
+  padding: 13px 28px !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  border-radius: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3) !important;
+  white-space: nowrap;
 }
 
 /* ── 4. Payment Checkout Page (Demo) ── */
@@ -944,9 +1032,45 @@ body.t2b-funnel-page {
   gap: 26px;
 }
 
+/* Confetti Canvas for Celebration */
+.t2b-confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+}
+
 /* Celebration Header */
 .t2b-thankyou-header {
   text-align: center;
+}
+
+.t2b-celebrate-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FCD34D;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+  animation: celebratePop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes celebratePop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.t2b-celebrate-emoji {
+  font-size: 1.1rem;
 }
 
 .t2b-check-halo {
@@ -969,17 +1093,17 @@ body.t2b-funnel-page {
   font-size: 2rem;
   font-weight: 900;
   color: #0F172A;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   letter-spacing: -0.03em;
   line-height: 1.2;
 }
 
 .t2b-thankyou-subtitle,
 .t2b-success-sub-clean {
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   color: #64748B;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .t2b-thankyou-subtitle strong,
@@ -987,7 +1111,7 @@ body.t2b-funnel-page {
   color: #059669;
 }
 
-/* Assigned CA Spotlight (Clean, Personal, Reassuring) */
+/* Assigned CA Spotlight (High-Visibility Glance Focal Point) */
 .t2b-ca-spotlight,
 .t2b-assigned-ca-minimal {
   background: linear-gradient(145deg, #F0FDF4 0%, #FFFFFF 100%);
@@ -998,6 +1122,30 @@ body.t2b-funnel-page {
   flex-direction: column;
   gap: 16px;
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.05);
+  transition: all 0.3s ease;
+}
+
+.t2b-ca-spotlight.highlight-focus {
+  background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 60%, #ECFDF5 100%);
+  border: 2.5px solid #10B981 !important;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.18), 0 0 0 5px rgba(16, 185, 129, 0.08) !important;
+  position: relative;
+}
+
+.t2b-ca-badge-row {
+  margin-bottom: 2px;
+}
+
+.t2b-officer-tag {
+  background: #10B981;
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 .t2b-ca-spotlight-top {
@@ -1248,6 +1396,493 @@ body.t2b-funnel-page {
   color: #64748B;
 }
 
+/* In-Between Highlight Callout: Lifetime CA Consultation Support */
+.t2b-track-privilege-callout {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 1.5px solid #FCD34D;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 6px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12);
+}
+
+.t2b-privilege-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #F59E0B;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+}
+
+.t2b-privilege-content {
+  flex: 1 1 auto;
+}
+
+.t2b-privilege-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.t2b-privilege-title strong {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #78350F;
+}
+
+.t2b-zero-cost-tag {
+  background: #059669;
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.t2b-privilege-content p {
+  font-size: 0.8rem;
+  color: #92400E;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Multi-Channel Dispatch Notice */
+.t2b-dispatch-notice {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+
+.t2b-dispatch-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1E293B;
+  margin-bottom: 12px;
+}
+
+.t2b-dispatch-head i {
+  color: #10B981;
+  font-size: 18px;
+}
+
+.t2b-dispatch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.t2b-dispatch-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+
+.t2b-dispatch-item i {
+  font-size: 22px;
+  color: #059669;
+  flex-shrink: 0;
+}
+
+.t2b-dispatch-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.t2b-dispatch-lbl {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.t2b-dispatch-text strong {
+  font-size: 0.8rem;
+  color: #0F172A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 6. Official Printable GST Tax Invoice Modal ── */
+.t2b-invoice-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.t2b-invoice-modal-overlay.active {
+  display: flex;
+}
+
+.t2b-invoice-modal-dialog {
+  background: #FFFFFF;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 820px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.t2b-invoice-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.t2b-toolbar-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t2b-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.t2b-toolbar-print-btn {
+  padding: 8px 18px !important;
+  font-size: 0.85rem !important;
+  min-height: 38px !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.t2b-toolbar-close-btn {
+  background: none;
+  border: none;
+  color: #94A3B8;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.t2b-toolbar-close-btn:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Printable Invoice Sheet (Clean, Official A4 Layout) */
+.t2b-invoice-sheet {
+  padding: 36px 40px;
+  background: #FFFFFF;
+  color: #0F172A;
+  font-family: 'Inter', -apple-system, sans-serif;
+  line-height: 1.4;
+}
+
+.t2b-inv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.t2b-inv-logo {
+  max-width: 140px;
+  height: auto;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.t2b-inv-company-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 3px;
+}
+
+.t2b-inv-issuer-details {
+  font-size: 0.76rem;
+  color: #64748B;
+  line-height: 1.45;
+}
+
+.t2b-inv-meta-block {
+  text-align: right;
+}
+
+.t2b-inv-badge {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+}
+
+.t2b-inv-subbadge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #059669;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.t2b-inv-meta-table {
+  font-size: 0.78rem;
+  margin-left: auto;
+  border-collapse: collapse;
+}
+
+.t2b-inv-meta-table td {
+  padding: 2px 6px;
+  color: #475569;
+}
+
+.t2b-inv-meta-table td:last-child {
+  color: #0F172A;
+  text-align: right;
+}
+
+.t2b-inv-divider {
+  height: 1px;
+  background: #E2E8F0;
+  margin: 22px 0;
+}
+
+.t2b-inv-client-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.t2b-inv-box-lbl {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.t2b-inv-client-name {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 2px;
+}
+
+.t2b-inv-client-info,
+.t2b-inv-pay-info {
+  font-size: 0.76rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.t2b-inv-pay-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #059669;
+  margin-bottom: 4px;
+}
+
+.t2b-inv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-bottom: 16px;
+}
+
+.t2b-inv-table th {
+  background: #F1F5F9;
+  color: #334155;
+  font-weight: 800;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid #CBD5E1;
+}
+
+.t2b-inv-table td {
+  padding: 12px;
+  border-bottom: 1px solid #E2E8F0;
+  vertical-align: top;
+}
+
+.t2b-inv-item-desc {
+  font-size: 0.73rem;
+  color: #64748B;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.t2b-inv-total-row td {
+  font-size: 1.05rem !important;
+  font-weight: 900 !important;
+  color: #059669 !important;
+  border-top: 2px solid #CBD5E1 !important;
+  border-bottom: 2px solid #CBD5E1 !important;
+  padding: 12px !important;
+}
+
+.t2b-inv-words-row {
+  font-size: 0.76rem;
+  color: #475569;
+  background: #F8FAFC;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px dashed #CBD5E1;
+  margin-bottom: 24px;
+}
+
+.t2b-inv-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  border-top: 1px solid #E2E8F0;
+  padding-top: 20px;
+}
+
+.t2b-inv-terms {
+  max-width: 440px;
+  font-size: 0.72rem;
+  color: #64748B;
+  line-height: 1.45;
+}
+
+.t2b-inv-terms ol {
+  margin: 4px 0 0;
+  padding-left: 16px;
+}
+
+.t2b-inv-signature-block {
+  text-align: right;
+}
+
+.t2b-inv-digital-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #059669;
+  border: 1px dashed #10B981;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #ECFDF5;
+  margin-bottom: 6px;
+}
+
+.t2b-inv-signatory-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.t2b-inv-signatory-title {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+/* Print CSS Media Rules */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  #t2b-invoice-modal,
+  #t2b-invoice-modal *,
+  #t2b-printable-invoice,
+  #t2b-printable-invoice * {
+    visibility: visible !important;
+  }
+
+  #t2b-invoice-modal {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #FFFFFF !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .t2b-invoice-modal-dialog {
+    max-width: 100% !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  .no-print,
+  .t2b-invoice-toolbar {
+    display: none !important;
+  }
+
+  .t2b-invoice-sheet {
+    padding: 20px !important;
+    width: 100% !important;
+  }
+}
+
 /* Minimal Receipt Meta Strip */
 .t2b-receipt-meta {
   border-top: 1px solid #E2E8F0;
@@ -1414,11 +2049,16 @@ body.t2b-funnel-page {
 
   /* Plans Grid Minimal */
   .t2b-plans-selection-section {
-    padding: 20px 0 40px !important;
+    padding: 28px 0 200px !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     overflow-x: hidden !important;
+  }
+
+  .t2b-plans-hero-clean {
+    margin-top: 12px !important;
+    margin-bottom: 22px !important;
   }
 
   .t2b-plans-grid,
@@ -1446,15 +2086,52 @@ body.t2b-funnel-page {
     padding: 5px 12px;
   }
 
-  .t2b-plans-bar-inner {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    gap: 12px;
+  .t2b-bar-trust-strip {
+    gap: 6px !important;
+    font-size: 0.68rem !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 8px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    justify-content: center !important;
   }
 
+  .t2b-bar-trust-item {
+    font-size: 0.68rem !important;
+    white-space: nowrap !important;
+  }
+
+  .t2b-plans-bar-inner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .t2b-bar-plan-summary {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .t2b-bar-plan-name {
+    font-size: 0.95rem !important;
+  }
+
+  .t2b-bar-plan-price {
+    font-size: 1.35rem !important;
+  }
+
+  .t2b-bar-proceed-btn,
   .t2b-plans-bar-inner .btn {
-    width: 100%;
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+    min-height: 48px !important;
   }
 
   /* Checkout Layout */
@@ -1681,5 +2358,108 @@ body.t2b-funnel-page {
     width: 40px !important;
     height: 46px !important;
     font-size: 1.2rem !important;
+  }
+
+  /* In-Between Highlight Callout Mobile */
+  .t2b-track-privilege-callout {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .t2b-privilege-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 18px !important;
+  }
+
+  .t2b-privilege-title strong {
+    font-size: 0.84rem !important;
+  }
+
+  .t2b-privilege-content p {
+    font-size: 0.76rem !important;
+  }
+
+  /* Multi-Channel Dispatch Notice Mobile */
+  .t2b-dispatch-notice {
+    padding: 14px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .t2b-dispatch-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .t2b-dispatch-item {
+    padding: 8px 10px !important;
+  }
+
+  .t2b-dispatch-item i {
+    font-size: 18px !important;
+  }
+
+  /* Printable Tax Invoice Modal Mobile */
+  .t2b-invoice-modal-overlay {
+    padding: 10px !important;
+  }
+
+  .t2b-invoice-modal-dialog {
+    max-height: 95vh !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+  }
+
+  .t2b-invoice-toolbar {
+    padding: 10px 14px !important;
+  }
+
+  .t2b-toolbar-title {
+    font-size: 0.85rem !important;
+  }
+
+  .t2b-invoice-sheet {
+    padding: 18px 14px !important;
+  }
+
+  .t2b-inv-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+
+  .t2b-inv-meta-block {
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  .t2b-inv-meta-table {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .t2b-inv-client-strip {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 12px !important;
+  }
+
+  .t2b-inv-table {
+    font-size: 0.72rem !important;
+  }
+
+  .t2b-inv-table th,
+  .t2b-inv-table td {
+    padding: 8px 6px !important;
+  }
+
+  .t2b-inv-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+
+  .t2b-inv-signature-block {
+    text-align: left !important;
   }
 }

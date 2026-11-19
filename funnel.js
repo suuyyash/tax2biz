@@ -299,11 +299,12 @@
     const planCards = document.querySelectorAll('.t2b-plan-card');
     const summaryPlanName = document.getElementById('t2b-summary-plan-name');
     const summaryPlanPrice = document.getElementById('t2b-summary-plan-price');
+    const summaryOfferBadge = document.getElementById('t2b-summary-offer-badge');
     const proceedBtn = document.getElementById('t2b-proceed-to-pay-btn');
 
     let currentPlan = {
       planId: lead.planId || 'plan_standard',
-      planName: lead.planName || 'Incorporation Only',
+      planName: lead.planName || 'Registration Only',
       planPrice: lead.planPrice || 2499,
       originalPrice: lead.originalPrice || 4999
     };
@@ -320,6 +321,7 @@
       const planName = card.getAttribute('data-plan-name');
       const planPrice = parseInt(card.getAttribute('data-plan-price'), 10);
       const originalPrice = parseInt(card.getAttribute('data-original-price'), 10);
+      const savings = originalPrice - planPrice;
 
       const selBtn = card.querySelector('.t2b-card-select-btn');
       if (selBtn) selBtn.textContent = 'Selected Plan ✓';
@@ -334,6 +336,15 @@
 
       if (summaryPlanName) summaryPlanName.textContent = planName;
       if (summaryPlanPrice) summaryPlanPrice.textContent = `₹${planPrice.toLocaleString('en-IN')}`;
+      if (summaryOfferBadge) {
+        if (planPrice === 14999) {
+          summaryOfferBadge.textContent = 'RECOMMENDED · Save ₹5,000';
+          summaryOfferBadge.classList.add('gold');
+        } else {
+          summaryOfferBadge.textContent = '50% OFF · Save ₹2,500';
+          summaryOfferBadge.classList.remove('gold');
+        }
+      }
     }
 
     // Deliverables dropdown toggle
@@ -483,13 +494,100 @@
   /* ============================================================
      4. THANK YOU & ASSIGNED CA PAGE (registration-success.html)
      ============================================================ */
+  function blastConfetti() {
+    const canvas = document.getElementById('t2b-confetti-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#10B981', '#059669', '#3B82F6', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#06B6D4'];
+    const pieces = [];
+    const count = 100;
+
+    for (let i = 0; i < count; i++) {
+      pieces.push({
+        x: canvas.width * 0.5 + (Math.random() - 0.5) * 300,
+        y: canvas.height * 0.35 + (Math.random() - 0.5) * 120,
+        vx: (Math.random() - 0.5) * 22,
+        vy: (Math.random() - 0.75) * 20 - 4,
+        size: Math.random() * 8 + 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rSpeed: (Math.random() - 0.5) * 14,
+        opacity: 1,
+        shape: Math.random() > 0.4 ? 'rect' : 'circle'
+      });
+    }
+
+    let animationFrame;
+    const startTime = Date.now();
+
+    function update() {
+      const elapsed = Date.now() - startTime;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let activePieces = 0;
+      pieces.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.38; // gravity
+        p.vx *= 0.985; // drag
+        p.rotation += p.rSpeed;
+        if (elapsed > 2200) {
+          p.opacity -= 0.016;
+        }
+
+        if (p.opacity > 0 && p.y < canvas.height + 60) {
+          activePieces++;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.opacity);
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      });
+
+      if (activePieces > 0 && elapsed < 5000) {
+        animationFrame = requestAnimationFrame(update);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        cancelAnimationFrame(animationFrame);
+      }
+    }
+
+    update();
+
+    window.addEventListener('resize', function () {
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    });
+  }
+
   function initSuccessThankYouPage() {
     const successWrap = document.querySelector('.t2b-thankyou-wrap, .t2b-success-wrap');
     if (!successWrap) return;
 
+    // Trigger Festive Confetti Celebration Explosion
+    try {
+      blastConfetti();
+    } catch (e) {}
+
     const lead = getLeadData();
 
-    // Populate order info
+    // Populate order & client info
     const orderIdEl = document.getElementById('success-order-id');
     const customerNameEl = document.getElementById('success-customer-name');
     const customerPhoneEl = document.getElementById('success-customer-phone');
@@ -500,7 +598,9 @@
     const orderId = lead.orderId || `TXB-INCORP-2026-${Math.floor(1000 + Math.random() * 9000)}`;
     const clientName = lead.name || 'Rahul Sharma';
     const clientPhone = lead.phone || '98765 43210';
-    const planName = lead.planName || 'Private Limited Company Registration';
+    const clientEmail = lead.email || 'rahul.sharma@example.com';
+    const clientState = lead.state || 'Maharashtra';
+    const planName = lead.planName || 'Registration Only';
     const price = lead.planPrice || 2499;
     const origPrice = lead.originalPrice || (price === 14999 ? 19999 : 4999);
     const savings = origPrice - price;
@@ -524,10 +624,120 @@
       }
     }
 
-    // Download invoice simulation
-    const downloadBtn = document.getElementById('t2b-download-receipt-btn');
-    if (downloadBtn) {
-      downloadBtn.addEventListener('click', function () {
+    // Populate Multi-Channel Dispatch Notice
+    const dispatchEmail = document.getElementById('success-dispatch-email');
+    const dispatchPhone = document.getElementById('success-dispatch-phone');
+    const dispatchWa = document.getElementById('success-dispatch-wa');
+
+    if (dispatchEmail) dispatchEmail.textContent = clientEmail;
+    if (dispatchPhone) dispatchPhone.textContent = `+91 ${clientPhone}`;
+    if (dispatchWa) dispatchWa.textContent = `+91 ${clientPhone}`;
+
+    // Populate Printable GST Tax Invoice
+    const invNumEl = document.getElementById('inv-num');
+    const invDateEl = document.getElementById('inv-date');
+    const invPlaceEl = document.getElementById('inv-place');
+    const invClientName = document.getElementById('inv-client-name');
+    const invClientPhone = document.getElementById('inv-client-phone');
+    const invClientEmail = document.getElementById('inv-client-email');
+    const invClientState = document.getElementById('inv-client-state');
+    const invTxnId = document.getElementById('inv-txn-id');
+
+    const invItem1Title = document.getElementById('inv-item-1-title');
+    const invItem1Rate = document.getElementById('inv-item-1-rate');
+    const invItem1Taxable = document.getElementById('inv-item-1-taxable');
+    const invItem2Rate = document.getElementById('inv-item-2-rate');
+    const invItem2Taxable = document.getElementById('inv-item-2-taxable');
+    const invSubtotal = document.getElementById('inv-subtotal');
+    const invIgst = document.getElementById('inv-igst');
+    const invGrandTotal = document.getElementById('inv-grand-total');
+    const invAmountWords = document.getElementById('inv-amount-words');
+
+    const now = new Date();
+    const formattedDate = `${now.getDate()} ${now.toLocaleString('default', { month: 'short' })} ${now.getFullYear()}`;
+
+    if (invNumEl) invNumEl.textContent = orderId.replace('TXB-INCORP', 'TXB-INV');
+    if (invDateEl) invDateEl.textContent = formattedDate;
+    if (invPlaceEl) invPlaceEl.textContent = `${clientState} (State Code: 27)`;
+    if (invClientName) invClientName.textContent = clientName;
+    if (invClientPhone) invClientPhone.textContent = `+91 ${clientPhone}`;
+    if (invClientEmail) invClientEmail.textContent = clientEmail;
+    if (invClientState) invClientState.textContent = clientState;
+    if (invTxnId) invTxnId.textContent = `TXN_${Math.floor(100000000000 + Math.random() * 900000000000)}`;
+
+    if (price === 14999) {
+      if (invItem1Title) invItem1Title.textContent = 'Private Limited Incorporation + 1-Year ROC & Statutory Compliance';
+      if (invItem1Rate) invItem1Rate.textContent = '₹10,762.71';
+      if (invItem1Taxable) invItem1Taxable.textContent = '₹10,762.71';
+      if (invItem2Rate) invItem2Rate.textContent = '₹1,948.31';
+      if (invItem2Taxable) invItem2Taxable.textContent = '₹1,948.31';
+      if (invSubtotal) invSubtotal.textContent = '₹12,711.02';
+      if (invIgst) invIgst.textContent = '₹2,287.98';
+      if (invGrandTotal) invGrandTotal.textContent = '₹14,999.00';
+      if (invAmountWords) invAmountWords.textContent = 'Indian Rupees Fourteen Thousand Nine Hundred Ninety-Nine Only';
+    } else {
+      if (invItem1Title) invItem1Title.textContent = 'Private Limited Company Incorporation Fast-Track Package';
+      if (invItem1Rate) invItem1Rate.textContent = '₹1,779.66';
+      if (invItem1Taxable) invItem1Taxable.textContent = '₹1,779.66';
+      if (invItem2Rate) invItem2Rate.textContent = '₹338.14';
+      if (invItem2Taxable) invItem2Taxable.textContent = '₹338.14';
+      if (invSubtotal) invSubtotal.textContent = '₹2,117.80';
+      if (invIgst) invIgst.textContent = '₹381.20';
+      if (invGrandTotal) invGrandTotal.textContent = '₹2,499.00';
+      if (invAmountWords) invAmountWords.textContent = 'Indian Rupees Two Thousand Four Hundred Ninety-Nine Only';
+    }
+
+    // Modal Interaction Handlers
+    const invoiceModal = document.getElementById('t2b-invoice-modal');
+    const openInvoiceBtn = document.getElementById('t2b-open-invoice-btn');
+    const closeInvoiceBtn = document.getElementById('t2b-close-invoice-btn');
+    const printActionBtn = document.getElementById('t2b-print-invoice-action');
+
+    function openModal() {
+      if (!invoiceModal) return;
+      invoiceModal.classList.add('active');
+      invoiceModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('t2b-modal-open');
+    }
+
+    function closeModal() {
+      if (!invoiceModal) return;
+      invoiceModal.classList.remove('active');
+      invoiceModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('t2b-modal-open');
+    }
+
+    if (openInvoiceBtn) {
+      openInvoiceBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal();
+      });
+    }
+
+    if (closeInvoiceBtn) {
+      closeInvoiceBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        closeModal();
+      });
+    }
+
+    if (invoiceModal) {
+      invoiceModal.addEventListener('click', function (e) {
+        if (e.target === invoiceModal) {
+          closeModal();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (invoiceModal && invoiceModal.classList.contains('active') && e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    if (printActionBtn) {
+      printActionBtn.addEventListener('click', function (e) {
+        e.preventDefault();
         window.print();
       });
     }

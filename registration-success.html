@@ -19,6 +19,9 @@
 </head>
 <body class="t2b-funnel-page">
 
+  <!-- Confetti Canvas for Exciting First-Step Celebration -->
+  <canvas id="t2b-confetti-canvas" class="t2b-confetti-canvas"></canvas>
+
   <!-- Header -->
   <header class="t2b-funnel-header" role="banner">
     <div class="container">
@@ -41,25 +44,29 @@
 
       <div class="t2b-thankyou-card">
         
-        <!-- Header Status -->
+        <!-- Exciting Celebratory Header -->
         <div class="t2b-thankyou-header">
-          <div class="t2b-check-halo">
-            <i class="ph-bold ph-check"></i>
+          <div class="t2b-celebrate-badge">
+            <span class="t2b-celebrate-emoji">🎉</span>
+            <span>Step 1 Complete · You're Officially on Your Way!</span>
           </div>
-          <h1 class="t2b-thankyou-title">Registration Confirmed</h1>
+
+          <h1 class="t2b-thankyou-title">Congratulations on Taking the First Step!</h1>
+          
           <p class="t2b-thankyou-subtitle">
-            Order <strong id="success-order-id">TXB-INCORP-2026-8492</strong> &bull; Paid <strong id="success-amount-paid">₹2,499</strong>
+            Your Private Limited Company registration is officially initiated on MCA V3.<br />
+            Order <strong id="success-order-id">TXB-INCORP-2026-8492</strong> &bull; Amount Paid <strong id="success-amount-paid">₹2,499</strong>
           </p>
         </div>
 
-        <!-- Assigned CA Spotlight (Clean, Personal, Reassuring) -->
-        <div class="t2b-ca-spotlight">
+        <!-- HIGHLIGHTED ASSIGNED CA SPOTLIGHT (First Glance Focal Point) -->
+        <div class="t2b-ca-spotlight highlight-focus" id="assigned-ca-card">
           <div class="t2b-ca-spotlight-top">
             <span class="t2b-ca-live-badge">
               <span class="t2b-live-dot"></span>
-              Dedicated CA Assigned
+              Assigned to Your Filing · Active Now
             </span>
-            <span class="t2b-ca-reg">ICAI #068412</span>
+            <span class="t2b-ca-reg">ICAI #068412 &bull; 12+ Yrs Exp</span>
           </div>
 
           <div class="t2b-ca-hero-row">
@@ -70,20 +77,23 @@
                 class="t2b-ca-avatar-img"
                 onerror="this.onerror=null; this.src='tax2biz.png';"
               />
-              <span class="t2b-avatar-check" title="Verified ICAI Member"><i class="ph-bold ph-check"></i></span>
+              <span class="t2b-avatar-check" title="Verified Senior ICAI Member"><i class="ph-bold ph-check"></i></span>
             </div>
 
             <div class="t2b-ca-primary-info">
-              <h2 class="t2b-ca-lead-name">CA Ananya Iyer</h2>
-              <p class="t2b-ca-title-text">Lead Corporate Partner &bull; Senior Chartered Accountant (FCA)</p>
+              <div class="t2b-ca-badge-row">
+                <span class="t2b-officer-tag">Dedicated Senior CA</span>
+              </div>
+              <h2 class="t2b-ca-lead-name">CA Ananya Iyer, FCA</h2>
+              <p class="t2b-ca-title-text">Lead Corporate Partner &bull; Senior Chartered Accountant</p>
             </div>
           </div>
 
-          <!-- Reassuring Callout Bubble -->
+          <!-- Urgent Reassuring Callout -->
           <div class="t2b-ca-callout-bubble">
             <i class="ph-bold ph-phone-call"></i>
             <p>
-              <strong>Keep your phone close</strong> — Ananya will call on <strong id="success-urgent-phone">+91 98765 43210</strong> in 15 mins to start your company name approval.
+              <strong>Keep your phone close!</strong> CA Ananya will call on <strong id="success-urgent-phone">+91 98765 43210</strong> in the next <strong>15 minutes</strong> to initiate your company name approval.
             </p>
           </div>
 
@@ -95,48 +105,99 @@
             </a>
             <a href="https://wa.me/919820184521?text=Hello%20CA%20Ananya,%20I%20have%20completed%20my%20registration%20on%20Tax2Biz" target="_blank" rel="noopener noreferrer" class="t2b-contact-btn whatsapp">
               <i class="ph-bold ph-whatsapp-logo"></i>
-              <span>WhatsApp CA</span>
+              <span>WhatsApp CA Direct</span>
             </a>
           </div>
         </div>
 
-        <!-- Sleek 5-Step Process Timeline -->
+        <!-- 5-Step Roadmap with Lifetime CA Consultation Support Highlight -->
         <div class="t2b-track-strip">
-          <div class="t2b-track-label">Next Steps &bull; 7–10 Days Guaranteed</div>
+          <div class="t2b-track-label">Next Steps &bull; 7–10 Days Guaranteed Delivery</div>
           <div class="t2b-track-steps">
+            
             <div class="t2b-track-step done">
               <span class="t2b-track-bullet"><i class="ph-bold ph-check"></i></span>
               <div class="t2b-track-desc">
-                <strong>Fee Paid &amp; Docket Initiated (<span id="success-step1-amount">₹2,499</span>)</strong>
-                <small>Invoice generated and sent to email</small>
+                <strong>Step 1: Fee Paid &amp; Docket Initiated (<span id="success-step1-amount">₹2,499</span>)</strong>
+                <small>Payment processed. Incorporation docket created on MCA V3.</small>
               </div>
             </div>
+
             <div class="t2b-track-step current">
               <span class="t2b-track-bullet">2</span>
               <div class="t2b-track-desc">
-                <strong>Name Reservation Call (Next 15 Mins)</strong>
-                <small>Your CA reviews and reserves RUN name on MCA V3</small>
+                <strong>Step 2: Name Reservation Call (Next 15 Mins)</strong>
+                <small>Your CA reviews proposed names and files RUN application on MCA.</small>
               </div>
             </div>
+
+            <!-- In-Between Highlight: Lifetime CA Consultation Support at No Extra Cost -->
+            <div class="t2b-track-privilege-callout">
+              <div class="t2b-privilege-icon">
+                <i class="ph-bold ph-crown"></i>
+              </div>
+              <div class="t2b-privilege-content">
+                <div class="t2b-privilege-title">
+                  <strong>Lifetime Senior CA Consultation Support Included</strong>
+                  <span class="t2b-zero-cost-tag">₹0 Extra Cost Forever</span>
+                </div>
+                <p>As a Tax2Biz founder, you receive continuous, on-demand advisory from senior Chartered Accountants for income tax, GST queries, and company structuring throughout your business journey.</p>
+              </div>
+            </div>
+
             <div class="t2b-track-step">
               <span class="t2b-track-bullet">3</span>
               <div class="t2b-track-desc">
-                <strong>Class-3 DSC Video KYC</strong>
-                <small>Quick 2-minute mobile OTP video verification</small>
+                <strong>Step 3: Class-3 DSC Video KYC</strong>
+                <small>Fast 2-minute paperless mobile OTP &amp; video verification for directors.</small>
               </div>
             </div>
+
             <div class="t2b-track-step">
               <span class="t2b-track-bullet">4</span>
               <div class="t2b-track-desc">
-                <strong>SPICe+ Part-B Filing with ROC</strong>
-                <small>MoA, AoA &amp; statutory director affidavits submitted</small>
+                <strong>Step 4: SPICe+ Part-B ROC Government Filing</strong>
+                <small>Drafting MoA, AoA &amp; filing statutory director affidavits with ROC.</small>
               </div>
             </div>
+
             <div class="t2b-track-step">
               <span class="t2b-track-bullet">5</span>
               <div class="t2b-track-desc">
-                <strong>Certificate of Incorporation (CIN) Delivered</strong>
-                <small>CIN, PAN, TAN &amp; zero-balance bank a/c issued</small>
+                <strong>Step 5: Certificate of Incorporation (CIN) Delivered</strong>
+                <small>Delivery of COI, PAN, TAN &amp; zero-balance corporate bank account.</small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Multi-Channel Invoice & Docket Dispatch Notice -->
+        <div class="t2b-dispatch-notice">
+          <div class="t2b-dispatch-head">
+            <i class="ph-bold ph-paper-plane-tilt"></i>
+            <span>Official GST Tax Invoice &amp; Filing Docket Dispatched</span>
+          </div>
+          <div class="t2b-dispatch-grid">
+            <div class="t2b-dispatch-item">
+              <i class="ph-bold ph-envelope-simple"></i>
+              <div class="t2b-dispatch-text">
+                <span class="t2b-dispatch-lbl">Email Dispatched</span>
+                <strong id="success-dispatch-email">rahul.sharma@example.com</strong>
+              </div>
+            </div>
+            <div class="t2b-dispatch-item">
+              <i class="ph-bold ph-device-mobile"></i>
+              <div class="t2b-dispatch-text">
+                <span class="t2b-dispatch-lbl">SMS Sent</span>
+                <strong id="success-dispatch-phone">+91 98765 43210</strong>
+              </div>
+            </div>
+            <div class="t2b-dispatch-item">
+              <i class="ph-bold ph-whatsapp-logo" style="color: #25D366;"></i>
+              <div class="t2b-dispatch-text">
+                <span class="t2b-dispatch-lbl">WhatsApp Copy</span>
+                <strong id="success-dispatch-wa">+91 98765 43210</strong>
               </div>
             </div>
           </div>
@@ -162,11 +223,11 @@
           </div>
         </div>
 
-        <!-- Clean Action Buttons -->
+        <!-- Clean Action Buttons with Print & View Invoice -->
         <div class="t2b-thankyou-actions">
-          <button type="button" class="btn btn-secondary t2b-btn-receipt" id="t2b-download-receipt-btn">
+          <button type="button" class="btn btn-secondary t2b-btn-receipt" id="t2b-open-invoice-btn">
             <i class="ph-bold ph-printer"></i>
-            <span>Print Receipt</span>
+            <span>View &amp; Print Tax Invoice</span>
           </button>
           <a href="index.html" class="btn srv-btn-vibrant t2b-btn-home">
             <span>Return to Homepage</span>
@@ -178,6 +239,173 @@
 
     </div>
   </main>
+
+  <!-- Complete Official Printable GST Tax Invoice Modal -->
+  <div class="t2b-invoice-modal-overlay" id="t2b-invoice-modal" aria-hidden="true" role="dialog" aria-label="Official Tax Invoice">
+    <div class="t2b-invoice-modal-dialog">
+      
+      <!-- Modal Action Toolbar (Hidden in Print) -->
+      <div class="t2b-invoice-toolbar no-print">
+        <span class="t2b-toolbar-title"><i class="ph-bold ph-receipt"></i> Official GST Tax Invoice</span>
+        <div class="t2b-toolbar-actions">
+          <button type="button" class="btn srv-btn-vibrant t2b-toolbar-print-btn" id="t2b-print-invoice-action">
+            <i class="ph-bold ph-printer"></i>
+            <span>Print Invoice (A4)</span>
+          </button>
+          <button type="button" class="t2b-toolbar-close-btn" id="t2b-close-invoice-btn" aria-label="Close Invoice">
+            <i class="ph-bold ph-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Invoice Document (Rendered exactly for A4 Print) -->
+      <div class="t2b-invoice-sheet" id="t2b-printable-invoice">
+        
+        <!-- Invoice Header -->
+        <div class="t2b-inv-header">
+          <div class="t2b-inv-issuer">
+            <img src="tax2biz.png" alt="Tax2Biz" class="t2b-inv-logo" />
+            <div class="t2b-inv-company-name">Tax2Biz Financial Technologies Pvt. Ltd.</div>
+            <div class="t2b-inv-issuer-details">
+              CIN: U74999HR2023PTC112345 &bull; GSTIN: 06AAACT2841M1Z5<br />
+              Plot 42, Sector 18, Udyog Vihar, Gurugram, Haryana &ndash; 122002<br />
+              MCA Authorized e-Filing Intermediary &bull; support@tax2biz.in
+            </div>
+          </div>
+
+          <div class="t2b-inv-meta-block">
+            <div class="t2b-inv-badge">TAX INVOICE</div>
+            <div class="t2b-inv-subbadge">Original for Recipient</div>
+            
+            <table class="t2b-inv-meta-table">
+              <tr>
+                <td>Invoice No:</td>
+                <td><strong id="inv-num">TXB-INV-2026-8492</strong></td>
+              </tr>
+              <tr>
+                <td>Invoice Date:</td>
+                <td><strong id="inv-date">19 Nov 2026</strong></td>
+              </tr>
+              <tr>
+                <td>Place of Supply:</td>
+                <td><strong id="inv-place">Maharashtra (27)</strong></td>
+              </tr>
+              <tr>
+                <td>Reverse Charge:</td>
+                <td><strong>No</strong></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="t2b-inv-divider"></div>
+
+        <!-- Billed To / Client Strip -->
+        <div class="t2b-inv-client-strip">
+          <div class="t2b-inv-client-box">
+            <div class="t2b-inv-box-lbl">Billed To (Applicant / Client):</div>
+            <div class="t2b-inv-client-name" id="inv-client-name">Rahul Sharma</div>
+            <div class="t2b-inv-client-info">
+              Phone: <span id="inv-client-phone">+91 98765 43210</span><br />
+              Email: <span id="inv-client-email">rahul.sharma@example.com</span><br />
+              State: <span id="inv-client-state">Maharashtra</span> (State Code: 27)
+            </div>
+          </div>
+
+          <div class="t2b-inv-payment-box">
+            <div class="t2b-inv-box-lbl">Payment &amp; Docket Status:</div>
+            <div class="t2b-inv-pay-status"><i class="ph-bold ph-check-circle"></i> PAYMENT RECEIVED (PAID)</div>
+            <div class="t2b-inv-pay-info">
+              Payment Gateway: UPI / Bank Transfer<br />
+              Txn Reference: <span id="inv-txn-id">TXN_984128491024</span><br />
+              Assigned Partner: CA Ananya Iyer (ICAI #068412)
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Items Table -->
+        <table class="t2b-inv-table">
+          <thead>
+            <tr>
+              <th style="width: 5%;">#</th>
+              <th style="width: 47%;">Description of Services</th>
+              <th style="width: 14%;">HSN/SAC</th>
+              <th style="width: 14%; text-align: right;">Rate (₹)</th>
+              <th style="width: 20%; text-align: right;">Taxable Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <strong id="inv-item-1-title">Private Limited Company Incorporation Package</strong>
+                <div class="t2b-inv-item-desc">
+                  SPICe+ Part A (Name RUN) &amp; Part B filing, MoA, AoA drafting, 2x Class-3 DSC, 2x Director DIN, PAN &amp; TAN allocation, zero-balance corporate bank account.
+                </div>
+              </td>
+              <td>998231</td>
+              <td style="text-align: right;" id="inv-item-1-rate">₹1,779.66</td>
+              <td style="text-align: right;" id="inv-item-1-taxable">₹1,779.66</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>
+                <strong>Professional CA Verification &amp; Advisory Retainer</strong>
+                <div class="t2b-inv-item-desc">
+                  Senior Chartered Accountant verification, ICAI compliant document scrutiny &amp; Lifetime founder consultation support.
+                </div>
+              </td>
+              <td>998311</td>
+              <td style="text-align: right;" id="inv-item-2-rate">₹338.14</td>
+              <td style="text-align: right;" id="inv-item-2-taxable">₹338.14</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" style="text-align: right; font-weight: 700;">Subtotal (Taxable Value):</td>
+              <td style="text-align: right; font-weight: 700;" id="inv-subtotal">₹2,117.80</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align: right; color: #475569;">Integrated GST (IGST @ 18%):</td>
+              <td style="text-align: right; color: #475569;" id="inv-igst">₹381.20</td>
+            </tr>
+            <tr class="t2b-inv-total-row">
+              <td colspan="4" style="text-align: right;">Total Amount Paid (INR):</td>
+              <td style="text-align: right;" id="inv-grand-total">₹2,499.00</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Amount In Words -->
+        <div class="t2b-inv-words-row">
+          Amount in Words: <strong id="inv-amount-words">Indian Rupees Two Thousand Four Hundred Ninety-Nine Only</strong>
+        </div>
+
+        <!-- Footer Notes & Official Signatory -->
+        <div class="t2b-inv-footer">
+          <div class="t2b-inv-terms">
+            <strong>Notes &amp; Guarantee Terms:</strong>
+            <ol>
+              <li>This is a computer-generated GST tax invoice issued under Section 31 of CGST Act 2017.</li>
+              <li>Includes 7–10 days fast-track delivery guarantee or 100% Tax2Biz professional fee refund.</li>
+              <li>MCA and ROC statutory government stamp fees are remitted at actuals.</li>
+            </ol>
+          </div>
+
+          <div class="t2b-inv-signature-block">
+            <div class="t2b-inv-digital-seal">
+              <i class="ph-bold ph-seal-check"></i>
+              <span>DIGITALLY SIGNED &amp; VERIFIED</span>
+            </div>
+            <div class="t2b-inv-signatory-name">For Tax2Biz Financial Technologies Pvt Ltd</div>
+            <div class="t2b-inv-signatory-title">Authorized Signatory &bull; Corporate Desk</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="funnel.js"></script>

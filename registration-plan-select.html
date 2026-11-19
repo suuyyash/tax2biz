@@ -169,24 +169,44 @@
   <!-- Sticky Bottom Summary Bar -->
   <aside class="t2b-plans-bottom-bar" aria-label="Selected plan checkout summary">
     <div class="container">
-      <div class="t2b-plans-bar-inner">
-        <div class="t2b-bar-plan-summary">
-          <span class="t2b-bar-plan-name">Selected: <strong id="t2b-summary-plan-name">Registration Only</strong></span>
-          <div class="t2b-bar-plan-price" id="t2b-summary-plan-price">₹2,499</div>
+      
+      <!-- Trust Factors Row with Dividers -->
+      <div class="t2b-bar-trust-strip">
+        <div class="t2b-bar-trust-item">
+          <i class="ph-bold ph-shield-check"></i>
+          <span>7–10 Days Delivery Guarantee</span>
         </div>
-
-        <div style="display: flex; align-items: center; gap: 16px;">
-          <div class="t2b-desktop-only" style="font-size: 0.8rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 6px;">
-            <i class="ph-bold ph-shield-check" style="font-size: 18px;"></i>
-            <span>7–10 Days Guarantee or 100% Fee Refund</span>
-          </div>
-
-          <button type="button" class="btn srv-btn-vibrant" id="t2b-proceed-to-pay-btn" style="padding: 13px 28px; font-size: 1rem;">
-            <span>Proceed to Secure Payment</span>
-            <i class="ph-bold ph-arrow-right"></i>
-          </button>
+        <span class="t2b-bar-trust-sep">&bull;</span>
+        <div class="t2b-bar-trust-item">
+          <i class="ph-bold ph-arrow-counter-clockwise"></i>
+          <span>100% Fee Refund Shield</span>
+        </div>
+        <span class="t2b-bar-trust-sep">&bull;</span>
+        <div class="t2b-bar-trust-item">
+          <i class="ph-bold ph-lock-key"></i>
+          <span>256-Bit Bank Grade SSL</span>
         </div>
       </div>
+
+      <!-- Main Action Summary Row -->
+      <div class="t2b-plans-bar-inner">
+        <div class="t2b-bar-plan-summary">
+          <div class="t2b-bar-plan-meta">
+            <span class="t2b-bar-selected-tag">Selected Plan</span>
+            <strong class="t2b-bar-plan-name" id="t2b-summary-plan-name">Registration Only</strong>
+          </div>
+          <div class="t2b-bar-price-cluster">
+            <span class="t2b-bar-plan-price" id="t2b-summary-plan-price">₹2,499</span>
+            <span class="t2b-bar-offer-badge" id="t2b-summary-offer-badge">50% OFF · Save ₹2,500</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn srv-btn-vibrant t2b-bar-proceed-btn" id="t2b-proceed-to-pay-btn">
+          <span>Proceed to Secure Payment</span>
+          <i class="ph-bold ph-arrow-right"></i>
+        </button>
+      </div>
+
     </div>
   </aside>
 
