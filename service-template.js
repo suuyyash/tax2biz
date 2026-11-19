@@ -161,40 +161,30 @@
     };
 
     try {
-      const response = await fetch('/api/leads', {
+      fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      });
+      }).catch(e => console.warn('Leads background post:', e));
 
-      if (!response.ok) throw new Error('Submission response status ' + response.status);
-
-      const result = await response.json();
-
-      // Show success on active form
-      form.style.display = 'none';
-      const successBox = form.parentElement.querySelector('.srv-form-success');
-      if (successBox) {
-        successBox.classList.add('active');
+      // Close inquiry modal if open
+      if (window.Tax2BizModal && typeof window.Tax2BizModal.close === 'function') {
+        window.Tax2BizModal.close();
       }
 
-      // Also mark modal / hero if open
-      const otherForm = form.id === 'hero-inquiry-form'
-        ? document.getElementById('modal-inquiry-form')
-        : document.getElementById('hero-inquiry-form');
-      if (otherForm) {
-        otherForm.style.display = 'none';
-        const otherSuccess = otherForm.parentElement.querySelector('.srv-form-success');
-        if (otherSuccess) otherSuccess.classList.add('active');
+      // Trigger the un-dismissable OTP verification modal
+      if (window.Tax2BizFunnel && typeof window.Tax2BizFunnel.openOtpModal === 'function') {
+        window.Tax2BizFunnel.openOtpModal(payload);
+      } else {
+        // Fallback: direct redirect
+        localStorage.setItem('tax2biz_lead_session', JSON.stringify(payload));
+        window.location.href = 'registration-plan-select.html';
       }
 
     } catch (err) {
       console.error('Lead Submission Error:', err);
-      // Fallback: Show graceful success since lead details are captured client-side
-      form.style.display = 'none';
-      const successBox = form.parentElement.querySelector('.srv-form-success');
-      if (successBox) {
-        successBox.classList.add('active');
+      if (window.Tax2BizFunnel && typeof window.Tax2BizFunnel.openOtpModal === 'function') {
+        window.Tax2BizFunnel.openOtpModal(payload);
       }
     } finally {
       state.isSubmitting = false;
