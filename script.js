@@ -59,6 +59,16 @@
       }
     });
 
+    // Close drawer when any nav link is tapped
+    drawer.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('open');
+        if (toggleIcon) toggleIcon.className = 'ph ph-list';
+        document.body.style.overflow = '';
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
     // Auto-close on viewport resize to desktop width
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1140 && drawer.classList.contains('open')) {
