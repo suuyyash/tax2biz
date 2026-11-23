@@ -41,6 +41,7 @@
     initSubnavScrollSpy();
     initFaqAccordion();
     initBottomBar();
+    initScrollToTop();
   }
 
   /* ============================================================
@@ -575,6 +576,26 @@
         }
       });
     }
+  }
+
+  /* ============================================================
+     8. SCROLL TO TOP FLOATING BUTTON
+     ============================================================ */
+  function initScrollToTop() {
+    const btn = document.getElementById('srv-scroll-top-btn');
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
 })();

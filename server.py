@@ -18,7 +18,7 @@ import time
 import os
 import sys
 
-PORT = 8000
+PORT = int(os.environ.get('PORT', 8085))
 
 # Nice Class Titles Mapping
 NICE_CLASS_TITLES = {

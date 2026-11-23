@@ -378,6 +378,46 @@ html {
 .srv-feature-pill i.ph-seal-check { color: #0284C7; font-size: 15px; }
 .srv-feature-pill i.ph-star { color: #EAB308; font-size: 15px; }
 
+/* Official Govt & MCA Trust Strip in Hero */
+.srv-hero-gov-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 14px 0 16px;
+}
+
+.srv-gov-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1E293B;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  transition: all 0.2s ease;
+}
+
+.srv-gov-chip:hover {
+  border-color: #CBD5E1;
+  background: #F8FAFC;
+}
+
+.srv-gov-chip i.srv-gov-icon {
+  color: #059669;
+  font-size: 16px;
+}
+
+.srv-gov-chip .srv-gov-flag {
+  font-size: 14px;
+  line-height: 1;
+}
+
 /* Price Pill with Crisp Emerald Styling */
 .srv-hero-price-pill {
   display: inline-flex;
@@ -1417,6 +1457,26 @@ html {
   flex-shrink: 0;
 }
 
+.srv-pkg-simple-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #64748B;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 16px 0 20px;
+}
+
+.srv-pkg-simple-note i {
+  color: #059669;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
 .srv-exclusions-box {
   background: #F8FAFC;
   border: 1px dashed #CBD5E1;
@@ -2100,7 +2160,8 @@ html {
 /* ── RIGHT SUPPORTING SIDEBAR: Register Now Action Card (Sticky) ── */
 .srv-detail-sidebar {
   position: sticky;
-  top: calc(var(--nav-h, 76px) + 60px); /* Sticks smoothly below header and subnav */
+  top: calc(var(--nav-h, 76px) + 72px); /* Sticks smoothly below header and subnav */
+  margin-top: 28px; /* Added breathing room at the top */
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -2312,25 +2373,21 @@ html {
 }
 
 .srv-diff-table th.col-feature {
-  width: 30%;
+  width: 28%;
   color: var(--navy, #142D4E);
   font-size: 0.95rem;
 }
 
-.srv-diff-table th.col-traditional {
-  width: 35%;
-  background: #F8FAFC;
-  color: #64748B;
-}
-
 .srv-diff-table th.col-tax2biz {
-  width: 35%;
+  width: 38%;
   background: #E8F8F3;
   color: #065F46;
   border-top: 3px solid #10B981;
 }
 
-.srv-diff-table td.cell-traditional {
+.srv-diff-table th.col-other,
+.srv-diff-table th.col-traditional {
+  width: 34%;
   background: #F8FAFC;
   color: #64748B;
 }
@@ -2338,7 +2395,13 @@ html {
 .srv-diff-table td.cell-tax2biz {
   background: rgba(232, 248, 243, 0.45);
   color: #065F46;
-  font-weight: 700;
+  font-weight: 600;
+}
+
+.srv-diff-table td.cell-other,
+.srv-diff-table td.cell-traditional {
+  background: #F8FAFC;
+  color: #64748B;
 }
 
 .srv-diff-stats-grid {
@@ -2470,10 +2533,14 @@ html {
 
 /* ── 8. Customer Feedback Section ── */
 .srv-feedback-section {
-  padding: 76px 0;
+  padding: 72px 0 60px;
   background: #FFFFFF;
   border-bottom: 1px solid #E2E8F0;
   overflow: hidden;
+}
+
+.srv-feedback-section .reviews-marquee-container {
+  margin-bottom: 0;
 }
 
 .srv-feedback-grid {
@@ -2957,6 +3024,21 @@ html {
   gap: 6px;
 }
 
+.srv-bottom-pill-highlight {
+  background: rgba(16, 185, 129, 0.22);
+  color: #34D399;
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+  white-space: nowrap;
+}
+
 .srv-bottom-pill-price {
   font-size: 1.15rem;
   font-weight: 900;
@@ -2967,11 +3049,7 @@ html {
 .srv-bottom-pill-note {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #34D399;
-  background: rgba(52, 211, 153, 0.15);
-  border: 1px solid rgba(52, 211, 153, 0.3);
-  padding: 2px 8px;
-  border-radius: 9999px;
+  color: #CBD5E1;
   white-space: nowrap;
 }
 
@@ -2981,6 +3059,54 @@ html {
   white-space: nowrap;
   border-radius: 9999px !important;
   flex-shrink: 0;
+}
+
+/* ── Floating Scroll-to-Top Button ── */
+.srv-scroll-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  color: var(--navy, #142D4E);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  z-index: 980;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.srv-scroll-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.srv-scroll-top-btn:hover {
+  background: var(--navy, #142D4E);
+  color: #FFFFFF;
+  border-color: var(--navy, #142D4E);
+  box-shadow: 0 6px 20px rgba(20, 45, 78, 0.22);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  .srv-scroll-top-btn {
+    bottom: 74px; /* Sits comfortably above floating bottom pill on mobile */
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 640px) {
@@ -3548,6 +3674,7 @@ body.srv-page {
   /* Related Services Section 2-Row Horizontal Carousel */
   .srv-related-section {
     padding: 44px 0 !important;
+    overflow: hidden !important;
   }
 
   .srv-related-swipe-hint {
@@ -3558,7 +3685,7 @@ body.srv-page {
     font-size: 0.76rem;
     font-weight: 600;
     color: #64748B;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
   .srv-related-swipe-hint i {
@@ -3568,26 +3695,35 @@ body.srv-page {
 
   .srv-related-pills-wrap {
     display: grid !important;
-    grid-template-rows: repeat(2, auto) !important;
+    grid-template-rows: repeat(2, 42px) !important;
     grid-auto-flow: column !important;
     grid-auto-columns: max-content !important;
     overflow-x: auto !important;
-    overflow-y: hidden !important;
-    gap: 8px 10px !important;
-    padding: 4px 16px 14px !important;
+    overflow-y: visible !important;
+    gap: 12px 10px !important;
+    padding: 8px 24px 20px 20px !important;
     margin: 0 -16px !important;
     -webkit-overflow-scrolling: touch !important;
     scroll-snap-type: x proximity;
+    scroll-padding: 0 20px;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .srv-related-pills-wrap::-webkit-scrollbar {
     display: none;
+    width: 0;
+    height: 0;
   }
 
   .srv-related-pill {
-    padding: 8px 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 40px !important;
+    padding: 0 16px !important;
     font-size: 0.82rem !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
     scroll-snap-align: start;
   }
 
@@ -3661,22 +3797,33 @@ body.srv-page {
 
 @media (max-width: 640px) {
   .srv-bottom-bar {
-    width: calc(100% - 24px) !important;
-    max-width: 360px !important;
-    padding: 8px 12px !important;
+    width: calc(100% - 20px) !important;
+    max-width: 390px !important;
+    padding: 6px 10px 6px 14px !important;
     bottom: 12px !important;
     min-width: 0 !important;
   }
 
+  .srv-bottom-pill-info {
+    gap: 8px !important;
+  }
+
   .srv-bottom-pill-title {
-    display: block !important;
-    font-size: 0.84rem !important;
+    display: inline-block !important;
+    font-size: 0.8rem !important;
     font-weight: 700 !important;
     white-space: nowrap !important;
   }
 
   .srv-bottom-pill-pricing {
-    display: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .srv-bottom-pill-highlight {
+    font-size: 0.95rem !important;
+    padding: 2px 7px !important;
   }
 
   .srv-bottom-pill-note {
@@ -3684,8 +3831,8 @@ body.srv-page {
   }
 
   .srv-bottom-pill-btn {
-    padding: 8px 16px !important;
-    font-size: 0.85rem !important;
+    padding: 8px 14px !important;
+    font-size: 0.82rem !important;
     flex-shrink: 0 !important;
   }
 }

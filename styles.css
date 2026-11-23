@@ -2315,6 +2315,7 @@ h5 { font-size: 0.9375rem; font-weight: 600; }
   display: flex;
   gap: 22px;
   width: max-content;
+  padding-right: 22px;
   will-change: transform;
 }
 
