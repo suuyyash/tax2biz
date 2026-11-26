@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc, func, asc
+from sqlalchemy import select, desc, func, asc, or_
 from backend.app.core.database import get_db
 from backend.app.core.config import settings
 from backend.app.core.security import hash_otp
@@ -41,6 +41,7 @@ class EmployeeCreateSchema(BaseModel):
     phone: Optional[str] = "+91 98765 43210"
     role: str = Field("SENIOR_CA", description="SUPERADMIN, SENIOR_CA, JUNIOR_CA, SALES_EXECUTIVE, COMPLIANCE_MANAGER")
     cop_number: Optional[str] = "FCA #408912"
+    department: Optional[str] = "General"
 
 class EmployeeOutSchema(BaseModel):
     id: str
@@ -49,8 +50,10 @@ class EmployeeOutSchema(BaseModel):
     phone: Optional[str]
     role: str
     cop_number: Optional[str]
+    department: Optional[str] = "General"
     is_active: bool
     leads_assigned_count: int
+    password_plain: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -66,6 +69,14 @@ class AdminUpdateLeadRequest(BaseModel):
     assigned_ca_cop: Optional[str] = None
     assigned_to_id: Optional[str] = None
     notes: Optional[str] = None
+    next_followup_date: Optional[str] = None
+    # Document checklist updates
+    docs_pan: Optional[bool] = None
+    docs_aadhaar: Optional[bool] = None
+    docs_photo: Optional[bool] = None
+    docs_address_proof: Optional[bool] = None
+    docs_dsc: Optional[bool] = None
+    docs_moa_aoa: Optional[bool] = None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -97,7 +108,7 @@ async def admin_or_employee_login(payload: AdminLoginRequest, db: AsyncSession =
     stmt = select(Employee).where((Employee.email == clean_email) & (Employee.is_active == True))
     res = await db.execute(stmt)
     emp = res.scalars().first()
-    if emp and (emp.password_hash == payload.password or emp.password_hash == hash_otp(payload.password, "tax2biz_salt")):
+    if emp and (emp.password_hash == payload.password or emp.password_plain == payload.password):
         return {
             "status": "success",
             "message": f"Welcome back, {emp.name}!",
@@ -129,10 +140,12 @@ async def create_employee(payload: EmployeeCreateSchema, db: AsyncSession = Depe
     emp = Employee(
         name=payload.name,
         email=payload.email.lower().strip(),
-        password_hash=payload.password, # In production store hashed, demo allows direct test
+        password_hash=payload.password,
+        password_plain=payload.password,  # Stored for Superadmin visibility
         phone=payload.phone,
         role=payload.role,
         cop_number=payload.cop_number,
+        department=payload.department or "General",
         is_active=True,
         leads_assigned_count=0
     )
@@ -152,10 +165,10 @@ async def list_employees(db: AsyncSession = Depends(get_db)):
     # If no employees exist in DB yet, auto-seed default expert team for demo
     if not employees:
         defaults = [
-            Employee(name="CA Aakash Mehra", email="aakash.ca@tax2biz.in", password_hash="Tax2Biz@2026!", phone="+91 98765 43210", role="SENIOR_CA", cop_number="FCA #408912"),
-            Employee(name="CA Priya Sharma", email="priya.ca@tax2biz.in", password_hash="Tax2Biz@2026!", phone="+91 98765 43211", role="SENIOR_CA", cop_number="ACA #512398"),
-            Employee(name="CS Rahul Verma", email="rahul.cs@tax2biz.in", password_hash="Tax2Biz@2026!", phone="+91 98765 43212", role="COMPLIANCE_MANAGER", cop_number="FCS #10928"),
-            Employee(name="Vikram Sethi", email="vikram.sales@tax2biz.in", password_hash="Tax2Biz@2026!", phone="+91 98765 43213", role="SALES_EXECUTIVE", cop_number="Sales Lead")
+            Employee(name="CA Aakash Mehra", email="aakash.ca@tax2biz.in", password_hash="Tax2Biz@2026!", password_plain="Tax2Biz@2026!", phone="+91 98765 43210", role="SENIOR_CA", cop_number="FCA #408912", department="Company Registration"),
+            Employee(name="CA Priya Sharma", email="priya.ca@tax2biz.in", password_hash="Tax2Biz@2026!", password_plain="Tax2Biz@2026!", phone="+91 98765 43211", role="SENIOR_CA", cop_number="ACA #512398", department="Tax & Audit"),
+            Employee(name="CS Rahul Verma", email="rahul.cs@tax2biz.in", password_hash="Tax2Biz@2026!", password_plain="Tax2Biz@2026!", phone="+91 98765 43212", role="COMPLIANCE_MANAGER", cop_number="FCS #10928", department="ROC Compliance"),
+            Employee(name="Vikram Sethi", email="vikram.sales@tax2biz.in", password_hash="Tax2Biz@2026!", password_plain="Tax2Biz@2026!", phone="+91 98765 43213", role="SALES_EXECUTIVE", cop_number="Sales Lead", department="Sales"),
         ]
         db.add_all(defaults)
         await db.commit()
@@ -163,6 +176,32 @@ async def list_employees(db: AsyncSession = Depends(get_db)):
         employees = res.scalars().all()
 
     return employees
+
+
+@router.patch("/employees/{emp_id}")
+async def update_employee(emp_id: str, db: AsyncSession = Depends(get_db)):
+    """Toggle employee active/inactive status."""
+    stmt = select(Employee).where(Employee.id == emp_id)
+    res = await db.execute(stmt)
+    emp = res.scalars().first()
+    if not emp:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    emp.is_active = not emp.is_active
+    await db.commit()
+    return {"status": "success", "is_active": emp.is_active}
+
+
+@router.delete("/employees/{emp_id}")
+async def delete_employee(emp_id: str, db: AsyncSession = Depends(get_db)):
+    """Deactivates an employee (soft delete)."""
+    stmt = select(Employee).where(Employee.id == emp_id)
+    res = await db.execute(stmt)
+    emp = res.scalars().first()
+    if not emp:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    emp.is_active = False
+    await db.commit()
+    return {"status": "success", "message": f"{emp.name} deactivated"}
 
 
 # ─────────────────────────────────────────────────────────────
@@ -317,7 +356,6 @@ async def convert_lead_with_price(
         "status": "success",
         "message": f"Lead converted successfully at agreed price ₹{payload.agreed_price:,}!",
         "lead_id": lead.id,
-        "status": lead.status,
         "agreed_price": lead.agreed_price,
         "payment_id": lead.payment_id
     }
@@ -348,7 +386,7 @@ async def auto_assign_lead(lead_id: str, db: AsyncSession = Depends(get_db)):
         lead.assigned_ca_phone = "+91 98765 43210"
         assigned_emp_name = "CA Aakash Mehra"
     else:
-        best_emp = employees[0] # Lowest workload
+        best_emp = employees[0]  # Lowest workload
         lead.assigned_to_id = best_emp.id
         lead.assigned_ca_name = best_emp.name
         lead.assigned_ca_phone = best_emp.phone or "+91 98765 43210"
@@ -385,19 +423,37 @@ async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
     total_leads = total_res.scalar() or 0
 
     verified_res = await db.execute(
-        select(func.count(Lead.id)).where(Lead.status.in_(["OTP_VERIFIED", "PLAN_SELECTED", "PAYMENT_PENDING", "PAID", "IN_PROCESS", "INCORPORATED"]))
+        select(func.count(Lead.id)).where(Lead.status.in_(["OTP_VERIFIED", "PLAN_SELECTED", "PAYMENT_PENDING", "PAID", "IN_PROCESS", "INCORPORATED", "DOCS_PENDING", "DOCS_RECEIVED", "GOVT_FILING", "DELIVERED"]))
     )
     verified_leads = verified_res.scalar() or 0
 
     paid_res = await db.execute(
-        select(func.count(Lead.id)).where(Lead.status.in_(["PAID", "IN_PROCESS", "INCORPORATED"]))
+        select(func.count(Lead.id)).where(Lead.status.in_(["PAID", "IN_PROCESS", "INCORPORATED", "DOCS_PENDING", "DOCS_RECEIVED", "GOVT_FILING", "DELIVERED"]))
     )
     paid_customers = paid_res.scalar() or 0
 
     revenue_res = await db.execute(
-        select(func.sum(Lead.amount)).where(Lead.status.in_(["PAID", "IN_PROCESS", "INCORPORATED"]))
+        select(func.sum(Lead.amount)).where(Lead.status.in_(["PAID", "IN_PROCESS", "INCORPORATED", "DOCS_PENDING", "DOCS_RECEIVED", "GOVT_FILING", "DELIVERED"]))
     )
     total_revenue = revenue_res.scalar() or 0
+
+    # Pipeline value (potential revenue from non-lost, non-paid leads)
+    pipeline_res = await db.execute(
+        select(func.sum(Lead.amount)).where(Lead.status.in_(["NEW_INQUIRY", "OTP_VERIFIED", "PLAN_SELECTED", "PAYMENT_PENDING"]))
+    )
+    pipeline_value = pipeline_res.scalar() or 0
+
+    # Lost leads count
+    lost_res = await db.execute(
+        select(func.count(Lead.id)).where(Lead.status == "LOST")
+    )
+    lost_leads = lost_res.scalar() or 0
+
+    # In-process (actively working)
+    in_process_res = await db.execute(
+        select(func.count(Lead.id)).where(Lead.status.in_(["IN_PROCESS", "DOCS_PENDING", "DOCS_RECEIVED", "GOVT_FILING"]))
+    )
+    in_process = in_process_res.scalar() or 0
 
     # Service Distribution breakdown
     service_counts = {}
@@ -413,6 +469,25 @@ async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
     for row in to_res.all():
         turnover_counts[row[0] or "Unspecified"] = row[1]
 
+    # Source distribution
+    source_counts = {}
+    src_stmt = select(Lead.source, func.count(Lead.id)).group_by(Lead.source)
+    src_res = await db.execute(src_stmt)
+    for row in src_res.all():
+        source_counts[row[0] or "direct"] = row[1]
+
+    # Status distribution
+    status_counts = {}
+    st_stmt = select(Lead.status, func.count(Lead.id)).group_by(Lead.status)
+    st_res = await db.execute(st_stmt)
+    for row in st_res.all():
+        status_counts[row[0]] = row[1]
+
+    # Employee workload
+    emp_stmt = select(Employee.name, Employee.leads_assigned_count).where(Employee.is_active == True).order_by(desc(Employee.leads_assigned_count))
+    emp_res = await db.execute(emp_stmt)
+    employee_workload = {row[0]: row[1] for row in emp_res.all()}
+
     return {
         "status": "success",
         "stats": {
@@ -420,8 +495,14 @@ async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
             "verified_leads": verified_leads,
             "paid_customers": paid_customers,
             "total_revenue": total_revenue,
+            "pipeline_value": pipeline_value,
+            "lost_leads": lost_leads,
+            "in_process": in_process,
             "service_counts": service_counts,
-            "turnover_counts": turnover_counts
+            "turnover_counts": turnover_counts,
+            "source_counts": source_counts,
+            "status_counts": status_counts,
+            "employee_workload": employee_workload
         }
     }
 
@@ -432,7 +513,7 @@ async def admin_update_lead(
     payload: AdminUpdateLeadRequest,
     db: AsyncSession = Depends(get_db)
 ):
-    """Allows updating any field of a lead (status, priority, price, assigned CA)."""
+    """Allows updating any field of a lead (status, priority, price, assigned CA, documents)."""
     stmt = select(Lead).where(Lead.id == lead_id)
     res = await db.execute(stmt)
     lead = res.scalars().first()
@@ -464,6 +545,19 @@ async def admin_update_lead(
         lead.assigned_ca_cop = payload.assigned_ca_cop
     if payload.assigned_to_id:
         lead.assigned_to_id = payload.assigned_to_id
+    # Document checklist updates
+    if payload.docs_pan is not None:
+        lead.docs_pan = payload.docs_pan
+    if payload.docs_aadhaar is not None:
+        lead.docs_aadhaar = payload.docs_aadhaar
+    if payload.docs_photo is not None:
+        lead.docs_photo = payload.docs_photo
+    if payload.docs_address_proof is not None:
+        lead.docs_address_proof = payload.docs_address_proof
+    if payload.docs_dsc is not None:
+        lead.docs_dsc = payload.docs_dsc
+    if payload.docs_moa_aoa is not None:
+        lead.docs_moa_aoa = payload.docs_moa_aoa
 
     # Record audit log remark
     if changes:
@@ -502,7 +596,7 @@ async def export_leads_csv(db: AsyncSession = Depends(get_db)):
         "Company Name", "Service Category", "Sub-Service", 
         "Company Turnover", "Authorized Capital", "Priority", 
         "Package", "Amount (INR)", "Agreed Price", "Status", 
-        "Assigned Professional", "Payment ID", "Received Date"
+        "Assigned Professional", "Payment ID", "Source", "Received Date"
     ])
 
     for l in leads:
@@ -512,6 +606,7 @@ async def export_leads_csv(db: AsyncSession = Depends(get_db)):
             l.company_turnover or "", l.authorized_capital or "", l.priority or "MEDIUM",
             l.package, l.amount, l.agreed_price or l.amount,
             l.status, l.assigned_ca_name or "", l.payment_id or "",
+            l.source or "landing_page", 
             l.created_at.strftime("%Y-%m-%d %H:%M:%S") if l.created_at else ""
         ])
 
@@ -522,3 +617,42 @@ async def export_leads_csv(db: AsyncSession = Depends(get_db)):
         media_type="text/csv",
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
+
+
+# ─────────────────────────────────────────────────────────────
+# 8. SEED DEMO DATA (for first-time setup)
+# ─────────────────────────────────────────────────────────────
+@router.post("/seed-demo")
+async def seed_demo_data(db: AsyncSession = Depends(get_db)):
+    """Seeds demo leads across all services for immediate testing."""
+    total_res = await db.execute(select(func.count(Lead.id)))
+    existing = total_res.scalar() or 0
+    if existing > 0:
+        return {"status": "info", "message": f"Database already has {existing} leads. Skipping seed."}
+
+    demo_leads = [
+        Lead(name="Rahul Sharma", email="rahul@acme.in", phone="9876543210", state="Maharashtra", company_name="Acme Innovations Pvt Ltd", service="Business Registration", service_item="Private Limited Company Registration", company_turnover="₹20L - ₹1 Crore", amount=2499, status="OTP_VERIFIED", source="landing_page_form", priority="HIGH"),
+        Lead(name="Priya Patel", email="priya@greenleaf.in", phone="9876543211", state="Gujarat", company_name="GreenLeaf Organics LLP", service="Business Registration", service_item="LLP Registration", company_turnover="< ₹20 Lakhs", amount=3999, status="PAID", source="google_ads", priority="HIGH", agreed_price=3999),
+        Lead(name="Arun Kumar", email="arun@techforge.in", phone="9876543212", state="Karnataka", company_name="TechForge Solutions", service="Tax & Audit", service_item="ITR-3 Business Filing", company_turnover="₹1 Cr - ₹5 Crore", amount=4999, status="NEW_INQUIRY", source="landing_page_form", priority="MEDIUM"),
+        Lead(name="Sneha Joshi", email="sneha@craftcafe.in", phone="9876543213", state="Delhi", company_name="CraftCafe India Pvt Ltd", service="GST & Accounting", service_item="GST Registration", company_turnover="< ₹20 Lakhs", amount=1999, status="PLAN_SELECTED", source="whatsapp", priority="LOW"),
+        Lead(name="Vikrant Singh", email="vikrant@shieldip.in", phone="9876543214", state="Rajasthan", company_name="ShieldIP Trademarks", service="Trademark", service_item="Trademark Application Filing", company_turnover="₹20L - ₹1 Crore", amount=6999, status="IN_PROCESS", source="phone_call", priority="HIGH"),
+        Lead(name="Meera Reddy", email="meera@cloudnine.in", phone="9876543215", state="Telangana", company_name="CloudNine Infra Pvt Ltd", service="ROC Compliance", service_item="ROC Annual Compliance", company_turnover="₹1 Cr - ₹5 Crore", amount=5999, status="PAYMENT_PENDING", source="referral", priority="MEDIUM"),
+        Lead(name="Deepak Verma", email="deepak@nova.in", phone="9876543216", state="Uttar Pradesh", company_name="Nova Enterprises", service="Business Registration", service_item="One Person Company (OPC)", company_turnover="< ₹20 Lakhs", amount=2999, status="LOST", source="google_ads", priority="LOW"),
+        Lead(name="Anjali Deshmukh", email="anjali@spicetrail.in", phone="9876543217", state="Maharashtra", company_name="SpiceTrail Foods Pvt Ltd", service="GST & Accounting", service_item="Monthly GST Return Filing", company_turnover="₹5 Crore+", amount=7999, status="PAID", source="landing_page_form", priority="HIGH", agreed_price=7999),
+    ]
+    db.add_all(demo_leads)
+
+    # Add remarks for some leads
+    await db.flush()
+    for lead in demo_leads[:3]:
+        remark = LeadRemark(
+            lead_id=lead.id,
+            author_name="CA Aakash Mehra",
+            author_role="SENIOR_CA",
+            remark_type="CALL",
+            content=f"Initial discovery call with {lead.name}. Discussed service requirements and pricing."
+        )
+        db.add(remark)
+
+    await db.commit()
+    return {"status": "success", "message": f"Seeded {len(demo_leads)} demo leads across all services."}

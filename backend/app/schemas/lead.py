@@ -44,6 +44,7 @@ class LeadOutSchema(BaseModel):
     email: str
     phone: str
     state: Optional[str] = None
+    city: Optional[str] = None
     company_name: Optional[str] = None
     service: str
     service_item: Optional[str] = None
@@ -59,7 +60,17 @@ class LeadOutSchema(BaseModel):
     assigned_ca_phone: Optional[str] = None
     assigned_ca_cop: Optional[str] = None
     payment_id: Optional[str] = None
+    payment_method: Optional[str] = None
     paid_at: Optional[Any] = None
+    source: Optional[str] = None
+    # Document checklist
+    docs_pan: Optional[bool] = False
+    docs_aadhaar: Optional[bool] = False
+    docs_photo: Optional[bool] = False
+    docs_address_proof: Optional[bool] = False
+    docs_dsc: Optional[bool] = False
+    docs_moa_aoa: Optional[bool] = False
+    created_at: Optional[Any] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -83,7 +94,7 @@ class ManualLeadCreateSchema(BaseModel):
 
 class LeadRemarkCreateSchema(BaseModel):
     content: str = Field(..., min_length=2, max_length=1000)
-    remark_type: Optional[str] = "NOTE" # NOTE, CALL, WHATSAPP, STATUS_CHANGE, PRICE_UPDATE, ASSIGNMENT
+    remark_type: Optional[str] = "NOTE"  # NOTE, CALL, WHATSAPP, STATUS_CHANGE, PRICE_UPDATE, ASSIGNMENT
     author_name: Optional[str] = "Staff"
     author_role: Optional[str] = "CA"
 

@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tax2Biz — Enterprise Superadmin &amp; Staff Operations Portal</title>
+  <title>Tax2Biz — Enterprise Operations & CRM Portal</title>
+  <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
   <style>
     :root {
-      --bg: #F8FAFC;
+      --bg: #F1F5F9;
       --surface: #FFFFFF;
+      --surface-raised: #FFFFFF;
       --border: #E2E8F0;
       --border-dark: #CBD5E1;
       --text: #0F172A;
+      --text-secondary: #334155;
       --muted: #64748B;
       --brand: #059669;
       --brand-hover: #047857;
@@ -24,1293 +27,1383 @@
       --accent-light: #EFF6FF;
       --warning: #D97706;
       --warning-light: #FEF3C7;
-      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --danger: #DC2626;
+      --danger-light: #FEE2E2;
+      --purple: #7C3AED;
+      --purple-light: #F5F3FF;
+      --sidebar-w: 260px;
+      --header-h: 64px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    button, select, input, textarea { font-family: inherit; }
 
-    /* ── Login Overlay ────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════
+       LOGIN SCREEN
+       ═══════════════════════════════════════════════════════════ */
     #login-screen {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
     }
+    #login-screen.hidden { display: none; }
+    .login-wrapper { width: 100%; max-width: 420px; }
+    .login-brand { text-align: center; margin-bottom: 32px; }
+    .login-brand img { height: 40px; filter: brightness(10); margin-bottom: 8px; }
+    .login-brand p { color: #94A3B8; font-size: 0.82rem; }
     .login-card {
-      background: #FFFFFF;
-      border-radius: 20px;
-      padding: 36px 32px;
-      width: 100%;
-      max-width: 440px;
-      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
-      text-align: center;
+      background: #FFFFFF; border-radius: 16px; padding: 32px 28px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     }
-    .login-logo { height: 42px; margin-bottom: 20px; }
-    .login-card h2 { font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 6px; }
-    .login-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 24px; }
-    .form-group { text-align: left; margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 6px; }
+    .login-card h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+    .login-card .sub { color: var(--muted); font-size: 0.84rem; margin-bottom: 24px; }
+    .login-error { background: var(--danger-light); color: var(--danger); border: 1px solid #FECACA; border-radius: 8px; padding: 10px 12px; font-size: 0.82rem; font-weight: 600; margin-bottom: 16px; display: none; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.03em; }
     .form-control {
-      width: 100%;
-      height: 44px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 0 14px;
-      font-size: 0.92rem;
-      font-family: inherit;
-      transition: border-color 0.2s;
+      width: 100%; height: 44px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      padding: 0 14px; font-size: 0.9rem; transition: border-color 0.2s, box-shadow 0.2s; background: #FFFFFF;
     }
-    .form-control:focus { outline: none; border-color: var(--brand); }
-    .btn-login {
-      width: 100%;
-      height: 46px;
-      background: var(--brand);
-      color: #FFFFFF;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s;
-      margin-top: 20px;
+    .form-control:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(5,150,105,0.12); }
+    textarea.form-control { height: auto; padding: 10px 14px; resize: vertical; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 44px; padding: 0 20px; border-radius: var(--radius-sm); font-size: 0.88rem;
+      font-weight: 700; cursor: pointer; transition: all 0.15s; border: none; text-decoration: none;
     }
-    .btn-login:hover { background: var(--brand-hover); }
-    .demo-accounts {
-      background: #F1F5F9;
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-top: 20px;
-      font-size: 0.76rem;
-      color: #475569;
-      text-align: left;
-      line-height: 1.45;
-    }
+    .btn-brand { background: var(--brand); color: #FFF; }
+    .btn-brand:hover { background: var(--brand-hover); }
+    .btn-outline { background: #FFF; border: 1.5px solid var(--border); color: var(--text-secondary); }
+    .btn-outline:hover { border-color: var(--border-dark); background: #F8FAFC; }
+    .btn-danger-outline { background: #FFF; border: 1.5px solid #FECACA; color: var(--danger); }
+    .btn-danger-outline:hover { background: var(--danger-light); }
+    .btn-sm { height: 34px; padding: 0 12px; font-size: 0.8rem; border-radius: 6px; }
+    .btn-xs { height: 28px; padding: 0 10px; font-size: 0.74rem; border-radius: 5px; }
+    .btn-icon { width: 34px; height: 34px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-full { width: 100%; }
 
-    /* ── Main Layout ───────────────────────────────────────── */
-    .admin-header {
-      background: #FFFFFF;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 0 24px;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* ═══════════════════════════════════════════════════════════
+       SIDEBAR NAVIGATION
+       ═══════════════════════════════════════════════════════════ */
+    .sidebar {
+      position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-w);
+      background: #0F172A; z-index: 200; display: flex; flex-direction: column;
+      transition: transform 0.3s ease;
     }
-    .header-left { display: flex; align-items: center; gap: 16px; }
-    .header-logo { height: 34px; }
-    .admin-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--brand-light);
-      color: var(--brand);
-      border: 1px solid var(--brand-border);
-      padding: 4px 10px;
-      border-radius: 9999px;
-      font-size: 0.74rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: #10B981; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .sidebar-brand { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-brand img { height: 32px; filter: brightness(10); }
+    .sidebar-brand .badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(5,150,105,0.2); color: #34D399; padding: 3px 10px; border-radius: 9999px; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; }
+    .sidebar-brand .badge .dot { width: 6px; height: 6px; background: #34D399; border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    .header-actions { display: flex; align-items: center; gap: 12px; }
-    .user-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #F1F5F9;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #1E293B;
+    .sidebar-nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+    .sidebar-section-title { font-size: 0.65rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px 12px 6px; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+      color: #94A3B8; font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+      text-decoration: none; border: none; background: none; width: 100%; text-align: left;
     }
-    .btn-action {
-      height: 40px;
-      padding: 0 14px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .btn-primary { background: var(--brand); color: #FFFFFF; border: none; }
-    .btn-primary:hover { background: var(--brand-hover); }
-    .btn-secondary { background: #FFFFFF; border: 1px solid var(--border); color: #334155; }
-    .btn-secondary:hover { background: #F8FAFC; border-color: var(--border-dark); }
-    .btn-danger { background: #FEE2E2; border: 1px solid #FECACA; color: #DC2626; }
+    .sidebar-link:hover { background: rgba(255,255,255,0.06); color: #E2E8F0; }
+    .sidebar-link.active { background: rgba(5,150,105,0.15); color: #34D399; }
+    .sidebar-link i { font-size: 18px; width: 20px; text-align: center; flex-shrink: 0; }
+    .sidebar-link .count { margin-left: auto; background: rgba(255,255,255,0.1); color: #94A3B8; padding: 1px 7px; border-radius: 9999px; font-size: 0.7rem; font-weight: 800; }
+    .sidebar-link.active .count { background: rgba(5,150,105,0.3); color: #34D399; }
 
-    .container { max-width: 1480px; margin: 0 auto; padding: 24px 24px 60px; }
+    .sidebar-footer { padding: 12px 14px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+    .sidebar-avatar { width: 36px; height: 36px; border-radius: 8px; background: var(--brand); display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 800; font-size: 0.82rem; flex-shrink: 0; }
+    .sidebar-user-info { flex: 1; min-width: 0; }
+    .sidebar-user-name { font-size: 0.82rem; font-weight: 700; color: #E2E8F0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sidebar-user-role { font-size: 0.7rem; color: #64748B; }
 
-    /* ── Navigation Tabs ───────────────────────────────────── */
-    .nav-tabs {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 24px;
-      padding-bottom: 2px;
-    }
-    .nav-tab-btn {
-      padding: 10px 18px;
-      border: none;
-      background: none;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--muted);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .nav-tab-btn.active {
-      color: var(--brand);
-    }
-    .nav-tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--brand);
-      border-radius: 3px 3px 0 0;
-    }
+    /* ═══════════════════════════════════════════════════════════
+       MAIN CONTENT AREA
+       ═══════════════════════════════════════════════════════════ */
+    .main-area { margin-left: var(--sidebar-w); min-height: 100vh; }
 
-    /* ── Metrics Cards ─────────────────────────────────────── */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+    .topbar {
+      height: var(--header-h); background: #FFFFFF; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
+      position: sticky; top: 0; z-index: 100;
     }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-title { font-size: 1.1rem; font-weight: 800; }
+    .topbar-sub { font-size: 0.78rem; color: var(--muted); }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .btn-mobile-menu { display: none; background: none; border: none; font-size: 22px; color: var(--text); cursor: pointer; }
+
+    .page-content { padding: 24px; max-width: 1600px; margin: 0 auto; }
+
+    /* ═══════════════════════════════════════════════════════════
+       METRICS CARDS
+       ═══════════════════════════════════════════════════════════ */
+    .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
     .metric-card {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      background: #FFF; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px;
+      box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 14px;
     }
-    .metric-icon-wrap {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    .icon-leads { background: #EFF6FF; color: #2563EB; }
-    .icon-verified { background: #F0FDF4; color: #16A34A; }
-    .icon-paid { background: #FAF5FF; color: #9333EA; }
-    .icon-revenue { background: #ECFDF5; color: #059669; }
-    .metric-value { font-size: 1.55rem; font-weight: 800; color: #0F172A; line-height: 1.1; margin-bottom: 2px; }
-    .metric-label { font-size: 0.74rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .metric-icon { width: 46px; height: 46px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .m-blue { background: #EFF6FF; color: #2563EB; }
+    .m-green { background: #F0FDF4; color: #16A34A; }
+    .m-purple { background: #F5F3FF; color: #7C3AED; }
+    .m-emerald { background: #ECFDF5; color: #059669; }
+    .m-amber { background: #FFFBEB; color: #D97706; }
+    .m-red { background: #FEF2F2; color: #DC2626; }
+    .m-indigo { background: #EEF2FF; color: #4F46E5; }
+    .m-cyan { background: #ECFEFF; color: #0891B2; }
+    .metric-value { font-size: 1.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 2px; }
+    .metric-label { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
 
-    /* ── Service Filter Strip ──────────────────────────────── */
-    .service-filter-strip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 2px 0 16px;
-      margin-bottom: 12px;
+    /* ═══════════════════════════════════════════════════════════
+       TOOLBAR / FILTER BAR
+       ═══════════════════════════════════════════════════════════ */
+    .toolbar {
+      background: #FFF; border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px;
+      margin-bottom: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+      box-shadow: var(--shadow-sm);
     }
-    .service-chip {
-      padding: 7px 14px;
-      border-radius: 9999px;
-      border: 1px solid var(--border);
-      background: #FFFFFF;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #334155;
-      cursor: pointer;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s;
+    .search-box { position: relative; flex: 1; min-width: 220px; max-width: 360px; }
+    .search-box input { width: 100%; height: 38px; padding: 0 12px 0 36px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 0.84rem; }
+    .search-box input:focus { outline: none; border-color: var(--brand); }
+    .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 16px; }
+    .toolbar-sep { width: 1px; height: 24px; background: var(--border); }
+    .chip-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      padding: 5px 12px; border-radius: 9999px; border: 1px solid var(--border); background: #FFF;
+      font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); cursor: pointer;
+      white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; transition: all 0.12s;
     }
-    .service-chip.active {
-      background: #0F172A;
-      color: #FFFFFF;
-      border-color: #0F172A;
-    }
+    .chip.active { background: #0F172A; color: #FFF; border-color: #0F172A; }
+    .chip:hover:not(.active) { border-color: var(--border-dark); background: #F8FAFC; }
 
-    /* ── Controls Bar ──────────────────────────────────────── */
-    .controls-bar {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .status-tabs { display: flex; gap: 4px; }
+    .status-tab {
+      padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: #FFF;
+      font-size: 0.76rem; font-weight: 700; color: #475569; cursor: pointer; transition: all 0.12s;
     }
-    .search-box {
-      position: relative;
-      flex: 1;
-      min-width: 240px;
-      max-width: 380px;
-    }
-    .search-box input {
-      width: 100%;
-      height: 40px;
-      padding: 0 14px 0 36px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.88rem;
-      font-family: inherit;
-    }
-    .search-box i {
-      position: absolute;
-      left: 11px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      font-size: 17px;
-    }
-    .filter-tabs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .filter-btn {
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #FFFFFF;
-      font-size: 0.80rem;
-      font-weight: 700;
-      color: #475569;
-      cursor: pointer;
-    }
-    .filter-btn.active {
-      background: var(--brand);
-      color: #FFFFFF;
-      border-color: var(--brand);
-    }
+    .status-tab.active { background: var(--brand); color: #FFF; border-color: var(--brand); }
 
-    /* ── Table Container ───────────────────────────────────── */
-    .table-container {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow-x: auto;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th {
-      background: #F8FAFC;
-      padding: 14px 16px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #475569;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-    td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.88rem;
-      vertical-align: middle;
-    }
-    tr:hover { background: #F8FAFC; }
+    /* ═══════════════════════════════════════════════════════════
+       DATA TABLE
+       ═══════════════════════════════════════════════════════════ */
+    .table-card { background: #FFF; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .table-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .table-header h3 { font-size: 0.95rem; font-weight: 800; }
+    .table-header .count-badge { background: var(--brand-light); color: var(--brand); padding: 2px 10px; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; margin-left: 8px; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #F8FAFC; padding: 11px 14px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #475569; border-bottom: 1px solid var(--border); white-space: nowrap; text-align: left; }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 0.84rem; vertical-align: middle; }
+    tr:hover td { background: #FAFBFC; }
+    tr:last-child td { border-bottom: none; }
 
-    /* Founder Cell */
-    .founder-name { font-weight: 700; color: #0F172A; font-size: 0.94rem; display: flex; align-items: center; gap: 8px; }
-    .priority-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .priority-high { background: #EF4444; }
-    .priority-med { background: #F59E0B; }
-    .priority-low { background: #10B981; }
-
-    .company-name { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
-    .service-tag {
-      display: inline-block;
-      background: #F1F5F9;
-      color: #475569;
-      border-radius: 4px;
-      padding: 2px 6px;
-      font-size: 0.70rem;
-      font-weight: 700;
-      margin-top: 4px;
-    }
-
-    /* Contact Cell */
-    .contact-phone { font-weight: 600; color: #1E293B; display: flex; align-items: center; gap: 6px; }
-    .contact-email { font-size: 0.76rem; color: var(--muted); }
-    .contact-actions { display: inline-flex; align-items: center; gap: 5px; margin-left: 6px; }
-    .quick-icon-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      text-decoration: none;
-      transition: transform 0.15s;
-    }
-    .icon-wa { background: #DCFCE7; color: #16A34A; }
-    .icon-tel { background: #EFF6FF; color: #2563EB; }
-    .quick-icon-btn:hover { transform: scale(1.12); }
-
-    /* Financial Turnover Pill */
-    .turnover-pill {
-      display: inline-block;
-      background: #FEF3C7;
-      color: #92400E;
-      border: 1px solid #FDE68A;
-      border-radius: 4px;
-      padding: 1px 6px;
-      font-size: 0.70rem;
-      font-weight: 700;
-      margin-top: 3px;
-    }
-
-    /* Status & CA Selectors */
-    .table-select {
-      height: 32px;
-      padding: 0 8px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      font-size: 0.80rem;
-      font-family: inherit;
-      font-weight: 700;
-      background: #FFFFFF;
-      cursor: pointer;
-    }
+    /* Cell components */
+    .cell-primary { font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 7px; }
+    .cell-secondary { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+    .priority-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .p-high { background: #EF4444; }
+    .p-medium { background: #F59E0B; }
+    .p-low { background: #10B981; }
+    .tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.68rem; font-weight: 700; }
+    .tag-service { background: #F1F5F9; color: #475569; }
+    .tag-turnover { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+    .tag-source { background: #ECFDF5; color: #065F46; }
+    .contact-actions { display: inline-flex; gap: 4px; margin-left: 6px; }
+    .icon-btn { width: 26px; height: 26px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; text-decoration: none; transition: transform 0.15s; border: none; cursor: pointer; }
+    .icon-btn:hover { transform: scale(1.1); }
+    .wa-btn { background: #DCFCE7; color: #16A34A; }
+    .tel-btn { background: #EFF6FF; color: #2563EB; }
+    .table-select { height: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid var(--border); font-size: 0.78rem; font-weight: 600; cursor: pointer; background: #FFF; }
     .table-select:focus { outline: none; border-color: var(--brand); }
 
-    /* Modals & Drawers */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 500;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-card {
-      background: #FFFFFF;
-      border-radius: 18px;
-      width: 100%;
-      max-width: 600px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 28px 24px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .modal-header h3 { font-size: 1.25rem; font-weight: 800; }
-    .btn-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); }
+    .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 9999px; font-size: 0.72rem; font-weight: 800; }
+    .sp-new { background: #EFF6FF; color: #2563EB; }
+    .sp-verified { background: #F0FDF4; color: #16A34A; }
+    .sp-paid { background: #ECFDF5; color: #059669; }
+    .sp-process { background: #FFFBEB; color: #D97706; }
+    .sp-lost { background: #FEF2F2; color: #DC2626; }
+    .sp-docs { background: #F5F3FF; color: #7C3AED; }
+    .sp-govt { background: #ECFEFF; color: #0891B2; }
+    .sp-done { background: #F0FDF4; color: #059669; }
+
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--muted); }
+    .empty-state i { font-size: 48px; margin-bottom: 12px; display: block; opacity: 0.3; }
+    .empty-state p { font-size: 0.88rem; }
+
+    /* ═══════════════════════════════════════════════════════════
+       MODAL
+       ═══════════════════════════════════════════════════════════ */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(4px); z-index: 500; display: none; align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: #FFF; border-radius: 16px; width: 100%; max-width: 640px; box-shadow: var(--shadow-lg); }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); }
+    .modal-head h3 { font-size: 1.1rem; font-weight: 800; }
+    .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); padding: 4px; border-radius: 6px; }
+    .modal-close:hover { background: #F1F5F9; }
+    .modal-body { padding: 20px 24px; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+    /* Detail info grid */
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 14px 0; font-size: 0.84rem; }
+    .detail-grid dt { font-weight: 700; color: var(--text-secondary); }
+    .detail-grid dd { color: var(--text); }
 
     /* Remarks timeline */
-    .remarks-timeline { margin: 18px 0; max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-    .remark-item {
-      background: #F8FAFC;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 0.82rem;
-    }
-    .remark-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 700; color: #334155; }
-    .remark-content { color: #475569; }
+    .timeline { margin: 14px 0; max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .timeline-item { background: #F8FAFC; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+    .timeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+    .timeline-author { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); }
+    .timeline-time { font-size: 0.7rem; color: var(--muted); }
+    .timeline-type { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; margin-left: 6px; }
+    .tt-call { background: #EFF6FF; color: #2563EB; }
+    .tt-note { background: #F1F5F9; color: #475569; }
+    .tt-whatsapp { background: #DCFCE7; color: #16A34A; }
+    .tt-status { background: #FFFBEB; color: #D97706; }
+    .tt-assignment { background: #F5F3FF; color: #7C3AED; }
+    .tt-price { background: #ECFDF5; color: #059669; }
+    .timeline-content { font-size: 0.82rem; color: #475569; line-height: 1.45; }
 
-    /* Conversion Box */
-    .convert-box {
-      background: #F0FDF4;
-      border: 1px solid #BBF7D0;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 16px;
+    /* Convert box */
+    .convert-box { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .convert-box h4 { font-size: 0.9rem; font-weight: 800; color: #065F46; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+    /* Docs checklist */
+    .doc-checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 12px 0; }
+    .doc-item { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+    .doc-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--brand); cursor: pointer; }
+    .doc-item.checked { color: var(--brand); }
+
+    /* Team password column */
+    .password-reveal { display: inline-flex; align-items: center; gap: 5px; font-family: 'Courier New', monospace; font-size: 0.8rem; background: #F1F5F9; padding: 3px 8px; border-radius: 4px; color: var(--text); }
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION PAGES (hidden/shown)
+       ═══════════════════════════════════════════════════════════ */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-area { margin-left: 0; }
+      .btn-mobile-menu { display: block; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
     }
-    .convert-box h4 { font-size: 0.95rem; font-weight: 800; color: #065F46; margin-bottom: 8px; }
+    @media (max-width: 640px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .page-content { padding: 16px; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .search-box { max-width: 100%; }
+      .toolbar-sep { display: none; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .topbar { padding: 0 16px; }
+    }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 199; }
+    @media (max-width: 1024px) { .sidebar-overlay.open { display: block; } }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #0F172A; color: #FFF; padding: 12px 20px; border-radius: 10px; font-size: 0.84rem; font-weight: 600; z-index: 9999; opacity: 0; transform: translateY(10px); transition: all 0.3s; pointer-events: none; box-shadow: var(--shadow-lg); }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN OVERLAY -->
-  <div id="login-screen">
+<!-- ══════════════════════════════════════════════════════════
+     LOGIN SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-wrapper">
+    <div class="login-brand">
+      <img src="tax2biz.png" alt="Tax2Biz">
+      <p>Enterprise Operations & CRM Portal</p>
+    </div>
     <div class="login-card">
-      <img src="tax2biz.png" alt="Tax2Biz" class="login-logo">
-      <h2>Team &amp; Superadmin Login</h2>
-      <p>Enter your official credentials to access operations</p>
-      
+      <h2>Sign In</h2>
+      <p class="sub">Enter your credentials to access the portal</p>
+      <div class="login-error" id="login-error"></div>
       <div class="form-group">
         <label>Work Email</label>
-        <input type="email" id="login-email" class="form-control" value="admin@tax2biz.in" required>
+        <input type="email" id="login-email" class="form-control" placeholder="admin@tax2biz.in" value="admin@tax2biz.in">
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" id="login-password" class="form-control" value="Tax2Biz@2026!" required>
+        <input type="password" id="login-password" class="form-control" placeholder="••••••••" value="Tax2Biz@2026!">
       </div>
-      <button class="btn-login" id="btn-do-login" onclick="handleLogin()">
-        <i class="ph-bold ph-lock-key"></i> Access Operations Portal
+      <button class="btn btn-brand btn-full" id="btn-login" onclick="handleLogin()">
+        <i class="ph-bold ph-sign-in"></i> Sign In
       </button>
-
-      <div class="demo-accounts">
-        <strong>Demo Portal Accounts:</strong><br>
-        👑 <b>Superadmin</b>: <code>admin@tax2biz.in</code> / <code>Tax2Biz@2026!</code><br>
-        💼 <b>Senior CA</b>: <code>aakash.ca@tax2biz.in</code> / <code>Tax2Biz@2026!</code><br>
-        ⚖️ <b>Compliance CS</b>: <code>rahul.cs@tax2biz.in</code> / <code>Tax2Biz@2026!</code>
+      <div style="background: #F8FAFC; border-radius: 8px; padding: 10px 12px; margin-top: 16px; font-size: 0.74rem; color: #475569; line-height: 1.5;">
+        <strong>Demo Accounts:</strong><br>
+        👑 Superadmin: <code>admin@tax2biz.in</code> / <code>Tax2Biz@2026!</code><br>
+        💼 Staff: <code>aakash.ca@tax2biz.in</code> / <code>Tax2Biz@2026!</code>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- DASHBOARD HEADER -->
-  <header class="admin-header">
-    <div class="header-left">
-      <a href="index.html">
-        <img src="tax2biz.png" alt="Tax2Biz" class="header-logo">
-      </a>
-      <span class="admin-badge">
-        <span class="pulse-dot"></span> Enterprise Ops
-      </span>
-    </div>
-    <div class="header-actions">
-      <div class="user-pill" id="current-user-pill">
-        <i class="ph-bold ph-user-circle"></i> <span id="logged-user-name">Super Admin</span>
+<!-- ══════════════════════════════════════════════════════════
+     SIDEBAR
+     ══════════════════════════════════════════════════════════ -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <img src="tax2biz.png" alt="Tax2Biz">
+    <div class="badge"><span class="dot"></span> Enterprise CRM</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-title">Main</div>
+    <button class="sidebar-link active" onclick="showPage('dashboard', this)">
+      <i class="ph-bold ph-chart-pie-slice"></i> Dashboard
+    </button>
+    <button class="sidebar-link" onclick="showPage('leads', this)">
+      <i class="ph-bold ph-users"></i> All Leads <span class="count" id="nav-leads-count">0</span>
+    </button>
+
+    <div class="sidebar-section-title">Services</div>
+    <button class="sidebar-link" onclick="showPage('leads', this, 'Business Registration')">
+      <i class="ph-bold ph-buildings"></i> Company Registration
+    </button>
+    <button class="sidebar-link" onclick="showPage('leads', this, 'Tax & Audit')">
+      <i class="ph-bold ph-receipt"></i> Tax & Audit
+    </button>
+    <button class="sidebar-link" onclick="showPage('leads', this, 'GST & Accounting')">
+      <i class="ph-bold ph-calculator"></i> GST & Accounting
+    </button>
+    <button class="sidebar-link" onclick="showPage('leads', this, 'Trademark')">
+      <i class="ph-bold ph-trademark-registered"></i> Trademark
+    </button>
+    <button class="sidebar-link" onclick="showPage('leads', this, 'ROC Compliance')">
+      <i class="ph-bold ph-shield-check"></i> ROC Compliance
+    </button>
+
+    <div class="sidebar-section-title">Management</div>
+    <button class="sidebar-link" onclick="showPage('team', this)">
+      <i class="ph-bold ph-users-three"></i> Team & Employees
+    </button>
+    <button class="sidebar-link" onclick="showPage('settings', this)">
+      <i class="ph-bold ph-gear-six"></i> Settings
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">SA</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-user-name">Super Admin</div>
+        <div class="sidebar-user-role" id="sidebar-user-role">SUPERADMIN</div>
       </div>
-      <button class="btn-action btn-primary" onclick="openManualLeadModal()">
-        <i class="ph-bold ph-plus-circle"></i> + Add New Lead
+    </div>
+    <button class="btn btn-danger-outline btn-sm btn-full" onclick="handleLogout()" style="margin-top:6px;">
+      <i class="ph-bold ph-sign-out"></i> Sign Out
+    </button>
+  </div>
+</aside>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN AREA
+     ══════════════════════════════════════════════════════════ -->
+<div class="main-area" id="main-area">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="btn-mobile-menu" onclick="toggleSidebar()"><i class="ph-bold ph-list"></i></button>
+      <div>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="topbar-sub" id="topbar-sub">Real-time business overview</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-brand btn-sm" onclick="openModal('modal-add-lead')">
+        <i class="ph-bold ph-plus"></i> Add Lead
       </button>
-      <a href="/api/v1/admin/export-csv" class="btn-action btn-secondary" title="Export to Excel">
-        <i class="ph-bold ph-download-simple"></i> Export CSV
+      <a href="/api/v1/admin/export-csv" class="btn btn-outline btn-sm" title="Export CSV">
+        <i class="ph-bold ph-download-simple"></i> Export
       </a>
-      <button class="btn-action btn-danger" onclick="handleLogout()">
-        <i class="ph-bold ph-sign-out"></i> Sign Out
-      </button>
     </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
-  <main class="container">
+  <div class="page-content">
 
-    <!-- NAVIGATION TABS -->
-    <div class="nav-tabs">
-      <button class="nav-tab-btn active" onclick="switchMainTab('leads', this)">
-        <i class="ph-bold ph-kanban"></i> Lead Management
-      </button>
-      <button class="nav-tab-btn" onclick="switchMainTab('team', this)">
-        <i class="ph-bold ph-users-three"></i> Employee &amp; CA Team
-      </button>
+    <!-- ═══════════════ DASHBOARD PAGE ═══════════════ -->
+    <div class="page-section active" id="page-dashboard">
+      <div class="metrics-row" id="metrics-row">
+        <div class="metric-card">
+          <div class="metric-icon m-blue"><i class="ph-bold ph-users"></i></div>
+          <div><div class="metric-value" id="kpi-total">0</div><div class="metric-label">Total Leads</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-green"><i class="ph-bold ph-shield-check"></i></div>
+          <div><div class="metric-value" id="kpi-verified">0</div><div class="metric-label">Verified</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-purple"><i class="ph-bold ph-credit-card"></i></div>
+          <div><div class="metric-value" id="kpi-paid">0</div><div class="metric-label">Converted</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-emerald"><i class="ph-bold ph-currency-inr"></i></div>
+          <div><div class="metric-value" id="kpi-revenue">₹0</div><div class="metric-label">Revenue</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-amber"><i class="ph-bold ph-funnel"></i></div>
+          <div><div class="metric-value" id="kpi-pipeline">₹0</div><div class="metric-label">Pipeline</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-indigo"><i class="ph-bold ph-spinner-gap"></i></div>
+          <div><div class="metric-value" id="kpi-process">0</div><div class="metric-label">In Process</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-red"><i class="ph-bold ph-x-circle"></i></div>
+          <div><div class="metric-value" id="kpi-lost">0</div><div class="metric-label">Lost</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon m-cyan"><i class="ph-bold ph-chart-line-up"></i></div>
+          <div><div class="metric-value" id="kpi-conv-rate">0%</div><div class="metric-label">Conv. Rate</div></div>
+        </div>
+      </div>
+
+      <!-- Recent leads quick view -->
+      <div class="table-card">
+        <div class="table-header">
+          <h3><i class="ph-bold ph-clock-countdown" style="color:var(--muted);"></i> Recent Inquiries <span class="count-badge" id="recent-count">0</span></h3>
+          <button class="btn btn-outline btn-xs" onclick="showPage('leads', document.querySelector('.sidebar-link:nth-child(3)'))">View All →</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Founder & Company</th><th>Service</th><th>Contact</th><th>Status</th><th>Assigned To</th><th>Actions</th></tr></thead>
+            <tbody id="recent-tbody"><tr><td colspan="6" class="empty-state"><p>Loading...</p></td></tr></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- TAB 1: LEADS VIEW -->
-    <div id="tab-leads-view">
-      <!-- METRICS GRID -->
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-icon-wrap icon-leads">
-            <i class="ph-bold ph-users"></i>
-          </div>
-          <div>
-            <div class="metric-value" id="kpi-leads">0</div>
-            <div class="metric-label">Total Inquiries</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon-wrap icon-verified">
-            <i class="ph-bold ph-shield-check"></i>
-          </div>
-          <div>
-            <div class="metric-value" id="kpi-verified">0</div>
-            <div class="metric-label">OTP Verified</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon-wrap icon-paid">
-            <i class="ph-bold ph-credit-card"></i>
-          </div>
-          <div>
-            <div class="metric-value" id="kpi-paid">0</div>
-            <div class="metric-label">Converted / Paid</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon-wrap icon-revenue">
-            <i class="ph-bold ph-currency-inr"></i>
-          </div>
-          <div>
-            <div class="metric-value" id="kpi-revenue">₹0</div>
-            <div class="metric-label">Total Revenue</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SERVICE FILTER CHIPS -->
-      <div class="service-filter-strip">
-        <button class="service-chip active" onclick="setServiceFilter('ALL', this)">
-          <i class="ph-bold ph-squares-four"></i> All Services
-        </button>
-        <button class="service-chip" onclick="setServiceFilter('Business Registration', this)">
-          <i class="ph-bold ph-buildings"></i> Company Registration
-        </button>
-        <button class="service-chip" onclick="setServiceFilter('Tax & Audit', this)">
-          <i class="ph-bold ph-receipt"></i> Tax &amp; Audit
-        </button>
-        <button class="service-chip" onclick="setServiceFilter('GST & Accounting', this)">
-          <i class="ph-bold ph-calculator"></i> GST &amp; Accounting
-        </button>
-        <button class="service-chip" onclick="setServiceFilter('Trademark', this)">
-          <i class="ph-bold ph-trademark"></i> Trademark
-        </button>
-        <button class="service-chip" onclick="setServiceFilter('ROC Compliance', this)">
-          <i class="ph-bold ph-shield-check"></i> ROC Compliance
-        </button>
-      </div>
-
-      <!-- CONTROLS BAR -->
-      <div class="controls-bar">
+    <!-- ═══════════════ LEADS PAGE ═══════════════ -->
+    <div class="page-section" id="page-leads">
+      <!-- Service filter chips -->
+      <div class="toolbar">
         <div class="search-box">
           <i class="ph ph-magnifying-glass"></i>
-          <input type="text" id="search-input" placeholder="Search founder, phone, email, or company..." oninput="handleSearch()">
+          <input type="text" id="leads-search" placeholder="Search name, phone, email, company..." oninput="handleLeadSearch()">
         </div>
-
-        <div class="filter-tabs">
-          <button class="filter-btn active" onclick="setStatusFilter('ALL', this)">All</button>
-          <button class="filter-btn" onclick="setStatusFilter('PAID', this)">Paid 💰</button>
-          <button class="filter-btn" onclick="setStatusFilter('IN_PROCESS', this)">In Process</button>
-          <button class="filter-btn" onclick="setStatusFilter('OTP_VERIFIED', this)">Verified 📱</button>
-          <button class="filter-btn" onclick="setStatusFilter('NEW_INQUIRY', this)">New</button>
+        <div class="toolbar-sep"></div>
+        <div class="chip-group" id="service-chips">
+          <button class="chip active" onclick="setServiceFilter('ALL', this)"><i class="ph-bold ph-squares-four"></i> All</button>
+          <button class="chip" onclick="setServiceFilter('Business Registration', this)"><i class="ph-bold ph-buildings"></i> Company Reg</button>
+          <button class="chip" onclick="setServiceFilter('Tax & Audit', this)"><i class="ph-bold ph-receipt"></i> Tax & Audit</button>
+          <button class="chip" onclick="setServiceFilter('GST & Accounting', this)"><i class="ph-bold ph-calculator"></i> GST</button>
+          <button class="chip" onclick="setServiceFilter('Trademark', this)"><i class="ph-bold ph-trademark-registered"></i> Trademark</button>
+          <button class="chip" onclick="setServiceFilter('ROC Compliance', this)"><i class="ph-bold ph-shield-check"></i> ROC</button>
+        </div>
+      </div>
+      <!-- Status filter tabs -->
+      <div class="toolbar" style="padding: 10px 16px;">
+        <div class="status-tabs" id="status-tabs">
+          <button class="status-tab active" onclick="setStatusFilter('ALL', this)">All</button>
+          <button class="status-tab" onclick="setStatusFilter('NEW_INQUIRY', this)">New</button>
+          <button class="status-tab" onclick="setStatusFilter('OTP_VERIFIED', this)">Verified</button>
+          <button class="status-tab" onclick="setStatusFilter('PLAN_SELECTED', this)">Plan Selected</button>
+          <button class="status-tab" onclick="setStatusFilter('PAYMENT_PENDING', this)">Payment Pending</button>
+          <button class="status-tab" onclick="setStatusFilter('PAID', this)">Paid 💰</button>
+          <button class="status-tab" onclick="setStatusFilter('IN_PROCESS', this)">In Process</button>
+          <button class="status-tab" onclick="setStatusFilter('INCORPORATED', this)">Incorporated 🏆</button>
+          <button class="status-tab" onclick="setStatusFilter('LOST', this)">Lost</button>
+        </div>
+        <div style="margin-left: auto; display: flex; gap: 6px;">
+          <button class="btn btn-outline btn-xs" onclick="seedDemoData()"><i class="ph-bold ph-database"></i> Seed Demo</button>
         </div>
       </div>
 
-      <!-- LEADS TABLE -->
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Founder &amp; Company</th>
-              <th>Service &amp; Turnover</th>
-              <th>Contact &amp; Connect</th>
-              <th>Price &amp; Fee</th>
-              <th>Funnel Status</th>
-              <th>Assigned Professional</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="leads-tbody">
-            <tr>
-              <td colspan="7" style="text-align: center; padding: 40px; color: var(--muted);">Loading leads...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 2: TEAM MANAGEMENT -->
-    <div id="tab-team-view" style="display: none;">
-      <div class="controls-bar">
-        <div>
-          <h3 style="font-size: 1.15rem; font-weight: 800;">Chartered Accountants &amp; Operations Team</h3>
-          <p style="font-size: 0.82rem; color: var(--muted);">Manage assigned professionals, roles, and automated lead distribution.</p>
+      <!-- Leads table -->
+      <div class="table-card">
+        <div class="table-header">
+          <h3>Lead Management <span class="count-badge" id="leads-count-badge">0</span></h3>
         </div>
-        <button class="btn-action btn-primary" onclick="openAddEmployeeModal()">
-          <i class="ph-bold ph-user-plus"></i> + Add Team Member
-        </button>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Name &amp; Role</th>
-              <th>Official Email</th>
-              <th>Phone</th>
-              <th>COP / Registration #</th>
-              <th>Leads Handled</th>
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>Founder & Company</th>
+              <th>Service & Turnover</th>
+              <th>Contact</th>
+              <th>Amount</th>
               <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="team-tbody">
-            <tr><td colspan="6" style="text-align: center; padding: 40px;">Loading team members...</td></tr>
-          </tbody>
-        </table>
+              <th>Assigned To</th>
+              <th>Source</th>
+              <th>Actions</th>
+            </tr></thead>
+            <tbody id="leads-tbody"><tr><td colspan="8" class="empty-state"><i class="ph ph-funnel"></i><p>No leads found</p></td></tr></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-  </main>
-
-  <!-- MODAL: MANUAL LEAD ENTRY -->
-  <div class="modal-overlay" id="manual-lead-modal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>+ Add Direct / Offline Inquiry</h3>
-        <button class="btn-close" onclick="closeModal('manual-lead-modal')">&times;</button>
+    <!-- ═══════════════ TEAM PAGE ═══════════════ -->
+    <div class="page-section" id="page-team">
+      <div class="toolbar">
+        <div>
+          <h3 style="font-size: 1rem; font-weight: 800;">Team & Employees</h3>
+          <p style="font-size: 0.78rem; color: var(--muted);">Manage CAs, CS, Sales, and Compliance staff</p>
+        </div>
+        <div style="margin-left: auto;">
+          <button class="btn btn-brand btn-sm" onclick="openModal('modal-add-employee')">
+            <i class="ph-bold ph-user-plus"></i> Add Member
+          </button>
+        </div>
       </div>
-      <form onsubmit="handleManualLeadSubmit(event)">
-        <div class="form-group">
-          <label>Service Category *</label>
-          <select id="m-service" class="form-control" onchange="updateSubServiceOptions()" required>
-            <option value="Business Registration">Business Registration</option>
-            <option value="Tax & Audit">Tax &amp; Audit</option>
-            <option value="GST & Accounting">GST &amp; Accounting</option>
-            <option value="Trademark">Trademark</option>
-            <option value="ROC Compliance">ROC Compliance</option>
-          </select>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>Name & Role</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>COP / Membership</th>
+              <th>Department</th>
+              <th>Leads</th>
+              <th>Password</th>
+              <th>Status</th>
+            </tr></thead>
+            <tbody id="team-tbody"><tr><td colspan="8" class="empty-state"><p>Loading team...</p></td></tr></tbody>
+          </table>
         </div>
-        <div class="form-group">
-          <label>Specific Service *</label>
-          <select id="m-service-item" class="form-control" required>
-            <option value="Private Limited Company Registration">Private Limited Company Registration</option>
-            <option value="LLP Registration">LLP Registration</option>
-            <option value="One Person Company (OPC) Registration">One Person Company (OPC)</option>
-            <option value="Partnership Firm Registration">Partnership Firm</option>
-          </select>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SETTINGS PAGE ═══════════════ -->
+    <div class="page-section" id="page-settings">
+      <div class="toolbar"><h3 style="font-size: 1rem; font-weight: 800;">Portal Settings</h3></div>
+      <div class="table-card" style="padding: 24px;">
+        <div class="detail-grid">
+          <dt>Superadmin Email</dt><dd><code>admin@tax2biz.in</code></dd>
+          <dt>Superadmin Password</dt><dd><span class="password-reveal"><i class="ph ph-eye"></i> Tax2Biz@2026!</span></dd>
+          <dt>Backend API</dt><dd><a href="/api/docs" target="_blank" style="color: var(--accent);">http://localhost:8085/api/docs</a></dd>
+          <dt>Environment</dt><dd><span class="tag tag-source">DEMO</span> Payment + Notifications in demo mode</dd>
+          <dt>Database</dt><dd>SQLite (local) — Switch to PostgreSQL for production</dd>
+          <dt>Frontend Form</dt><dd>Landing pages → <code>/api/leads</code> → CRM auto-sync</dd>
         </div>
-        <div class="form-group">
-          <label>Founder Name *</label>
-          <input type="text" id="m-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+          <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 8px;">Connected Landing Pages</h4>
+          <ul style="font-size: 0.84rem; color: var(--text-secondary); line-height: 2;">
+            <li>✅ <a href="/private-limited-company-registration.html" target="_blank" style="color: var(--accent);">Private Limited Company Registration</a> — form connected to <code>/api/leads</code></li>
+            <li>✅ <a href="/registration-plan-select.html" target="_blank" style="color: var(--accent);">Plan Selection & Checkout</a> — connected</li>
+            <li>⬜ Tax & Audit pages — will connect when forms are built</li>
+            <li>⬜ GST & Accounting pages — will connect when forms are built</li>
+          </ul>
         </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div>
-            <label>Phone Number *</label>
-            <input type="tel" id="m-phone" class="form-control" placeholder="10-digit mobile" required>
+      </div>
+    </div>
+
+  </div><!-- /page-content -->
+</div><!-- /main-area -->
+
+<!-- ══════════════════════════════════════════════════════════
+     MODALS
+     ══════════════════════════════════════════════════════════ -->
+
+<!-- ADD LEAD MODAL -->
+<div class="modal-backdrop" id="modal-add-lead">
+  <div class="modal">
+    <div class="modal-head">
+      <h3><i class="ph-bold ph-plus-circle" style="color:var(--brand);"></i> Add New Lead</h3>
+      <button class="modal-close" onclick="closeModal('modal-add-lead')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form onsubmit="handleAddLead(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Service Category *</label>
+            <select id="ml-service" class="form-control" onchange="updateSubServices('ml')" required>
+              <option value="Business Registration">Business Registration</option>
+              <option value="Tax & Audit">Tax & Audit</option>
+              <option value="GST & Accounting">GST & Accounting</option>
+              <option value="Trademark">Trademark</option>
+              <option value="ROC Compliance">ROC Compliance</option>
+            </select>
           </div>
-          <div>
-            <label>Email Address *</label>
-            <input type="email" id="m-email" class="form-control" placeholder="founder@example.com" required>
+          <div class="form-group">
+            <label>Specific Service *</label>
+            <select id="ml-service-item" class="form-control" required></select>
           </div>
         </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div>
-            <label>Proposed Company Name</label>
-            <input type="text" id="m-company" class="form-control" placeholder="e.g. Acme Innovations Pvt Ltd">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Founder Name *</label>
+            <input type="text" id="ml-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
           </div>
-          <div>
-            <label>State of Incorporation</label>
-            <input type="text" id="m-state" class="form-control" placeholder="e.g. Maharashtra">
+          <div class="form-group">
+            <label>Priority</label>
+            <select id="ml-priority" class="form-control">
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+              <option value="LOW">Low</option>
+            </select>
           </div>
         </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div>
-            <label>Company Expected Turnover</label>
-            <select id="m-turnover" class="form-control">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone *</label>
+            <input type="tel" id="ml-phone" class="form-control" placeholder="10-digit mobile" required>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="ml-email" class="form-control" placeholder="founder@example.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" id="ml-company" class="form-control" placeholder="e.g. Acme Pvt Ltd">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" id="ml-state" class="form-control" placeholder="e.g. Maharashtra">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company Turnover</label>
+            <select id="ml-turnover" class="form-control">
               <option value="< ₹20 Lakhs">&lt; ₹20 Lakhs</option>
               <option value="₹20L - ₹1 Crore">₹20L - ₹1 Crore</option>
               <option value="₹1 Cr - ₹5 Crore">₹1 Cr - ₹5 Crore</option>
               <option value="₹5 Crore+">₹5 Crore+</option>
             </select>
           </div>
-          <div>
-            <label>Initial Quoted Fee (₹)</label>
-            <input type="number" id="m-amount" class="form-control" value="2499">
+          <div class="form-group">
+            <label>Quoted Fee (₹)</label>
+            <input type="number" id="ml-amount" class="form-control" value="2499">
           </div>
         </div>
         <div class="form-group">
-          <label>Initial Followup Note / Remark</label>
-          <textarea id="m-remark" class="form-control" style="height: 70px; padding: 10px;" placeholder="Client called inquiring about Pvt Ltd vs LLP for SaaS startup..."></textarea>
+          <label>Initial Remark / Note</label>
+          <textarea id="ml-remark" class="form-control" rows="2" placeholder="Client called inquiring about Pvt Ltd registration..."></textarea>
         </div>
-        <button type="submit" class="btn-action btn-primary" style="width: 100%; height: 46px; justify-content: center;">
+        <button type="submit" class="btn btn-brand btn-full" style="margin-top: 4px;">
           <i class="ph-bold ph-check"></i> Save Lead to CRM
         </button>
       </form>
     </div>
   </div>
+</div>
 
-  <!-- MODAL: LEAD DETAIL, REMARKS & CONVERT -->
-  <div class="modal-overlay" id="lead-detail-modal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 id="d-modal-title">Lead Details</h3>
-        <button class="btn-close" onclick="closeModal('lead-detail-modal')">&times;</button>
-      </div>
-      <div id="lead-detail-content">
-        <!-- Rendered dynamically -->
-      </div>
+<!-- LEAD DETAIL / REMARKS MODAL -->
+<div class="modal-backdrop" id="modal-lead-detail">
+  <div class="modal" style="max-width: 700px;">
+    <div class="modal-head">
+      <h3 id="detail-modal-title">Lead Details</h3>
+      <button class="modal-close" onclick="closeModal('modal-lead-detail')">&times;</button>
+    </div>
+    <div class="modal-body" id="detail-modal-body">
+      <!-- Dynamically rendered -->
     </div>
   </div>
+</div>
 
-  <!-- MODAL: ADD EMPLOYEE -->
-  <div class="modal-overlay" id="add-employee-modal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>+ Add Team Member / CA</h3>
-        <button class="btn-close" onclick="closeModal('add-employee-modal')">&times;</button>
-      </div>
-      <form onsubmit="handleAddEmployeeSubmit(event)">
+<!-- ADD EMPLOYEE MODAL -->
+<div class="modal-backdrop" id="modal-add-employee">
+  <div class="modal">
+    <div class="modal-head">
+      <h3><i class="ph-bold ph-user-plus" style="color:var(--brand);"></i> Add Team Member</h3>
+      <button class="modal-close" onclick="closeModal('modal-add-employee')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form onsubmit="handleAddEmployee(event)">
         <div class="form-group">
           <label>Full Name *</label>
           <input type="text" id="emp-name" class="form-control" placeholder="e.g. CA Sanya Kapoor" required>
         </div>
-        <div class="form-group">
-          <label>Work Email *</label>
-          <input type="email" id="emp-email" class="form-control" placeholder="sanya.ca@tax2biz.in" required>
-        </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div>
-            <label>Password *</label>
-            <input type="password" id="emp-password" class="form-control" placeholder="Minimum 6 characters" required>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Work Email *</label>
+            <input type="email" id="emp-email" class="form-control" placeholder="sanya.ca@tax2biz.in" required>
           </div>
-          <div>
+          <div class="form-group">
+            <label>Password *</label>
+            <input type="text" id="emp-password" class="form-control" placeholder="Min 6 chars" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
             <label>Role *</label>
             <select id="emp-role" class="form-control">
               <option value="SENIOR_CA">Senior Chartered Accountant</option>
               <option value="JUNIOR_CA">Junior CA / Associate</option>
               <option value="COMPLIANCE_MANAGER">Company Secretary / Compliance</option>
-              <option value="SALES_EXECUTIVE">Sales &amp; Onboarding Lead</option>
+              <option value="SALES_EXECUTIVE">Sales & Onboarding</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <select id="emp-dept" class="form-control">
+              <option value="General">General</option>
+              <option value="Company Registration">Company Registration</option>
+              <option value="Tax & Audit">Tax & Audit</option>
+              <option value="GST & Accounting">GST & Accounting</option>
+              <option value="Trademark">Trademark</option>
+              <option value="ROC Compliance">ROC Compliance</option>
+              <option value="Sales">Sales</option>
             </select>
           </div>
         </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div>
-            <label>Direct Phone</label>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
             <input type="tel" id="emp-phone" class="form-control" placeholder="+91 98765 00000">
           </div>
-          <div>
+          <div class="form-group">
             <label>COP / Membership #</label>
             <input type="text" id="emp-cop" class="form-control" placeholder="FCA #492812">
           </div>
         </div>
-        <button type="submit" class="btn-action btn-primary" style="width: 100%; height: 46px; justify-content: center;">
+        <button type="submit" class="btn btn-brand btn-full" style="margin-top: 4px;">
           <i class="ph-bold ph-user-plus"></i> Create Account
         </button>
       </form>
     </div>
   </div>
+</div>
 
-  <script>
-    let allLeads = [];
-    let allEmployees = [];
-    let currentServiceFilter = 'ALL';
-    let currentStatusFilter = 'ALL';
-    let searchQuery = '';
-    let selectedLeadId = null;
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const isAuth = sessionStorage.getItem('t2b_admin_auth');
-      if (isAuth === 'true') {
-        document.getElementById('login-screen').style.display = 'none';
-        const u = JSON.parse(sessionStorage.getItem('t2b_admin_user') || '{}');
-        if (u.name) document.getElementById('logged-user-name').textContent = u.name + ` (${u.role || 'Staff'})`;
-        loadDashboardData();
-        loadEmployeesData();
+<script>
+  // ══════════════════════════════════════════════════════════
+  // STATE
+  // ══════════════════════════════════════════════════════════
+  let allLeads = [];
+  let allEmployees = [];
+  let currentServiceFilter = 'ALL';
+  let currentStatusFilter = 'ALL';
+  let searchQuery = '';
+  let currentUser = null;
+
+  const SUB_SERVICES = {
+    'Business Registration': ['Private Limited Company Registration', 'LLP Registration', 'One Person Company (OPC)', 'Partnership Firm', 'Section 8 Company (NGO)', 'Producer Company'],
+    'Tax & Audit': ['ITR-1 Salaried Filing', 'ITR-3 Business Filing', 'ITR-4 Presumptive Filing', 'ITR-5/6 Corporate Filing', 'Tax Audit (44AB)', 'Pvt Ltd Statutory Audit', 'LLP Statutory Audit'],
+    'GST & Accounting': ['GST Registration', 'Monthly GST Return Filing', 'Quarterly GST Filing', 'GST Annual Return (GSTR-9)', 'Annual Bookkeeping Package', 'GST Cancellation'],
+    'Trademark': ['Trademark Application Filing', 'Trademark Objection Reply', 'Trademark Renewal', 'Trademark Assignment', 'Copyright Registration'],
+    'ROC Compliance': ['ROC Annual Compliance', 'Director Appointment / Resignation', 'Company Name Change', 'Registered Office Change', 'Share Transfer / Allotment', 'Increase Authorized Capital', 'Company Closure / Strike-off']
+  };
+
+  const STATUS_MAP = {
+    'NEW_INQUIRY': { label: 'New', css: 'sp-new', emoji: '🔵' },
+    'OTP_VERIFIED': { label: 'Verified', css: 'sp-verified', emoji: '✅' },
+    'PLAN_SELECTED': { label: 'Plan Selected', css: 'sp-verified', emoji: '📋' },
+    'PAYMENT_PENDING': { label: 'Payment Pending', css: 'sp-process', emoji: '⏳' },
+    'PAID': { label: 'Paid', css: 'sp-paid', emoji: '💰' },
+    'IN_PROCESS': { label: 'In Process', css: 'sp-process', emoji: '⚙️' },
+    'DOCS_PENDING': { label: 'Docs Pending', css: 'sp-docs', emoji: '📄' },
+    'DOCS_RECEIVED': { label: 'Docs Received', css: 'sp-docs', emoji: '📁' },
+    'GOVT_FILING': { label: 'Govt Filing', css: 'sp-govt', emoji: '🏛️' },
+    'INCORPORATED': { label: 'Incorporated', css: 'sp-done', emoji: '🏆' },
+    'DELIVERED': { label: 'Delivered', css: 'sp-done', emoji: '✨' },
+    'LOST': { label: 'Lost', css: 'sp-lost', emoji: '❌' }
+  };
+
+  const SOURCE_MAP = {
+    'landing_page_form': '🌐 Website',
+    'manual_admin_entry': '✍️ Manual',
+    'google_ads': '📢 Google Ads',
+    'whatsapp': '💬 WhatsApp',
+    'phone_call': '📞 Phone',
+    'referral': '🤝 Referral'
+  };
+
+  // ══════════════════════════════════════════════════════════
+  // INIT
+  // ══════════════════════════════════════════════════════════
+  window.addEventListener('DOMContentLoaded', () => {
+    const auth = sessionStorage.getItem('t2b_crm_auth');
+    if (auth === 'true') {
+      currentUser = JSON.parse(sessionStorage.getItem('t2b_crm_user') || '{}');
+      showApp();
+    }
+    updateSubServices('ml');
+  });
+
+  // ══════════════════════════════════════════════════════════
+  // AUTH
+  // ══════════════════════════════════════════════════════════
+  async function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const btn = document.getElementById('btn-login');
+    const errEl = document.getElementById('login-error');
+    errEl.style.display = 'none';
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ph ph-spinner" style="animation:spin 0.8s infinite linear;"></i> Signing in...';
+
+    try {
+      const resp = await fetch('/api/v1/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await resp.json();
+
+      if (resp.ok) {
+        currentUser = data.user;
+        sessionStorage.setItem('t2b_crm_auth', 'true');
+        sessionStorage.setItem('t2b_crm_user', JSON.stringify(data.user));
+        showApp();
+      } else {
+        errEl.textContent = data.detail || 'Invalid credentials';
+        errEl.style.display = 'block';
       }
+    } catch (err) {
+      errEl.textContent = 'Server connection error. Make sure backend is running on port 8085.';
+      errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ph-bold ph-sign-in"></i> Sign In';
+    }
+  }
+
+  // Allow Enter key on login form
+  document.getElementById('login-password')?.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+
+  function handleLogout() {
+    sessionStorage.removeItem('t2b_crm_auth');
+    sessionStorage.removeItem('t2b_crm_user');
+    currentUser = null;
+    document.getElementById('login-screen').classList.remove('hidden');
+  }
+
+  function showApp() {
+    document.getElementById('login-screen').classList.add('hidden');
+    if (currentUser) {
+      const initials = currentUser.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+      document.getElementById('sidebar-avatar').textContent = initials;
+      document.getElementById('sidebar-user-name').textContent = currentUser.name;
+      document.getElementById('sidebar-user-role').textContent = (currentUser.role || 'STAFF').replace(/_/g, ' ');
+    }
+    loadAllData();
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // NAVIGATION
+  // ══════════════════════════════════════════════════════════
+  function showPage(page, btn, serviceFilter) {
+    // Update sidebar active
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    // Hide all pages
+    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+
+    const titles = {
+      'dashboard': ['Dashboard', 'Real-time business overview'],
+      'leads': ['Lead Management', 'Track, assign, and convert inquiries'],
+      'team': ['Team & Employees', 'Manage CAs, CS, and staff'],
+      'settings': ['Settings', 'Portal configuration']
+    };
+    const [title, sub] = titles[page] || ['', ''];
+    document.getElementById('topbar-title').textContent = title;
+    document.getElementById('topbar-sub').textContent = sub;
+
+    document.getElementById(`page-${page}`).classList.add('active');
+
+    // If navigating to leads from service sidebar link
+    if (page === 'leads' && serviceFilter) {
+      currentServiceFilter = serviceFilter;
+      // Update chip active state
+      document.querySelectorAll('#service-chips .chip').forEach(c => {
+        c.classList.toggle('active', c.textContent.trim().includes(serviceFilter.split(' ')[0]) || (serviceFilter === 'ALL' && c.textContent.includes('All')));
+      });
+      renderLeadsTable();
+    }
+
+    // Close sidebar on mobile
+    if (window.innerWidth <= 1024) toggleSidebar(false);
+  }
+
+  function toggleSidebar(forceState) {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const isOpen = sidebar.classList.contains('open');
+    const shouldOpen = forceState !== undefined ? forceState : !isOpen;
+    sidebar.classList.toggle('open', shouldOpen);
+    overlay.classList.toggle('open', shouldOpen);
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // DATA LOADING
+  // ══════════════════════════════════════════════════════════
+  async function loadAllData() {
+    await Promise.all([loadStats(), loadLeads(), loadEmployees()]);
+  }
+
+  async function loadStats() {
+    try {
+      const resp = await fetch('/api/v1/admin/stats');
+      if (!resp.ok) return;
+      const { stats } = await resp.json();
+      document.getElementById('kpi-total').textContent = stats.total_leads;
+      document.getElementById('kpi-verified').textContent = stats.verified_leads;
+      document.getElementById('kpi-paid').textContent = stats.paid_customers;
+      document.getElementById('kpi-revenue').textContent = '₹' + Number(stats.total_revenue).toLocaleString('en-IN');
+      document.getElementById('kpi-pipeline').textContent = '₹' + Number(stats.pipeline_value).toLocaleString('en-IN');
+      document.getElementById('kpi-process').textContent = stats.in_process;
+      document.getElementById('kpi-lost').textContent = stats.lost_leads;
+      const rate = stats.total_leads > 0 ? Math.round((stats.paid_customers / stats.total_leads) * 100) : 0;
+      document.getElementById('kpi-conv-rate').textContent = rate + '%';
+    } catch(e) { console.error('Stats load error:', e); }
+  }
+
+  async function loadLeads() {
+    try {
+      const resp = await fetch('/api/v1/leads?limit=500');
+      if (!resp.ok) return;
+      allLeads = await resp.json();
+      document.getElementById('nav-leads-count').textContent = allLeads.length;
+      renderLeadsTable();
+      renderRecentTable();
+    } catch(e) { console.error('Leads load error:', e); }
+  }
+
+  async function loadEmployees() {
+    try {
+      const resp = await fetch('/api/v1/admin/employees');
+      if (!resp.ok) return;
+      allEmployees = await resp.json();
+      renderTeamTable();
+    } catch(e) { console.error('Employees load error:', e); }
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // RENDER: RECENT TABLE (Dashboard)
+  // ══════════════════════════════════════════════════════════
+  function renderRecentTable() {
+    const tbody = document.getElementById('recent-tbody');
+    const recent = allLeads.slice(0, 8);
+    document.getElementById('recent-count').textContent = allLeads.length;
+    if (!recent.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><i class="ph ph-clipboard-text"></i><p>No leads yet. Click "Add Lead" or seed demo data.</p></td></tr>';
+      return;
+    }
+    tbody.innerHTML = recent.map(lead => renderLeadRow(lead, true)).join('');
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // RENDER: LEADS TABLE
+  // ══════════════════════════════════════════════════════════
+  function renderLeadsTable() {
+    const tbody = document.getElementById('leads-tbody');
+    let filtered = allLeads.filter(lead => {
+      if (currentServiceFilter !== 'ALL' && !(lead.service || '').includes(currentServiceFilter)) return false;
+      if (currentStatusFilter !== 'ALL' && lead.status !== currentStatusFilter) return false;
+      if (searchQuery) {
+        const q = searchQuery;
+        return (lead.name||'').toLowerCase().includes(q) || (lead.phone||'').includes(q) || (lead.email||'').toLowerCase().includes(q) || (lead.company_name||'').toLowerCase().includes(q);
+      }
+      return true;
     });
 
-    async function handleLogin() {
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      const btn = document.getElementById('btn-do-login');
+    document.getElementById('leads-count-badge').textContent = filtered.length;
 
-      btn.disabled = true;
-      btn.innerHTML = '<i class="ph ph-spinner" style="animation: spin 1s infinite linear;"></i> Logging in...';
-
-      try {
-        const resp = await fetch('/api/v1/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await resp.json();
-
-        if (resp.ok) {
-          sessionStorage.setItem('t2b_admin_auth', 'true');
-          sessionStorage.setItem('t2b_admin_user', JSON.stringify(data.user));
-          document.getElementById('login-screen').style.display = 'none';
-          document.getElementById('logged-user-name').textContent = data.user.name + ` (${data.user.role || 'Staff'})`;
-          loadDashboardData();
-          loadEmployeesData();
-        } else {
-          alert(data.detail || 'Invalid login credentials');
-        }
-      } catch (err) {
-        alert('Server connection error. Make sure the backend server is running.');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="ph-bold ph-lock-key"></i> Access Operations Portal';
-      }
+    if (!filtered.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><i class="ph ph-funnel"></i><p>No leads match current filters</p></td></tr>';
+      return;
     }
 
-    function handleLogout() {
-      sessionStorage.clear();
-      document.getElementById('login-screen').style.display = 'flex';
+    tbody.innerHTML = filtered.map(lead => renderLeadRow(lead, false)).join('');
+  }
+
+  function renderLeadRow(lead, compact) {
+    const phone = lead.phone || '';
+    const waLink = `https://wa.me/91${phone}?text=Hello%20${encodeURIComponent(lead.name)}%2C%20this%20is%20Tax2Biz.`;
+    const telLink = `tel:${phone}`;
+    const st = STATUS_MAP[lead.status] || { label: lead.status, css: 'sp-new', emoji: '•' };
+    const displayPrice = lead.agreed_price || lead.amount || 0;
+    const pDot = (lead.priority||'MEDIUM').toLowerCase().substring(0,3);
+    const src = SOURCE_MAP[lead.source] || lead.source || '';
+
+    if (compact) {
+      return `<tr>
+        <td><div class="cell-primary"><span class="priority-dot p-${pDot}"></span>${lead.name}</div><div class="cell-secondary">${lead.company_name||'—'}</div></td>
+        <td><span class="tag tag-service">${lead.service_item || lead.service || ''}</span></td>
+        <td><div class="cell-primary">${phone}<div class="contact-actions"><a href="${waLink}" target="_blank" class="icon-btn wa-btn"><i class="ph-bold ph-whatsapp-logo"></i></a><a href="${telLink}" class="icon-btn tel-btn"><i class="ph-bold ph-phone"></i></a></div></div></td>
+        <td><span class="status-pill ${st.css}">${st.emoji} ${st.label}</span></td>
+        <td>${lead.assigned_ca_name || '—'}</td>
+        <td><button class="btn btn-outline btn-xs" onclick="openLeadDetail('${lead.id}')"><i class="ph-bold ph-note-pencil"></i> Open</button></td>
+      </tr>`;
     }
 
-    function switchMainTab(tab, btn) {
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-leads-view').style.display = tab === 'leads' ? 'block' : 'none';
-      document.getElementById('tab-team-view').style.display = tab === 'team' ? 'block' : 'none';
+    return `<tr>
+      <td>
+        <div class="cell-primary"><span class="priority-dot p-${pDot}"></span>${lead.name}</div>
+        <div class="cell-secondary"><i class="ph ph-buildings"></i> ${lead.company_name||'—'} ${lead.state?'• '+lead.state:''}</div>
+      </td>
+      <td>
+        <strong style="font-size:0.82rem;">${lead.service||''}</strong>
+        <div class="cell-secondary">${lead.service_item||''}</div>
+        <span class="tag tag-turnover">${lead.company_turnover||'< ₹20L'}</span>
+      </td>
+      <td>
+        <div class="cell-primary">${phone}<div class="contact-actions"><a href="${waLink}" target="_blank" class="icon-btn wa-btn" title="WhatsApp"><i class="ph-bold ph-whatsapp-logo"></i></a><a href="${telLink}" class="icon-btn tel-btn" title="Call"><i class="ph-bold ph-phone"></i></a></div></div>
+        <div class="cell-secondary">${lead.email||''}</div>
+      </td>
+      <td>
+        <strong style="font-size:0.9rem;">₹${Number(displayPrice).toLocaleString('en-IN')}</strong>
+        ${lead.agreed_price?'<div style="font-size:0.68rem;color:var(--brand);font-weight:700;">Agreed</div>':''}
+      </td>
+      <td>
+        <select class="table-select" onchange="quickUpdateStatus('${lead.id}', this.value)" style="${lead.status==='PAID'?'color:var(--brand);font-weight:800;':''}">
+          ${Object.entries(STATUS_MAP).map(([k,v])=>`<option value="${k}" ${lead.status===k?'selected':''}>${v.emoji} ${v.label}</option>`).join('')}
+        </select>
+      </td>
+      <td>
+        <select class="table-select" onchange="quickUpdateCA('${lead.id}', this.value)">
+          ${renderCAOptions(lead.assigned_ca_name)}
+        </select>
+        <button onclick="autoAssignLead('${lead.id}')" style="background:none;border:none;color:var(--accent);font-size:0.7rem;font-weight:700;cursor:pointer;display:block;margin-top:2px;">⚡ Auto</button>
+      </td>
+      <td><span class="tag tag-source">${src}</span></td>
+      <td><button class="btn btn-outline btn-xs" onclick="openLeadDetail('${lead.id}')"><i class="ph-bold ph-note-pencil"></i> Detail</button></td>
+    </tr>`;
+  }
+
+  function renderCAOptions(currentCA) {
+    if (!allEmployees.length) {
+      return `<option value="CA Aakash Mehra" ${currentCA==='CA Aakash Mehra'?'selected':''}>CA Aakash Mehra</option>
+        <option value="CA Priya Sharma" ${currentCA==='CA Priya Sharma'?'selected':''}>CA Priya Sharma</option>`;
     }
+    return allEmployees.map(e => `<option value="${e.name}" ${currentCA===e.name?'selected':''}>${e.name}</option>`).join('');
+  }
 
-    async function loadDashboardData() {
-      try {
-        const [statsResp, leadsResp] = await Promise.all([
-          fetch('/api/v1/admin/stats'),
-          fetch('/api/v1/leads?limit=200')
-        ]);
-
-        if (statsResp.ok) {
-          const stats = (await statsResp.json()).stats;
-          document.getElementById('kpi-leads').textContent = stats.total_leads;
-          document.getElementById('kpi-verified').textContent = stats.verified_leads;
-          document.getElementById('kpi-paid').textContent = stats.paid_customers;
-          document.getElementById('kpi-revenue').textContent = '₹' + Number(stats.total_revenue).toLocaleString('en-IN');
-        }
-
-        if (leadsResp.ok) {
-          allLeads = await leadsResp.json();
-          renderLeadsTable();
-        }
-      } catch (err) {
-        console.error('Error loading dashboard:', err);
-      }
+  // ══════════════════════════════════════════════════════════
+  // RENDER: TEAM TABLE
+  // ══════════════════════════════════════════════════════════
+  function renderTeamTable() {
+    const tbody = document.getElementById('team-tbody');
+    if (!allEmployees.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><p>No team members yet.</p></td></tr>';
+      return;
     }
+    tbody.innerHTML = allEmployees.map(e => `<tr>
+      <td>
+        <div class="cell-primary">${e.name}</div>
+        <div class="cell-secondary">${(e.role||'').replace(/_/g,' ')}</div>
+      </td>
+      <td>${e.email}</td>
+      <td>${e.phone || '—'}</td>
+      <td>${e.cop_number || 'N/A'}</td>
+      <td><span class="tag tag-service">${e.department || 'General'}</span></td>
+      <td><strong>${e.leads_assigned_count || 0}</strong></td>
+      <td><span class="password-reveal"><i class="ph ph-eye"></i> ${e.password_plain || '••••••'}</span></td>
+      <td><span style="color:${e.is_active?'var(--brand)':'var(--danger)'};font-weight:700;">${e.is_active?'● Active':'○ Inactive'}</span></td>
+    </tr>`).join('');
+  }
 
-    async function loadEmployeesData() {
-      try {
-        const resp = await fetch('/api/v1/admin/employees');
-        if (resp.ok) {
-          allEmployees = await resp.json();
-          renderTeamTable();
-        }
-      } catch (err) {
-        console.error('Error loading employees:', err);
-      }
+  // ══════════════════════════════════════════════════════════
+  // FILTERS
+  // ══════════════════════════════════════════════════════════
+  function setServiceFilter(val, btn) {
+    currentServiceFilter = val;
+    document.querySelectorAll('#service-chips .chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    renderLeadsTable();
+  }
+
+  function setStatusFilter(val, btn) {
+    currentStatusFilter = val;
+    document.querySelectorAll('#status-tabs .status-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderLeadsTable();
+  }
+
+  function handleLeadSearch() {
+    searchQuery = document.getElementById('leads-search').value.toLowerCase().trim();
+    renderLeadsTable();
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // QUICK ACTIONS
+  // ══════════════════════════════════════════════════════════
+  async function quickUpdateStatus(leadId, newStatus) {
+    await fetch(`/api/v1/admin/leads/${leadId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    });
+    showToast('Status updated');
+    loadAllData();
+  }
+
+  async function quickUpdateCA(leadId, caName) {
+    await fetch(`/api/v1/admin/leads/${leadId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assigned_ca_name: caName })
+    });
+    showToast('Assigned to ' + caName);
+    loadAllData();
+  }
+
+  async function autoAssignLead(leadId) {
+    const resp = await fetch(`/api/v1/admin/leads/${leadId}/auto-assign`, { method: 'POST' });
+    if (resp.ok) {
+      const data = await resp.json();
+      showToast(data.message);
+      loadAllData();
     }
+  }
 
-    function renderTeamTable() {
-      const tbody = document.getElementById('team-tbody');
-      if (!allEmployees.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 30px;">No employees added yet.</td></tr>';
-        return;
-      }
-      tbody.innerHTML = allEmployees.map(e => `
-        <tr>
-          <td>
-            <strong>${e.name}</strong>
-            <div style="font-size: 0.74rem; color: #64748B;">${e.role.replace('_', ' ')}</div>
-          </td>
-          <td>${e.email}</td>
-          <td>${e.phone || '-'}</td>
-          <td>${e.cop_number || 'N/A'}</td>
-          <td><strong>${e.leads_assigned_count || 0}</strong> active</td>
-          <td><span style="color: #059669; font-weight: 700;">● Active</span></td>
-        </tr>
-      `).join('');
-    }
+  // ══════════════════════════════════════════════════════════
+  // LEAD DETAIL MODAL
+  // ══════════════════════════════════════════════════════════
+  async function openLeadDetail(leadId) {
+    const lead = allLeads.find(l => l.id === leadId);
+    if (!lead) return;
 
-    function setServiceFilter(srv, btn) {
-      currentServiceFilter = srv;
-      document.querySelectorAll('.service-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderLeadsTable();
-    }
+    document.getElementById('detail-modal-title').textContent = `${lead.name} — ${lead.company_name || 'Inquiry'}`;
+    const body = document.getElementById('detail-modal-body');
+    openModal('modal-lead-detail');
+    body.innerHTML = '<p style="color:var(--muted);">Loading...</p>';
 
-    function setStatusFilter(st, btn) {
-      currentStatusFilter = st;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderLeadsTable();
-    }
+    const remarksResp = await fetch(`/api/v1/admin/leads/${leadId}/remarks`);
+    const remarksData = await remarksResp.json();
+    const remarks = remarksData.remarks || [];
+    const st = STATUS_MAP[lead.status] || { label: lead.status, emoji: '' };
 
-    function handleSearch() {
-      searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
-      renderLeadsTable();
-    }
+    body.innerHTML = `
+      <div class="detail-grid" style="border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 14px;">
+        <dt>Service</dt><dd>${lead.service} → ${lead.service_item || ''}</dd>
+        <dt>Status</dt><dd><span class="status-pill ${(STATUS_MAP[lead.status]||{}).css||''}">${st.emoji} ${st.label}</span></dd>
+        <dt>Phone</dt><dd>${lead.phone} <a href="tel:${lead.phone}" style="color:var(--accent);font-size:0.78rem;margin-left:4px;">📞 Call</a></dd>
+        <dt>Email</dt><dd>${lead.email}</dd>
+        <dt>Company</dt><dd>${lead.company_name || '—'}</dd>
+        <dt>State</dt><dd>${lead.state || '—'}</dd>
+        <dt>Turnover</dt><dd><span class="tag tag-turnover">${lead.company_turnover || '< ₹20L'}</span></dd>
+        <dt>Quoted / Agreed</dt><dd><strong>₹${Number(lead.agreed_price||lead.amount||0).toLocaleString('en-IN')}</strong></dd>
+        <dt>Assigned CA</dt><dd>${lead.assigned_ca_name || 'Unassigned'}</dd>
+        <dt>Source</dt><dd>${SOURCE_MAP[lead.source]||lead.source||'—'}</dd>
+      </div>
 
-    function renderLeadsTable() {
-      const tbody = document.getElementById('leads-tbody');
-      let filtered = allLeads.filter(lead => {
-        // Service filter
-        if (currentServiceFilter !== 'ALL' && !((lead.service || '').includes(currentServiceFilter))) return false;
+      <!-- Document Checklist -->
+      <h4 style="font-size:0.85rem;font-weight:800;margin-bottom:8px;"><i class="ph-bold ph-folder-open" style="color:var(--purple);"></i> Document Checklist</h4>
+      <div class="doc-checklist">
+        <label class="doc-item ${lead.docs_pan?'checked':''}"><input type="checkbox" ${lead.docs_pan?'checked':''} onchange="updateDoc('${leadId}','docs_pan',this.checked)"> PAN Card</label>
+        <label class="doc-item ${lead.docs_aadhaar?'checked':''}"><input type="checkbox" ${lead.docs_aadhaar?'checked':''} onchange="updateDoc('${leadId}','docs_aadhaar',this.checked)"> Aadhaar Card</label>
+        <label class="doc-item ${lead.docs_photo?'checked':''}"><input type="checkbox" ${lead.docs_photo?'checked':''} onchange="updateDoc('${leadId}','docs_photo',this.checked)"> Passport Photo</label>
+        <label class="doc-item ${lead.docs_address_proof?'checked':''}"><input type="checkbox" ${lead.docs_address_proof?'checked':''} onchange="updateDoc('${leadId}','docs_address_proof',this.checked)"> Address Proof</label>
+        <label class="doc-item ${lead.docs_dsc?'checked':''}"><input type="checkbox" ${lead.docs_dsc?'checked':''} onchange="updateDoc('${leadId}','docs_dsc',this.checked)"> DSC (Digital Signature)</label>
+        <label class="doc-item ${lead.docs_moa_aoa?'checked':''}"><input type="checkbox" ${lead.docs_moa_aoa?'checked':''} onchange="updateDoc('${leadId}','docs_moa_aoa',this.checked)"> MOA / AOA</label>
+      </div>
 
-        // Status filter
-        if (currentStatusFilter === 'PAID' && lead.status !== 'PAID') return false;
-        if (currentStatusFilter === 'IN_PROCESS' && lead.status !== 'IN_PROCESS') return false;
-        if (currentStatusFilter === 'OTP_VERIFIED' && lead.status !== 'OTP_VERIFIED') return false;
-        if (currentStatusFilter === 'NEW_INQUIRY' && lead.status !== 'NEW_INQUIRY') return false;
-
-        // Search
-        if (searchQuery) {
-          const matchName = (lead.name || '').toLowerCase().includes(searchQuery);
-          const matchPhone = (lead.phone || '').toLowerCase().includes(searchQuery);
-          const matchEmail = (lead.email || '').toLowerCase().includes(searchQuery);
-          const matchCompany = (lead.company_name || '').toLowerCase().includes(searchQuery);
-          return matchName || matchPhone || matchEmail || matchCompany;
-        }
-        return true;
-      });
-
-      if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: var(--muted);">No matching inquiries found in this filter.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(lead => {
-        const phone = lead.phone || '';
-        const waLink = `https://wa.me/91${phone}?text=Hello%20${encodeURIComponent(lead.name)}%2C%20this%20is%20Tax2Biz%20regarding%20your%20company%20registration.`;
-        const telLink = `tel:${phone}`;
-        const isPaid = lead.status === 'PAID';
-        const displayPrice = lead.agreed_price || lead.amount || 2499;
-
-        return `
-          <tr>
-            <td>
-              <div class="founder-name">
-                <span class="priority-indicator priority-${(lead.priority || 'med').toLowerCase().substring(0, 3)}"></span>
-                ${lead.name || 'Unnamed Founder'}
-              </div>
-              <div class="company-name">
-                <i class="ph-bold ph-buildings"></i> ${lead.company_name || 'Proposed Company'} ${lead.state ? '• ' + lead.state : ''}
-              </div>
-            </td>
-            <td>
-              <strong>${lead.service || 'Business Registration'}</strong>
-              <div style="font-size: 0.74rem; color: #64748B;">${lead.service_item || 'Private Limited'}</div>
-              <span class="turnover-pill">${lead.company_turnover || '< ₹20 Lakhs'}</span>
-            </td>
-            <td>
-              <div class="contact-phone">
-                ${phone}
-                <div class="contact-actions">
-                  <a href="${waLink}" target="_blank" class="quick-icon-btn icon-wa" title="Open WhatsApp">
-                    <i class="ph-bold ph-whatsapp-logo"></i>
-                  </a>
-                  <a href="${telLink}" class="quick-icon-btn icon-tel" title="Call">
-                    <i class="ph-bold ph-phone"></i>
-                  </a>
-                </div>
-              </div>
-              <div class="contact-email">${lead.email || ''}</div>
-            </td>
-            <td>
-              <strong style="color: #0F172A; font-size: 0.95rem;">₹${Number(displayPrice).toLocaleString('en-IN')}</strong>
-              ${lead.agreed_price ? '<div style="font-size: 0.70rem; color: #059669; font-weight: 700;">Agreed Closed Fee</div>' : '<div style="font-size: 0.70rem; color: #64748B;">Standard Quoted</div>'}
-            </td>
-            <td>
-              <select class="table-select" onchange="quickUpdateStatus('${lead.id}', this.value)" style="${isPaid ? 'color: #059669; font-weight: 800;' : ''}">
-                <option value="NEW_INQUIRY" ${lead.status === 'NEW_INQUIRY' ? 'selected' : ''}>New Inquiry</option>
-                <option value="OTP_VERIFIED" ${lead.status === 'OTP_VERIFIED' ? 'selected' : ''}>OTP Verified</option>
-                <option value="PLAN_SELECTED" ${lead.status === 'PLAN_SELECTED' ? 'selected' : ''}>Plan Selected</option>
-                <option value="PAYMENT_PENDING" ${lead.status === 'PAYMENT_PENDING' ? 'selected' : ''}>Payment Pending</option>
-                <option value="PAID" ${lead.status === 'PAID' ? 'selected' : ''}>PAID 💰</option>
-                <option value="IN_PROCESS" ${lead.status === 'IN_PROCESS' ? 'selected' : ''}>In Process (SPICe+)</option>
-                <option value="INCORPORATED" ${lead.status === 'INCORPORATED' ? 'selected' : ''}>Incorporated 🏆</option>
-                <option value="LOST" ${lead.status === 'LOST' ? 'selected' : ''}>Dropped / Lost</option>
-              </select>
-            </td>
-            <td>
-              <select class="table-select" onchange="quickUpdateCA('${lead.id}', this.value)">
-                ${renderCAOptions(lead.assigned_ca_name)}
-              </select>
-              <button onclick="autoAssignLead('${lead.id}')" style="background: none; border: none; color: #2563EB; font-size: 0.72rem; font-weight: 700; cursor: pointer; display: block; margin-top: 3px;">
-                ⚡ Auto-Assign
-              </button>
-            </td>
-            <td>
-              <button class="btn-action btn-secondary" style="height: 32px; font-size: 0.76rem;" onclick="openLeadDetail('${lead.id}')">
-                <i class="ph-bold ph-chats-circle"></i> Remarks &amp; Convert
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderCAOptions(currentCA) {
-      if (!allEmployees.length) {
-        return `
-          <option value="CA Aakash Mehra" ${currentCA === 'CA Aakash Mehra' ? 'selected' : ''}>CA Aakash Mehra</option>
-          <option value="CA Priya Sharma" ${currentCA === 'CA Priya Sharma' ? 'selected' : ''}>CA Priya Sharma</option>
-          <option value="CS Rahul Verma" ${currentCA === 'CS Rahul Verma' ? 'selected' : ''}>CS Rahul Verma</option>
-        `;
-      }
-      return allEmployees.map(e => `
-        <option value="${e.name}" ${currentCA === e.name ? 'selected' : ''}>${e.name} (${e.role.replace('_', ' ')})</option>
-      `).join('');
-    }
-
-    async function quickUpdateStatus(leadId, newStatus) {
-      await fetch(`/api/v1/admin/leads/${leadId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
-      });
-      loadDashboardData();
-    }
-
-    async function quickUpdateCA(leadId, caName) {
-      await fetch(`/api/v1/admin/leads/${leadId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ assigned_ca_name: caName })
-      });
-      loadDashboardData();
-    }
-
-    async function autoAssignLead(leadId) {
-      const resp = await fetch(`/api/v1/admin/leads/${leadId}/auto-assign`, { method: 'POST' });
-      if (resp.ok) {
-        const data = await resp.json();
-        alert(`Success: ${data.message}`);
-        loadDashboardData();
-        loadEmployeesData();
-      }
-    }
-
-    // ── Open Lead Detail & Remarks Modal ───────────────────
-    async function openLeadDetail(leadId) {
-      selectedLeadId = leadId;
-      const lead = allLeads.find(l => l.id === leadId);
-      if (!lead) return;
-
-      document.getElementById('d-modal-title').textContent = `${lead.name} — ${lead.company_name || 'Inquiry'}`;
-      
-      const modal = document.getElementById('lead-detail-modal');
-      const content = document.getElementById('lead-detail-content');
-      modal.classList.add('open');
-      content.innerHTML = '<p>Loading timeline...</p>';
-
-      const remarksResp = await fetch(`/api/v1/admin/leads/${leadId}/remarks`);
-      const remarksData = await remarksResp.json();
-      const remarks = remarksData.remarks || [];
-
-      content.innerHTML = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; font-size: 0.84rem;">
-          <div><b>Service:</b> ${lead.service} (${lead.service_item || ''})</div>
-          <div><b>Turnover Tier:</b> ${lead.company_turnover || '< ₹20 Lakhs'}</div>
-          <div><b>Phone:</b> ${lead.phone}</div>
-          <div><b>Email:</b> ${lead.email}</div>
-          <div><b>State:</b> ${lead.state || 'N/A'}</div>
-          <div><b>Assigned To:</b> ${lead.assigned_ca_name || 'Unassigned'}</div>
+      <!-- Convert Box -->
+      <div class="convert-box">
+        <h4><i class="ph-bold ph-currency-inr"></i> Close Deal & Convert</h4>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="number" id="convert-price" class="form-control" style="width:130px;height:36px;" value="${lead.agreed_price||lead.amount||2499}">
+          <select id="convert-method" class="form-control" style="width:160px;height:36px;">
+            <option value="UPI">UPI / GPay / PhonePe</option>
+            <option value="Bank Transfer">Bank Transfer (NEFT/IMPS)</option>
+            <option value="Payment Link">Payment Link (Razorpay)</option>
+            <option value="Cash">Cash / Cheque</option>
+          </select>
+          <button class="btn btn-brand btn-sm" onclick="handleConvert('${leadId}')"><i class="ph-bold ph-check"></i> Mark Paid</button>
         </div>
+      </div>
 
-        <div class="convert-box">
-          <h4>💰 Close Deal &amp; Set Converted Price</h4>
-          <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
-            <input type="number" id="convert-price" class="form-control" style="width: 140px;" value="${lead.agreed_price || lead.amount || 2499}">
-            <select id="convert-method" class="form-control" style="width: 150px;">
-              <option value="UPI">UPI / GPay / PhonePe</option>
-              <option value="Bank Transfer">Bank Transfer (NEFT/IMPS)</option>
-              <option value="Payment Link">Payment Link (Razorpay)</option>
-              <option value="Cash">Cash / Cheque</option>
-            </select>
-            <button class="btn-action btn-primary" onclick="handleConvertSubmit('${lead.id}')">
-              Mark Converted &amp; Paid
-            </button>
-          </div>
-        </div>
-
-        <h4 style="font-size: 0.95rem; font-weight: 800; margin-top: 20px;">📝 Followup Remarks &amp; History</h4>
-        <div class="remarks-timeline">
-          ${remarks.length ? remarks.map(r => `
-            <div class="remark-item">
-              <div class="remark-header">
-                <span>${r.author_name} (${r.author_role})</span>
-                <span style="font-size: 0.72rem; color: #64748B;">${r.created_at}</span>
-              </div>
-              <div class="remark-content">${r.content}</div>
+      <!-- Remarks Timeline -->
+      <h4 style="font-size:0.85rem;font-weight:800;margin:14px 0 8px;"><i class="ph-bold ph-clock-clockwise" style="color:var(--accent);"></i> Activity Timeline (${remarks.length})</h4>
+      <div class="timeline">
+        ${remarks.length ? remarks.map(r => {
+          const tClass = {'CALL':'tt-call','NOTE':'tt-note','WHATSAPP':'tt-whatsapp','STATUS_CHANGE':'tt-status','ASSIGNMENT':'tt-assignment','PRICE_UPDATE':'tt-price'}[r.remark_type]||'tt-note';
+          return `<div class="timeline-item">
+            <div class="timeline-header">
+              <span class="timeline-author">${r.author_name} <span class="timeline-type ${tClass}">${r.remark_type}</span></span>
+              <span class="timeline-time">${r.created_at}</span>
             </div>
-          `).join('') : '<p style="color: #64748B; font-size: 0.82rem;">No remarks logged yet. Add your first call note below.</p>'}
+            <div class="timeline-content">${r.content}</div>
+          </div>`;
+        }).join('') : '<p style="color:var(--muted);font-size:0.82rem;">No remarks yet. Add a note below.</p>'}
+      </div>
+
+      <!-- Add Remark -->
+      <div style="margin-top:12px;">
+        <label style="font-size:0.76rem;font-weight:700;display:block;margin-bottom:4px;">Add Followup Note:</label>
+        <div style="display:flex;gap:6px;">
+          <select id="remark-type" class="form-control" style="width:120px;height:36px;">
+            <option value="NOTE">📝 Note</option>
+            <option value="CALL">📞 Call</option>
+            <option value="WHATSAPP">💬 WhatsApp</option>
+            <option value="EMAIL">📧 Email</option>
+          </select>
+          <input type="text" id="remark-text" class="form-control" style="flex:1;height:36px;" placeholder="Spoke with founder about documents...">
+          <button class="btn btn-outline btn-sm" onclick="handleAddRemark('${leadId}')">Post</button>
         </div>
+      </div>
+    `;
+  }
 
-        <div style="margin-top: 14px;">
-          <label style="font-size: 0.78rem; font-weight: 700; display: block; margin-bottom: 4px;">Log Call / Followup Note:</label>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="new-remark-text" class="form-control" placeholder="e.g. Spoke with founder, asked to send PAN card on WhatsApp...">
-            <button class="btn-action btn-secondary" onclick="handleAddRemarkSubmit('${lead.id}')">
-              Post Note
-            </button>
-          </div>
-        </div>
-      `;
+  async function updateDoc(leadId, field, val) {
+    await fetch(`/api/v1/admin/leads/${leadId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ [field]: val })
+    });
+    // Update local state
+    const lead = allLeads.find(l => l.id === leadId);
+    if (lead) lead[field] = val;
+    showToast('Document updated');
+  }
+
+  async function handleConvert(leadId) {
+    const price = parseInt(document.getElementById('convert-price').value);
+    const method = document.getElementById('convert-method').value;
+    const resp = await fetch(`/api/v1/admin/leads/${leadId}/convert`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ agreed_price: price, payment_method: method })
+    });
+    if (resp.ok) {
+      showToast('🎉 Deal converted and marked PAID!');
+      closeModal('modal-lead-detail');
+      loadAllData();
     }
+  }
 
-    async function handleAddRemarkSubmit(leadId) {
-      const input = document.getElementById('new-remark-text');
-      const text = input.value.trim();
-      if (!text) return;
+  async function handleAddRemark(leadId) {
+    const text = document.getElementById('remark-text').value.trim();
+    const type = document.getElementById('remark-type').value;
+    if (!text) return;
 
-      const user = JSON.parse(sessionStorage.getItem('t2b_admin_user') || '{}');
-      await fetch(`/api/v1/admin/leads/${leadId}/remarks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: text,
-          author_name: user.name || 'Staff',
-          author_role: user.role || 'CA'
-        })
-      });
-      openLeadDetail(leadId);
+    await fetch(`/api/v1/admin/leads/${leadId}/remarks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        content: text,
+        remark_type: type,
+        author_name: currentUser?.name || 'Staff',
+        author_role: currentUser?.role || 'CA'
+      })
+    });
+    openLeadDetail(leadId); // Refresh modal
+    showToast('Remark added');
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // ADD LEAD
+  // ══════════════════════════════════════════════════════════
+  function updateSubServices(prefix) {
+    const service = document.getElementById(`${prefix}-service`).value;
+    const sub = document.getElementById(`${prefix}-service-item`);
+    const items = SUB_SERVICES[service] || [];
+    sub.innerHTML = items.map(i => `<option value="${i}">${i}</option>`).join('');
+  }
+
+  async function handleAddLead(e) {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById('ml-name').value,
+      phone: document.getElementById('ml-phone').value,
+      email: document.getElementById('ml-email').value,
+      service: document.getElementById('ml-service').value,
+      service_item: document.getElementById('ml-service-item').value,
+      company_name: document.getElementById('ml-company').value,
+      state: document.getElementById('ml-state').value,
+      company_turnover: document.getElementById('ml-turnover').value,
+      amount: parseInt(document.getElementById('ml-amount').value || 2499),
+      priority: document.getElementById('ml-priority').value,
+      initial_remark: document.getElementById('ml-remark').value
+    };
+
+    const resp = await fetch('/api/v1/admin/leads/manual', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (resp.ok) {
+      showToast('Lead added to CRM!');
+      closeModal('modal-add-lead');
+      e.target.reset();
+      updateSubServices('ml');
+      loadAllData();
+    } else {
+      const err = await resp.json();
+      alert('Error: ' + (err.detail || JSON.stringify(err)));
     }
+  }
 
-    async function handleConvertSubmit(leadId) {
-      const price = parseInt(document.getElementById('convert-price').value);
-      const method = document.getElementById('convert-method').value;
+  // ══════════════════════════════════════════════════════════
+  // ADD EMPLOYEE
+  // ══════════════════════════════════════════════════════════
+  async function handleAddEmployee(e) {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById('emp-name').value,
+      email: document.getElementById('emp-email').value,
+      password: document.getElementById('emp-password').value,
+      role: document.getElementById('emp-role').value,
+      department: document.getElementById('emp-dept').value,
+      phone: document.getElementById('emp-phone').value,
+      cop_number: document.getElementById('emp-cop').value
+    };
 
-      const resp = await fetch(`/api/v1/admin/leads/${leadId}/convert`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agreed_price: price, payment_method: method })
-      });
-      if (resp.ok) {
-        alert('🎉 Congratulations! Deal recorded as converted and marked PAID.');
-        closeModal('lead-detail-modal');
-        loadDashboardData();
-      }
+    const resp = await fetch('/api/v1/admin/employees', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (resp.ok) {
+      showToast('Team member created!');
+      closeModal('modal-add-employee');
+      e.target.reset();
+      loadEmployees();
+    } else {
+      const err = await resp.json();
+      alert('Error: ' + (err.detail || 'Failed'));
     }
+  }
 
-    // ── Manual Lead Creation ──────────────────────────────
-    function openManualLeadModal() {
-      document.getElementById('manual-lead-modal').classList.add('open');
-    }
+  // ══════════════════════════════════════════════════════════
+  // SEED DEMO
+  // ══════════════════════════════════════════════════════════
+  async function seedDemoData() {
+    const resp = await fetch('/api/v1/admin/seed-demo', { method: 'POST' });
+    const data = await resp.json();
+    showToast(data.message);
+    loadAllData();
+  }
 
-    function openAddEmployeeModal() {
-      document.getElementById('add-employee-modal').classList.add('open');
-    }
+  // ══════════════════════════════════════════════════════════
+  // MODAL HELPERS
+  // ══════════════════════════════════════════════════════════
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('open');
-    }
+  // Close modal on backdrop click
+  document.querySelectorAll('.modal-backdrop').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+  });
 
-    function updateSubServiceOptions() {
-      const s = document.getElementById('m-service').value;
-      const sub = document.getElementById('m-service-item');
-      if (s === 'Business Registration') {
-        sub.innerHTML = `
-          <option value="Private Limited Company Registration">Private Limited Company Registration</option>
-          <option value="LLP Registration">LLP Registration</option>
-          <option value="One Person Company (OPC)">One Person Company (OPC)</option>
-          <option value="Partnership Firm">Partnership Firm</option>
-        `;
-      } else if (s === 'Tax & Audit') {
-        sub.innerHTML = `
-          <option value="ITR-3 Business Filing">ITR-3 Business Filing</option>
-          <option value="Tax Audit (44AB)">Tax Audit (44AB)</option>
-          <option value="Pvt Ltd Statutory Audit">Pvt Ltd Statutory Audit</option>
-          <option value="ITR-5 / ITR-6 Filing">ITR-5 / ITR-6 Corporate Filing</option>
-        `;
-      } else if (s === 'GST & Accounting') {
-        sub.innerHTML = `
-          <option value="GST Registration">New GST Registration</option>
-          <option value="Monthly GST Return Filing">Monthly GST Return Filing</option>
-          <option value="Quarterly GST Return">Quarterly GST Filing</option>
-          <option value="Annual Bookkeeping Package">Annual Bookkeeping & Accounting</option>
-        `;
-      } else if (s === 'Trademark') {
-        sub.innerHTML = `
-          <option value="Trademark Application Filing">Trademark Application Filing</option>
-          <option value="Trademark Objection Reply">Trademark Objection Reply</option>
-        `;
-      } else {
-        sub.innerHTML = `
-          <option value="ROC Annual Compliance">ROC Annual Compliance</option>
-          <option value="Director Change">Director Appointment / Resignation</option>
-          <option value="Company Name Change">Company Name Change</option>
-        `;
-      }
-    }
-
-    async function handleManualLeadSubmit(e) {
-      e.preventDefault();
-      const payload = {
-        name: document.getElementById('m-name').value,
-        phone: document.getElementById('m-phone').value,
-        email: document.getElementById('m-email').value,
-        service: document.getElementById('m-service').value,
-        service_item: document.getElementById('m-service-item').value,
-        company_name: document.getElementById('m-company').value,
-        state: document.getElementById('m-state').value,
-        company_turnover: document.getElementById('m-turnover').value,
-        amount: parseInt(document.getElementById('m-amount').value || 2499),
-        initial_remark: document.getElementById('m-remark').value
-      };
-
-      const resp = await fetch('/api/v1/admin/leads/manual', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (resp.ok) {
-        alert('Lead successfully added to CRM!');
-        closeModal('manual-lead-modal');
-        loadDashboardData();
-      } else {
-        const err = await resp.json();
-        alert('Error adding lead: ' + (err.detail || 'Validation error'));
-      }
-    }
-
-    async function handleAddEmployeeSubmit(e) {
-      e.preventDefault();
-      const payload = {
-        name: document.getElementById('emp-name').value,
-        email: document.getElementById('emp-email').value,
-        password: document.getElementById('emp-password').value,
-        role: document.getElementById('emp-role').value,
-        phone: document.getElementById('emp-phone').value,
-        cop_number: document.getElementById('emp-cop').value
-      };
-
-      const resp = await fetch('/api/v1/admin/employees', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (resp.ok) {
-        alert('Team member account created successfully!');
-        closeModal('add-employee-modal');
-        loadEmployeesData();
-      } else {
-        const err = await resp.json();
-        alert('Error adding team member: ' + (err.detail || 'Error'));
-      }
-    }
-  </script>
+  // ══════════════════════════════════════════════════════════
+  // TOAST
+  // ══════════════════════════════════════════════════════════
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+</script>
 </body>
 </html>

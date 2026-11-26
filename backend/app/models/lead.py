@@ -8,6 +8,7 @@ from backend.app.models.base import TimestampMixin
 class Lead(Base, TimestampMixin):
     """
     Core Lead model tracking the user through the incorporation/filing funnel.
+    Enhanced with document tracking, followup scheduling, and source attribution.
     """
     __tablename__ = "leads"
 
@@ -16,23 +17,26 @@ class Lead(Base, TimestampMixin):
     email: Mapped[str] = mapped_column(String(150), nullable=False, index=True)
     phone: Mapped[str] = mapped_column(String(20), nullable=False, index=True)
     state: Mapped[str] = mapped_column(String(60), nullable=True)
+    city: Mapped[str] = mapped_column(String(80), nullable=True)
     company_name: Mapped[str] = mapped_column(String(150), nullable=True)
     service: Mapped[str] = mapped_column(String(100), default="Business Registration")
     service_item: Mapped[str] = mapped_column(String(150), default="Private Limited Company Registration")
-    
+
     # Financial & Business Metrics
     company_turnover: Mapped[str] = mapped_column(String(60), nullable=True, default="< ₹20 Lakhs")
     authorized_capital: Mapped[str] = mapped_column(String(60), nullable=True, default="₹1,00,000")
-    priority: Mapped[str] = mapped_column(String(20), default="MEDIUM") # HIGH, MEDIUM, LOW
-    
+    priority: Mapped[str] = mapped_column(String(20), default="MEDIUM")  # HIGH, MEDIUM, LOW
+
     # Selected plan details
     package: Mapped[str] = mapped_column(String(50), default="Standard")
     amount: Mapped[int] = mapped_column(Integer, default=2499)
-    agreed_price: Mapped[int] = mapped_column(Integer, nullable=True) # Final closing/converted price
+    agreed_price: Mapped[int] = mapped_column(Integer, nullable=True)
     govt_fees_estimated: Mapped[int] = mapped_column(Integer, default=1000)
 
-    # Funnel status: NEW_INQUIRY, OTP_VERIFIED, PLAN_SELECTED, PAYMENT_PENDING, PAID, IN_PROCESS, INCORPORATED, LOST
+    # Funnel status
     status: Mapped[str] = mapped_column(String(40), default="NEW_INQUIRY", index=True)
+    # NEW_INQUIRY, OTP_VERIFIED, PLAN_SELECTED, PAYMENT_PENDING, PAID, IN_PROCESS, 
+    # DOCS_PENDING, DOCS_RECEIVED, GOVT_FILING, INCORPORATED, DELIVERED, LOST
 
     # Assigned Staff / Chartered Accountant
     assigned_to_id: Mapped[str] = mapped_column(String(64), nullable=True)
@@ -46,7 +50,16 @@ class Lead(Base, TimestampMixin):
     payment_method: Mapped[str] = mapped_column(String(50), nullable=True)
     paid_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
+    # Document checklist tracking
+    docs_pan: Mapped[bool] = mapped_column(Boolean, default=False)
+    docs_aadhaar: Mapped[bool] = mapped_column(Boolean, default=False)
+    docs_photo: Mapped[bool] = mapped_column(Boolean, default=False)
+    docs_address_proof: Mapped[bool] = mapped_column(Boolean, default=False)
+    docs_dsc: Mapped[bool] = mapped_column(Boolean, default=False)
+    docs_moa_aoa: Mapped[bool] = mapped_column(Boolean, default=False)
+
     source: Mapped[str] = mapped_column(String(50), default="landing_page_form")
+    # landing_page_form, manual_admin_entry, google_ads, whatsapp, phone_call, referral
     notes: Mapped[str] = mapped_column(Text, nullable=True)
 
 
