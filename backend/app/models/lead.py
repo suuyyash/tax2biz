@@ -17,20 +17,29 @@ class Lead(Base, TimestampMixin):
     phone: Mapped[str] = mapped_column(String(20), nullable=False, index=True)
     state: Mapped[str] = mapped_column(String(60), nullable=True)
     company_name: Mapped[str] = mapped_column(String(150), nullable=True)
-    service: Mapped[str] = mapped_column(String(100), default="Private Limited Company Registration")
+    service: Mapped[str] = mapped_column(String(100), default="Business Registration")
+    service_item: Mapped[str] = mapped_column(String(150), default="Private Limited Company Registration")
+    
+    # Financial & Business Metrics
+    company_turnover: Mapped[str] = mapped_column(String(60), nullable=True, default="< ₹20 Lakhs")
+    authorized_capital: Mapped[str] = mapped_column(String(60), nullable=True, default="₹1,00,000")
+    priority: Mapped[str] = mapped_column(String(20), default="MEDIUM") # HIGH, MEDIUM, LOW
     
     # Selected plan details
     package: Mapped[str] = mapped_column(String(50), default="Standard")
     amount: Mapped[int] = mapped_column(Integer, default=2499)
+    agreed_price: Mapped[int] = mapped_column(Integer, nullable=True) # Final closing/converted price
     govt_fees_estimated: Mapped[int] = mapped_column(Integer, default=1000)
 
-    # Funnel status: NEW_INQUIRY, OTP_VERIFIED, PLAN_SELECTED, PAYMENT_PENDING, PAID, ASSIGNED_TO_CA
+    # Funnel status: NEW_INQUIRY, OTP_VERIFIED, PLAN_SELECTED, PAYMENT_PENDING, PAID, IN_PROCESS, INCORPORATED, LOST
     status: Mapped[str] = mapped_column(String(40), default="NEW_INQUIRY", index=True)
 
-    # Assigned Chartered Accountant / Company Secretary
+    # Assigned Staff / Chartered Accountant
+    assigned_to_id: Mapped[str] = mapped_column(String(64), nullable=True)
     assigned_ca_name: Mapped[str] = mapped_column(String(100), nullable=True, default="CA Aakash Mehra")
     assigned_ca_phone: Mapped[str] = mapped_column(String(20), nullable=True, default="+91 98765 43210")
     assigned_ca_cop: Mapped[str] = mapped_column(String(50), nullable=True, default="FCA #408912")
+    next_followup_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
     # Payment link reference
     payment_id: Mapped[str] = mapped_column(String(100), nullable=True)
